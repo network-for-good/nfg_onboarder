@@ -25,4 +25,21 @@ class Onboarding::<%= combined_onboarder_name %>Controller < <%= inherited_contr
   def onboarder_name
     "<%= onboarder_name.underscore %>"
   end
+
+  def get_onboarding_session
+    # Use the following as an example of how an onboarding session would be either retrieved or instantiated
+    # We call new rather than create because we don't want the onboarding session
+    # to be saved if the user does not continue past the first step.
+    # onboarding_admin.onboarding_session_for(onboarder_name) || Onboarding::Session.new(onboarding_session_parameters)
+  end
+
+  def onboarding_session_parameters
+    {
+      entity: ,# supply the parent object to the onboarding session
+      user: onboarding_admin,
+      current_step: ,  #typically the first step
+      related_objects:  ,# a hash containing the whatever object will be saved first, i.e. { project: get_project },
+      name: onboarder_name
+    }
+  end
 end

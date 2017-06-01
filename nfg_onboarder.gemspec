@@ -37,5 +37,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'reform', '~> 1.2'
   spec.add_dependency 'wicked', '~> 1.1'
   spec.add_dependency 'decent_exposure', '~> 2.3'
+  spec.add_dependency 'haml'
 
 end

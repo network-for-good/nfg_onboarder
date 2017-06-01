@@ -1,0 +1,16 @@
+.navbar.navbar-default.nav-primary
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle.collapsed{"data-target" => "#onboarding_steps", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-menu
+      %a.navbar-brand.visible-xs{:href => "#"}
+        =image_tag 'onboarding/logo-product.png'
+    #onboarding_steps.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        - onboarding_group_steps.each do |group_item, index|
+          %li{ class: get_onboarding_high_level_nav_status(group_item.to_s)}
+            = link_to "/onboarding/#{controller.class.name.underscore.split('/')[1]}/#{group_item.to_s}" do
+              %span.label
+                = onboarding_group_steps.index(group_item) + 1
+              = t(group_item, scope: [:onboarding, onboarder_name.to_sym, :group_steps])

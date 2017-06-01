@@ -1,4 +1,4 @@
-class CreateOnboardingRelatedObjects < ActiveRecord::Migration
+class CreateOnboardingRelatedObject < ActiveRecord::Migration
   def change
     create_table "onboarding_related_objects", force: :cascade do |t|
       t.string  "name",                  :limit=>255

@@ -39,6 +39,13 @@ Include the NfgOnboarding::OnboardableObject module on any object that will be b
 include NfgOnboarding::OnboardableObject
 ```
 
+Add a namespacing to the routes file for onboarding
+```ruby
+  namespace :onboarding do
+
+  end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

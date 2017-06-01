@@ -130,8 +130,8 @@ module NfgOnboarder
         # it does not include the closing end
         # Instead, we add it here when we finish adding the onboarder
         inject_into_file routes_file, after: "namespace :#{namespace_name} do\n" do <<-STRING
-        #{ spacing }resources :#{onboarder_name.underscore}, controller: :#{onboarder_name.underscore}
-        #{ onboarding_group.present? ? 'end' : '' }
+    #{ spacing }resources :#{onboarder_name.underscore}, controller: :#{onboarder_name.underscore}
+    #{ onboarding_group.present? ? 'end' : '' }
         STRING
         end
       end
@@ -162,7 +162,7 @@ module NfgOnboarder
         if onboarding_group.present?
           "Onboarding::#{onboarding_group}"
         else
-          'Onboarding::Base'
+          'NfgOnboarder::Base'
         end
       end
 

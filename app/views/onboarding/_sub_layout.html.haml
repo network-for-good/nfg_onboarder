@@ -1,0 +1,66 @@
+- guidance = '' if local_assigns[:guidance].nil?
+- header_page = '' if local_assigns[:header_page].nil?
+- enable_next_button = true if local_assigns[:enable_next_button].nil?
+- additional_form_classes = "" unless local_assigns[:additional_form_classes]
+- form_orientation = "form-horizontal" if local_assigns[:form_orientation].nil?
+- submit_button_text = t("submit", scope: locale_namespace + [step, :button], default: 'Next') if local_assigns[:submit_button_text].nil?
+.container.onboarding-sub-layout
+  .row.hidden-xs
+    .col-md-10.col-md-offset-1.col-sm-12
+      .page-header
+        %h1.text-center
+          = header_message
+  .row
+    .col-md-10.col-md-offset-1.col-sm-12
+      .panel.panel-primary
+        .panel-heading
+          %h3.panel-title
+            - if controller.steps.count > 1
+              %small Step #{ controller.steps.index(step) + 1 }
+            = header_form
+            - if guidance.present?
+              %button.btn.btn-default{"data-target" => "#myModal", "data-toggle" => "modal", :type => "button"}
+                Need Help?
+        = form_for form, url: wizard_path, html: { class: "#{ form_orientation } #{ additional_form_classes }", id: 'onboarding_main_form', multipart: true}, method: :put do |f|
+          - if params[:confirmation_token].present?
+            = hidden_field_tag :confirmation_token, params[:confirmation_token]
+          .panel-body
+            = render partial: 'shared/flash', locals: { flash: flash }
+            - if header_page.present?
+              .form-group
+                = simple_format(header_page).html_safe
+            = yield f
+          .panel-footer
+            .row
+              .col-xs-6
+                - unless first_step
+                  = link_to 'Previous', previous_wizard_path, class: 'btn btn-default btn-previous'
+
+              .col-xs-6.text-right
+                - if enable_next_button
+                  %button.btn.btn-default.btn-next#next_step{data: { :disable_with => "Please wait.." }}
+                    = submit_button_text.html_safe
+            .btn-next-help.text-right
+              %em
+                Advance to the next step to save your progress.
+                %br
+                If you close your browser, you can pick up where you left off.
+
+- if guidance.present?
+  #myModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+            %span{"aria-hidden" => "true"} &times;
+          %h4#myModalLabel.modal-title Additional Guidance
+        .modal-body
+          = simple_format(guidance)
+        .modal-footer
+          %button.btn.btn-default{ data: { dismiss: "modal" }, :type => "button"} Close
+
+- content_for :javascript do
+  :javascript
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })

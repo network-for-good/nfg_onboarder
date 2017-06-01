@@ -1,11 +1,11 @@
+require 'wicked'
+require 'decent_exposure'
+
+
 class NfgOnboarder::BaseController < ActionController::Base
   include Wicked::Wizard
-  include Multitenantable
-  include NewRelic::TransactionAttributes
 
   layout "onboarding"
-
-  impersonates :admin
 
   before_filter :maybe_jump_to_last_visited_step, only: :show
   after_filter :track_action, unless: :skip_track_action, only: :update
@@ -19,8 +19,6 @@ class NfgOnboarder::BaseController < ActionController::Base
   expose(:last_step) { steps.last == step }
   expose(:locale_namespace) { self.class.name.underscore.gsub('_controller', '').split('/') }
   expose(:form_params) { params.fetch("#{field_prefix}_#{step}", {}).permit! }
-  expose(:event_target) { get_event_target }
-  expose(:entity_presenter) { EntityPresenter.new(entity: entity, request: request) }
 
   def show
     on_before_show
@@ -39,23 +37,7 @@ class NfgOnboarder::BaseController < ActionController::Base
     render_wizard unless performed?
   end
 
-  def current_user
-    current_admin || current_donor
-  end
-
   protected
-
-  def track_action
-    begin
-      ahoy.track "Processed #{locale_namespace.join(':')}##{action_name}#{ ('#' + step.to_s) unless step.blank? }", cleansed_param_data
-    rescue => e
-      Honeybadger.notify(e)
-    end
-  end
-
-  def skip_track_action
-    false
-  end
 
   def on_before_save
     self.send("#{step}_on_before_save") if self.respond_to?("#{step}_on_before_save", true)
@@ -82,8 +64,7 @@ class NfgOnboarder::BaseController < ActionController::Base
     # do not redirect if the current onboarding controller and step match what has been completed
     return if onboarding_session.does_current_completed_step_match_current_step?(controller_name, step)
 
-    redirect_to Onboarding::UrlGenerator.new(onboarding_session).call and return
-
+    redirect_to NfgOnboarder::UrlGenerator.new(onboarding_session).call and return
   end
 
   def cleansed_param_data
@@ -96,7 +77,7 @@ class NfgOnboarder::BaseController < ActionController::Base
       get_form_object_name.constantize.new(get_form_target)
     else
       #supply a dummy form
-      Onboarding::InformationalForm.new(OpenStruct.new(name: ''))
+      NfgOnboarder::InformationalForm.new(OpenStruct.new(name: ''))
     end
   end
 

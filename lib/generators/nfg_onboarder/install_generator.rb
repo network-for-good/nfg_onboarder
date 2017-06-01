@@ -14,8 +14,8 @@ module NfgOnboarder
       source_root File.expand_path('../templates', __FILE__)
 
       def copy_migrations
-        migration_template "migrations/create_onboarding_sessions.rb", "db/migrate/create_onboarding_sessions.rb"
-        migration_template "migrations/create_related_objects.rb", "db/migrate/create_related_objects.rb"
+        migration_template "migrations/create_onboarding_session.rb", "db/migrate/create_onboarding_session.rb"
+        migration_template "migrations/create_onboarding_related_object.rb", "db/migrate/create_onboarding_related_object.rb"
       end
 
       def create_onboarding_session_model
@@ -29,6 +29,14 @@ end
       def create_related_records_model
         create_file "app/models/onboarding/related_records.rb", <<-FILE
 class Onboarding::RelatedRecord < NfgOnboarder::RelatedRecord
+
+end
+        FILE
+      end
+
+      def create_onboarding_controller
+        create_file "app/controllers/onboarding/base_controller.rb", <<-FILE
+class Onboarding::BaseController < NfgOnboarder::BaseController
 
 end
         FILE

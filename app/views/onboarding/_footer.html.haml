@@ -1,0 +1,10 @@
+.container.footer-container
+  .row
+    .col-sm-8.col-sm-push-2.text-center
+      %p
+        %small
+          %strong
+            Questions?
+          %br/
+          Call us at #{onboarding_session.present? ? onboarding_session.contact_number : Entity::CONTACT_NUMBER} or
+          = link_to 'Visit our Website', 'http://www.networkforgood.com/contact/', target: '_blank'

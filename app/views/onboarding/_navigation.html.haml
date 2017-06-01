@@ -1,0 +1,12 @@
+-if controller.wizard_steps.count > 1
+  .navbar.navbar-default.nav-secondary
+    .container-fluid
+      .container
+        %ul.nav.navbar-nav
+          - controller.wizard_steps.each_with_index do |step, index|
+            %li{:role => "presentation", class: get_onboarding_nav_status(step)}
+              = link_to wizard_path(step) do
+                - if (step == :submit_for_review) && (!required_approval?)
+                  = t('onboarding.create_fundraiser.launch_your_campaign.step')
+                - else
+                  = t(step, scope: locale_namespace + [:step_navigations], default: step.to_s.humanize)
