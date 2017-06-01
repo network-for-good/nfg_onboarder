@@ -1,5 +1,4 @@
-require "nfg_onboarder/version"
+require "nfg_onboarder/engine"
 
 module NfgOnboarder
-  # Your code goes here...
 end
