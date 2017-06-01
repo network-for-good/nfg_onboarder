@@ -1,0 +1,33 @@
+Description:
+  Creates files for a new onboarder and its steps. If the onboarder doesn't exist, it will be created.
+
+  The OnboarderGroupName is optional. This is used when you want to have several onboarders linked together
+
+Example:
+  rails generate nfg_onboarder:onboarder OnboarderName[::OnboarderGroupName] Step1 Step2 ...
+
+  i.e. rails generate nfg_onboarder:onboarder CreateProject ProjectName ProjectDescription
+
+  This will create:
+    app/forms/onboarding/create_project/project_name.rb
+    app/views/onboarding/create_project/project_name.html.haml
+    app/forms/onboarding/create_project/project_description.rb
+    app/views/onboarding/create_project/project_description.html.haml
+    app/controllers/onboarding/create_project_controller.rb
+    config/locales/onboarding/create_project.yml
+  This updates
+    config/routes
+
+  i.e. rails generate nfg_onboarder:onboarder InitialSteps::CreateProject project_name project_description
+
+  This will create:
+    app/forms/onboarding/initial_steps/create_project/project_name.rb
+    app/views/onboarding/initial_steps/create_project/project_name.html.haml
+    app/forms/onboarding/initial_steps/create_project/project_description.rb
+    app/views/onboarding/initial_steps/create_project/project_description.html.haml
+    app/controllers/onboarding/initial_steps_controller.rb
+    app/controllers/onboarding/initial_steps/create_project_controller.rb
+    config/locales/onboarding/initial_steps/create_project.yml
+
+  This updates
+    config/routes

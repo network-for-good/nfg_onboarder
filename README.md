@@ -22,7 +22,22 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Run the installer
+```ruby
+rails g nfg_onboarder:install
+```
+
+An association between the onboarding_sessions parent object and the onboarding session needs to be created
+Likely, you will add to the parent object the following
+
+```ruby
+has_many onboarding_sessions, foreign_key: "entity_id", class_name: "Onboarding::Session"
+```
+
+Include the NfgOnboarding::OnboardableObject module on any object that will be built with the onboarder
+```ruby
+include NfgOnboarding::OnboardableObject
+```
 
 ## Development
 
