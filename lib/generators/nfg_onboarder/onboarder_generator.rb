@@ -186,7 +186,7 @@ module NfgOnboarder
         if onboarding_group.present?
           "Onboarding::#{onboarding_group}"
         else
-          'NfgOnboarder::Base'
+          'Onboarding::Base'
         end
       end
 
