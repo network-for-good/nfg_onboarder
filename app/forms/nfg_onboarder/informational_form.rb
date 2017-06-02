@@ -1,3 +1,3 @@
-class NfgOnboarding::InformationalForm < Reform::Form
+class NfgOnboarder::InformationalForm < Reform::Form
 
 end

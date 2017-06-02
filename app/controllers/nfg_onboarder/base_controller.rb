@@ -4,11 +4,11 @@ require 'decent_exposure'
 
 class NfgOnboarder::BaseController < ActionController::Base
   include Wicked::Wizard
+  helper NfgOnboarder::ApplicationHelper
 
   layout "onboarding"
 
   before_filter :maybe_jump_to_last_visited_step, only: :show
-  after_filter :track_action, unless: :skip_track_action, only: :update
 
   expose(:onboarding_admin) { get_onboarding_admin }
   expose(:form) { get_form_object }

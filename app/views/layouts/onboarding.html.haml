@@ -13,8 +13,6 @@
 
     = content_for :head_css
     = csrf_meta_tags
-    - unless Rails.env.test?
-      = kiss_metrics_tag
 
     %script{:src => "//use.typekit.net/rqm7drt.js"}
     :javascript

@@ -1,0 +1,1 @@
+Rails.application.config.assets.precompile += %w( nfg_onboarder/logo-product.png )

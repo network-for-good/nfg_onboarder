@@ -4,6 +4,10 @@ class Onboarding::<%= combined_onboarder_name %>Controller < <%= inherited_contr
 
   private
 
+  # on before save steps
+
+  # on valid steps
+
   def can_view_step_without_onboarding_session
     return true if params[:id] == 'wicked_finish' # the onboarding session is typically completed prior to this step
     # if there are steps that can be accessed without a onboarding session (typically the first step of the onboarder), list them here
@@ -20,6 +24,7 @@ class Onboarding::<%= combined_onboarder_name %>Controller < <%= inherited_contr
 
   def finish_wizard_path
      # where to take the user when the have finished this step
+     # TODO add a path to where the user should go once they complete the onboarder
   end
 
   def onboarder_name

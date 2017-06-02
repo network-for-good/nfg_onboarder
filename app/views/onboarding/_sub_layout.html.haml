@@ -25,7 +25,7 @@
           - if params[:confirmation_token].present?
             = hidden_field_tag :confirmation_token, params[:confirmation_token]
           .panel-body
-            = render partial: 'shared/flash', locals: { flash: flash }
+            = render partial: 'onboarding/flash', locals: { flash: flash }
             - if header_page.present?
               .form-group
                 = simple_format(header_page).html_safe

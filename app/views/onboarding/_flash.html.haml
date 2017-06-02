@@ -1,0 +1,8 @@
+- if has_flash?(flash)
+  .row
+    .col-sm-12
+      - flash.each do |type, value|
+        - next unless [:success, :error, :message, :failure, :notice, :recaptcha_error].include?(type.to_sym)
+        - value = value.values.join if value.kind_of?(Hash)
+        = render partial: 'shared/flash_message', locals: { type: type, message: value }
+        - flash.discard(type)

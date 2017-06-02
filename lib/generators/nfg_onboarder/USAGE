@@ -4,9 +4,9 @@ Description:
   The OnboarderGroupName is optional. This is used when you want to have several onboarders linked together
 
 Example:
-  rails generate nfg_onboarder:onboarder OnboarderName[::OnboarderGroupName] Step1 Step2 ...
+  rails generate nfg_onboarder:onboarder OnboarderName[::OnboarderGroupName] step1 step2 ...
 
-  i.e. rails generate nfg_onboarder:onboarder CreateProject ProjectName ProjectDescription
+  i.e. rails generate nfg_onboarder:onboarder CreateProject project_name project_description
 
   This will create:
     app/forms/onboarding/create_project/project_name.rb

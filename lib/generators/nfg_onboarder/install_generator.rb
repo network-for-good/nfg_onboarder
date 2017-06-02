@@ -26,9 +26,9 @@ end
         FILE
       end
 
-      def create_related_records_model
-        create_file "app/models/onboarding/related_records.rb", <<-FILE
-class Onboarding::RelatedRecord < NfgOnboarder::RelatedRecord
+      def create_related_object_model
+        create_file "app/models/onboarding/related_object.rb", <<-FILE
+class Onboarding::RelatedObject < NfgOnboarder::RelatedObject
 
 end
         FILE

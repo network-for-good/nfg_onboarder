@@ -2,7 +2,8 @@ class NfgOnboarder::Session < ActiveRecord::Base
   self.table_name = 'onboarding_sessions'
 
   belongs_to :user, polymorphic: true
-  has_many :related_objects, class_name: 'Onboarding::RelatedObject', foreign_key: :onboarding_session_id, dependent: :destroy
+  belongs_to :entity
+  has_many :related_objects, class_name: 'NfgOnboarder::RelatedObject', foreign_key: :onboarding_session_id, dependent: :destroy
 
   validates :name, presence: true
 
@@ -58,9 +59,5 @@ class NfgOnboarder::Session < ActiveRecord::Base
 
   def respond_to_missing?(method_name, include_private)
     self.related_objects.find_by(name: method_name) || super(method_name, include_private)
-  end
-
-  def contact_number
-    self.try(:cause).try(:contact_phone_number) || Entity::CONTACT_NUMBER
   end
 end

@@ -2,7 +2,4 @@
   .container
     .row
       .col-sm-12
-        - if entity.main_logo.present?
-          = image_tag entity.main_logo.url(:welcome_logo), alt: 'Network for Good Presents Social Fundraising'
-        - else
-          =image_tag 'onboarding/logo-product.png', alt: 'Network for Good Presents Social Fundraising'
+        =image_tag 'nfg_onboarder/logo-product.png', alt: 'Network for Good Presents Social Fundraising'

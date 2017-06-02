@@ -20,6 +20,30 @@ module NfgOnboarder
         end
       end
 
+      def add_on_valid_methods_to_controller
+        steps.each do |step_name|
+          inject_into_file controller, after: "# on valid steps\n" do <<-STRING
+  def #{ step_name }_on_valid_step
+    # you can add logic here to perform actions once a step has completed successfully
+  end
+
+          STRING
+          end
+        end
+      end
+
+      def add_on_before_save_methods_to_controller
+        steps.each do |step_name|
+          inject_into_file controller, after: "# on before save steps\n" do <<-STRING
+  def #{ step_name }_on_before_save
+    # you can add logic here to perform, such as appending data to the params, before the form is to be saved
+  end
+
+          STRING
+          end
+        end
+      end
+
       def add_get_form_target_entry
         inject_into_file controller, after: "case step\n" do
           steps.inject("") do |str, step_name|
