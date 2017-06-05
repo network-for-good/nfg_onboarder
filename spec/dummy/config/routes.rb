@@ -53,4 +53,12 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  namespace :onboarding do
+    namespace :create_campaign do
+      resources :recruit_fundraisers, controller: :recruit_fundraisers
+    end
+    resources :create_project, controller: :create_project
+
+  end
 end

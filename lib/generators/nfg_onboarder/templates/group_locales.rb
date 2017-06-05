@@ -1,4 +1,4 @@
 en:
   onboarding:
-    <% if onboarder_name.underscore -%>
+    <% onboarder_name.underscore -%>
       group_steps:

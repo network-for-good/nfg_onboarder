@@ -87,36 +87,36 @@ module NfgOnboarder
         if onboarding_group.present?
           steps.each do |step_name|
             inject_into_file locales_file, after: "#{onboarder_name.underscore}:\n" do <<-STRING
-            #{step_name.underscore}:
-              header:
-                message: 'Replace me at config/locales/view/onboarding/#{onboarder_name.underscore}'
-                form: 'Replace me too'
-                page:
-              button:
-                submit: Next
-              label:
-              placeholder:
-              hint:
-              guidance:
-                modal:
+        #{step_name.underscore}:
+          header:
+            message: 'Replace me at config/locales/view/onboarding/#{onboarder_name.underscore}'
+            form: 'Replace me too'
+            page:
+          button:
+            submit: Next
+          label:
+          placeholder:
+          hint:
+          guidance:
+            modal:
           STRING
             end
           end
         else
           steps.each do |step_name|
             inject_into_file locales_file, after: "#{onboarder_name.underscore}:\n" do <<-STRING
-          #{step_name.underscore}:
-            header:
-              message: 'Replace me at config/locales/view/onboarding/#{onboarder_name.underscore}'
-              form: 'Replace me too'
-              page:
-            button:
-              submit: Next
-            label:
-            placeholder:
-            hint:
-            guidance:
-              modal:
+      #{step_name.underscore}:
+        header:
+          message: 'Replace me at config/locales/view/onboarding/#{onboarder_name.underscore}'
+          form: 'Replace me too'
+          page:
+        button:
+          submit: Next
+        label:
+        placeholder:
+        hint:
+        guidance:
+          modal:
           STRING
             end
           end

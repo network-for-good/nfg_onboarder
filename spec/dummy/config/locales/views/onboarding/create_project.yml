@@ -1,0 +1,29 @@
+en:
+  onboarding:
+    create_project:
+      project_description:
+        header:
+          message: 'Replace me at config/locales/view/onboarding/create_project'
+          form: 'Replace me too'
+          page:
+        button:
+          submit: Next
+        label:
+        placeholder:
+        hint:
+        guidance:
+          modal:
+      project_name:
+        header:
+          message: 'Replace me at config/locales/view/onboarding/create_project'
+          form: 'Replace me too'
+          page:
+        button:
+          submit: Next
+        label:
+        placeholder:
+        hint:
+        guidance:
+          modal:
+      step_navigations:
+

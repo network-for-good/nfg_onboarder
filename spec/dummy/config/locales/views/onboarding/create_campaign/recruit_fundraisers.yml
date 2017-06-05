@@ -1,0 +1,30 @@
+en:
+  onboarding:
+    create_campaign:
+      recruit_fundraisers:
+        build_page:
+          header:
+            message: 'Replace me at config/locales/view/onboarding/recruit_fundraisers'
+            form: 'Replace me too'
+            page:
+          button:
+            submit: Next
+          label:
+          placeholder:
+          hint:
+          guidance:
+            modal:
+        initial_setup:
+          header:
+            message: 'Replace me at config/locales/view/onboarding/recruit_fundraisers'
+            form: 'Replace me too'
+            page:
+          button:
+            submit: Next
+          label:
+          placeholder:
+          hint:
+          guidance:
+            modal:
+        step_navigations:
+
