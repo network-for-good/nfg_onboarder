@@ -67,8 +67,11 @@ module NfgOnboarder
       end
 
       def cleansed_param_data
-        fields_to_be_cleansed_from_form_params = %w{ main_logo password password_confirmation photo}
         form_params.dup.delete_if { |key, value| fields_to_be_cleansed_from_form_params.include?(key)}
+      end
+
+      def fields_to_be_cleansed_from_form_params
+        %w{ }
       end
 
       def get_form_object
