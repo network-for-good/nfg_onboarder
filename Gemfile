@@ -6,6 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'rails', '~> 4.2.7'
+gem 'bundler', '~> 1.14'
 
 
 # Declare any dependencies that are still in development here instead of in
