@@ -1,8 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe NfgOnboarder::UrlGenerator do
 
-  let(:admin) { build_stubbed(:admin) }
+  let(:admin) { create(:admin) }
 
   let!(:onboarding_session) do
     create(:session,
