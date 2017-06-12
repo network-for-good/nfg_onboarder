@@ -107,11 +107,22 @@ module NfgOnboarder
         update_onboarding_session_progress
         self.send("#{step}_on_valid_step") if self.respond_to?("#{step}_on_valid_step", true)
         onboarding_session.save
-        jump_to(next_step) unless @stay_on_step
+        jump_to(@override_next_step || next_step) unless @stay_on_step
       end
 
       def get_onboarding_session
         raise 'This should be overriden in the containing controller'
+      end
+
+      def jump_to_step(new_step)
+        # this allows you to move from any step to any future step
+        # and updates the session to act as if you have completed
+        # any steps that would be in between
+        @override_next_step = new_step #used by the onvalid step to get the user to the next step
+        steps.each do |this_step|
+          break if steps.index(this_step) >= steps.index(step)
+          onboarding_session.onboarder_progress[controller_name] << this_step unless onboarding_session.onboarder_progress[controller_name].include?(this_step)
+        end
       end
 
       def onboarder_name
