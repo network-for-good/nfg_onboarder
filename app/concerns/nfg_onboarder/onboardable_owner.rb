@@ -1,8 +1,8 @@
-module NfgOnboarder::Onboardable
+module NfgOnboarder::OnboardableOwner
   extend ActiveSupport::Concern
 
   included do
-    has_many :onboarding_sessions, as: :user, class_name: "Onboarding::Session", dependent: :destroy
+    has_many :onboarding_sessions, as: :owner, class_name: "Onboarding::Session", dependent: :destroy
   end
 
   def onboarding_session
@@ -24,6 +24,6 @@ module NfgOnboarder::Onboardable
 
   def default_onboarder
     # can be overridden in the containing object
-    Onboarding::Session::INITIAL_SETUP_TYPE
+    self.class.to_s.underscore + "_onboarder"
   end
 end

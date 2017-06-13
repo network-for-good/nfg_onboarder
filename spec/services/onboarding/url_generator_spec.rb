@@ -6,7 +6,7 @@ describe NfgOnboarder::UrlGenerator do
 
   let!(:onboarding_session) do
     create(:session,
-           user: admin,
+           owner: admin,
            onboarder_prefix: 'create_campaign',
            completed_high_level_steps: [],
            current_high_level_step: 'recruit_fundraisers',
@@ -25,7 +25,7 @@ describe NfgOnboarder::UrlGenerator do
   describe "an initial setup onboarding session on the account step" do
     let!(:onboarding_session) do
       create(:session,
-             user: admin,
+             owner: admin,
              onboarder_prefix: nil,
              current_high_level_step: 'create_project',
              current_step: 'project_name',

@@ -3,6 +3,6 @@ FactoryGirl.define do
     name 'create_event'
     current_step :contact_info
     current_high_level_step :initial_setup
-    user { FactoryGirl.create(:admin) }
+    owner { FactoryGirl.create(:admin) }
   end
 end

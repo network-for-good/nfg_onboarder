@@ -9,7 +9,7 @@ end
 describe NfgOnboarder::Session do
   let(:session) { FactoryGirl.create :session }
 
-  it { is_expected.to belong_to :user }
+  it { is_expected.to belong_to :owner }
 
   it { is_expected.to serialize(:step_data).as(Hash) }
   it { is_expected.to serialize(:completed_high_level_steps).as(Array) }

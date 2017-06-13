@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170602185059) do
+ActiveRecord::Schema.define(version: 20170613145918) do
 
   create_table "admins", force: :cascade do |t|
     t.string "first_name"
@@ -31,14 +31,14 @@ ActiveRecord::Schema.define(version: 20170602185059) do
   create_table "onboarding_sessions", force: :cascade do |t|
     t.text     "completed_high_level_steps", limit: 65535
     t.string   "current_step",               limit: 255
-    t.integer  "user_id",                    limit: 4
+    t.integer  "owner_id",                   limit: 4
     t.integer  "entity_id",                  limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "step_data",                  limit: 65535
     t.string   "current_high_level_step",    limit: 255
     t.text     "onboarder_progress",         limit: 65535
-    t.string   "user_type",                  limit: 255
+    t.string   "owner_type",                 limit: 255
     t.datetime "completed_at"
     t.string   "onboarder_prefix",           limit: 255
     t.string   "name",                       limit: 255
@@ -46,6 +46,6 @@ ActiveRecord::Schema.define(version: 20170602185059) do
 
   add_index "onboarding_sessions", ["entity_id"], name: "fk__onboarding_sessions_entity_id"
   add_index "onboarding_sessions", ["name"], name: "index_onboarding_sessions_on_name"
-  add_index "onboarding_sessions", ["user_id"], name: "fk__onboarding_sessions_admin_id"
+  add_index "onboarding_sessions", ["owner_id"], name: "fk__onboarding_sessions_admin_id"
 
 end
