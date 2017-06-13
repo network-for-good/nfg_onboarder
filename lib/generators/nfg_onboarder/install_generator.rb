@@ -44,7 +44,7 @@ end
 
       def add_onboardable_to_admin
         inject_into_file "app/models/admin.rb", after: "< ActiveRecord::Base\n" do <<-STRING
-  include NfgOnboarder::Onboardable
+  include NfgOnboarder::OnboardableOwner
         STRING
         end
       end
