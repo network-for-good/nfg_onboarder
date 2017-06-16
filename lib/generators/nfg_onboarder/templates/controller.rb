@@ -43,7 +43,7 @@ class Onboarding::<%= combined_onboarder_name %>Controller < <%= inherited_contr
   def onboarding_session_parameters
     {
       entity: nil,# supply the parent object to the onboarding session
-      user: onboarding_admin,
+      owner: onboarding_admin,
       current_step: ,  #typically the first step
       related_objects: {} ,# a hash containing the whatever object will be saved first, i.e. { project: get_project },
       name: onboarder_name
