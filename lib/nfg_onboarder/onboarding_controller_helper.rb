@@ -124,9 +124,10 @@ module NfgOnboarder
         # any steps that would be in between
         @override_next_step = new_step #used by the onvalid step to get the user to the next step
         steps.each do |this_step|
-          break if steps.index(this_step) >= steps.index(step)
+          break if steps.index(this_step) >= steps.index(new_step)
           onboarding_session.onboarder_progress[controller_name] << this_step unless onboarding_session.onboarder_progress[controller_name].include?(this_step)
         end
+        onboarding_session.current_step = new_step
       end
 
       def onboarder_name
