@@ -72,6 +72,7 @@ module NfgOnboarder
       end
 
       def maybe_jump_to_next_step
+        return if onboarding_session.onboarder_progress.empty?
         return unless onboarding_session.onboarder_progress[controller_name].include?(step.to_sym)
         return unless self.single_use_steps.include?(step.to_sym)
         referred_by_us? ? jump_to(onboarding_session.current_step) : next_step
