@@ -8,6 +8,7 @@ module NfgOnboarder
       helper NfgOnboarder::ApplicationHelper
 
       before_filter :maybe_jump_to_last_visited_step, only: :show
+      before_filter :maybe_jump_to_next_step, only: :show
 
       expose(:onboarding_admin) { get_onboarding_admin }
       expose(:form) { get_form_object }
@@ -68,6 +69,12 @@ module NfgOnboarder
         return if onboarding_session.does_current_completed_step_match_current_step?(controller_name, step)
 
         redirect_to NfgOnboarder::UrlGenerator.new(onboarding_session).call and return
+      end
+
+      def maybe_jump_to_next_step
+        return unless onboarding_session.onboarder_progress[controller_name].include?(step.to_sym)
+        return unless self.single_use_steps.include?(step.to_sym)
+        referred_by_us? ? jump_to(onboarding_session.current_step) : next_step
       end
 
       def cleansed_param_data
