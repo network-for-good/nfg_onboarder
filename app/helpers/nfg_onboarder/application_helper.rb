@@ -8,6 +8,7 @@ module NfgOnboarder
 
     def calculate_onboarding_nav_status(nav_step, all_steps, current_step)
       return '' if all_steps.index(nav_step).nil? || all_steps.index(current_step).nil?
+      return onboarding_nav_classes[:disabled] if controller.single_use_steps.include?(nav_step)
       return onboarding_nav_classes[:active] if nav_step == current_step
       return onboarding_nav_classes[:success] if onboarding_session.try(:completed_steps, controller_name).try(:include?, nav_step)
       return onboarding_nav_classes[:disabled]

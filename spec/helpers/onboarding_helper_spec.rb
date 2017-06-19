@@ -6,6 +6,7 @@ RSpec.describe NfgOnboarder::ApplicationHelper, type: :helper do
     before(:each) do
       allow(helper).to receive(:onboarding_session).and_return(NfgOnboarder::Session.new(onboarder_progress: onboarder_progress))
       allow(helper).to receive(:controller_name).and_return(controller_name)
+      allow(controller).to receive(:single_use_steps) { single_use_steps }
     end
     let(:calculate_onboarding_nav_status) { helper.calculate_onboarding_nav_status(nav_step, all_steps, current_step) }
     let(:all_steps) { [:account, :goal, :theme, :story] }
@@ -14,6 +15,7 @@ RSpec.describe NfgOnboarder::ApplicationHelper, type: :helper do
     let(:current_step) { :account }
     let(:controller_name) { 'empowering_fundraisers' }
     let(:onboarder_progress) { {'empowering_fundraisers' => [:goal]} }
+    let(:single_use_steps) { [] }
 
     subject { calculate_onboarding_nav_status }
 
@@ -52,6 +54,13 @@ RSpec.describe NfgOnboarder::ApplicationHelper, type: :helper do
       it "should return ''" do
         expect(subject).to eq('')
       end
+    end
+
+    context "when the nav step is a single use step" do
+      let(:current_step) { :goal }
+      let(:single_use_steps) { [:goal] }
+      before { allow(controller).to receive(:single_use_steps) { single_use_steps } }
+      it { should eq 'disabled' }
     end
   end
 

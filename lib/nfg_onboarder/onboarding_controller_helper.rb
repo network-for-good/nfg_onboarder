@@ -36,6 +36,10 @@ module NfgOnboarder
         render_wizard unless performed?
       end
 
+      def single_use_steps
+        []
+      end
+
       protected
 
       def on_before_save
