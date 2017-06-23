@@ -24,6 +24,11 @@ class NfgOnboarder::Session < ActiveRecord::Base
     onboarder_progress[current_high_level_step]
   end
 
+  def complete!
+    return false if complete?
+    update(completed_at: DateTime.now)
+  end
+
   def complete?
     completed_at.present?
   end

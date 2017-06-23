@@ -101,6 +101,25 @@ describe NfgOnboarder::Session do
     end
   end
 
+  describe "complete!" do
+    let(:onboarding_session) { create(:session, completed_at: completed_at) }
+
+    subject { onboarding_session.complete! }
+
+    context "when the onboarding session is already complete" do
+      let(:completed_at) { DateTime.now }
+      it { should be_falsey }
+    end
+
+    context "when the onboarding session hasn't been completed yet" do
+      let(:completed_at) { nil }
+      it { should be_truthy }
+      it "timestamps the field" do
+        subject
+        expect(onboarding_session.completed_at.to_s).to eql onboarding_session.updated_at.to_s
+      end
+    end
+  end
 
   describe "#completed_steps" do
     before do
