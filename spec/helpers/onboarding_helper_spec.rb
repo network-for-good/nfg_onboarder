@@ -56,11 +56,24 @@ RSpec.describe NfgOnboarder::ApplicationHelper, type: :helper do
       end
     end
 
-    context "when the nav step is a single use step" do
-      let(:current_step) { :goal }
+    describe "when the nav step is a single use step" do
       let(:single_use_steps) { [:goal] }
-      before { allow(controller).to receive(:single_use_steps) { single_use_steps } }
-      it { should eq 'disabled' }
+
+      before do
+        allow(controller).to receive(:single_use_steps) { single_use_steps }
+        allow(controller).to receive(:current_step) { current_step }
+      end
+
+      context "as the current step" do
+        let(:current_step) { :goal }
+        let(:nav_step) { :goal }
+        it { should eq 'active' }
+      end
+
+      context "as another step" do
+        let(:current_step) { :theme }
+        it { should eq 'disabled' }
+      end
     end
   end
 
