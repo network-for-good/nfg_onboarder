@@ -37,6 +37,10 @@ class NfgOnboarder::Session < ActiveRecord::Base
     [:onboarding, onboarder_prefix, current_high_level_step.try(:to_sym)].compact
   end
 
+  def onboarder_progress_includes?(step)
+    completed_steps(current_high_level_step).include?(step)
+  end
+
   def does_current_completed_step_match_current_step?(high_level_step, step)
     current_high_level_step.to_sym == high_level_step.to_sym && current_step.to_sym == step.to_sym
   end
