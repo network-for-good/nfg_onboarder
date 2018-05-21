@@ -145,6 +145,25 @@ describe NfgOnboarder::Session do
     end
   end
 
+  describe 'started?' do
+    subject { session.started? }
+
+    context 'when the created_at and updated_at values are the same' do
+      it 'should be falsey' do
+        session
+        expect(subject).to be_falsey
+      end
+    end
+
+    context "whent the created_at and updated_at values are different" do
+      it 'should be truthy' do
+        session.update(onboarder_progress: { "initial_setup" => [:contact_info]})
+        expect(subject).to be_truthy
+      end
+
+    end
+  end
+
 end
 
 def onboarding_configuration

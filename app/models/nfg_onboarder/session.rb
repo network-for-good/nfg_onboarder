@@ -61,6 +61,10 @@ class NfgOnboarder::Session < ActiveRecord::Base
     end
   end
 
+  def started?
+    created_at != updated_at
+  end
+
   def method_missing(method_name, *args, &block)
     related_object = self.related_objects.find_by(name: method_name)
     related_object ? related_object.target : super
