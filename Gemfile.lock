@@ -56,10 +56,10 @@ GEM
       representable (~> 2.0)
       uber
     erubis (2.7.0)
-    factory_girl (4.9.0)
+    factory_bot (4.11.1)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.9.0)
-      factory_girl (~> 4.9.0)
+    factory_bot_rails (4.11.1)
+      factory_bot (~> 4.11.1)
       railties (>= 3.0.0)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
@@ -166,7 +166,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.14)
-  factory_girl_rails
+  factory_bot_rails
   nfg_onboarder!
   rails (~> 4.2.7)
   rake (~> 10.0)

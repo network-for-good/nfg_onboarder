@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec_junit_formatter"
   spec.add_development_dependency "rspec-rails", "~> 3.0"
   spec.add_development_dependency 'sqlite3'
-  spec.add_development_dependency "factory_girl_rails"
+  spec.add_development_dependency "factory_bot_rails"
   spec.add_development_dependency "shoulda-matchers"
 
 

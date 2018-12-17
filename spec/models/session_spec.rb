@@ -7,7 +7,7 @@ shared_examples_for "raising a method missing exception" do
 end
 
 describe NfgOnboarder::Session do
-  let(:session) { FactoryGirl.create :session }
+  let(:session) { FactoryBot.create :session }
 
   it { is_expected.to belong_to :owner }
 
