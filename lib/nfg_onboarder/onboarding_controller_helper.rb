@@ -7,8 +7,8 @@ module NfgOnboarder
 
       helper NfgOnboarder::ApplicationHelper
 
-      before_filter :maybe_jump_to_last_visited_step, only: :show
-      before_filter :maybe_jump_to_next_step, only: :show
+      before_action :maybe_jump_to_last_visited_step, only: :show
+      before_action :maybe_jump_to_next_step, only: :show
 
       expose(:onboarding_admin) { get_onboarding_admin }
       expose(:form) { get_form_object }
