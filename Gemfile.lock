@@ -2,11 +2,11 @@ PATH
   remote: .
   specs:
     nfg_onboarder (0.0.3)
-      decent_exposure (~> 3.0)
+      decent_exposure
       haml
       rails (~> 5.0)
-      reform (~> 2.2)
-      wicked (~> 1.1)
+      reform
+      wicked
 
 GEM
   remote: https://rubygems.org/
