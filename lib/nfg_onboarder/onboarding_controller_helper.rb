@@ -9,6 +9,7 @@ module NfgOnboarder
 
       before_action :maybe_jump_to_last_visited_step, only: :show
       before_action :maybe_jump_to_next_step, only: :show
+      before_action :maybe_jump_to_last_visited_point_of_no_return, only: :show
 
       expose(:onboarding_admin) { get_onboarding_admin }
       expose(:form) { get_form_object }
@@ -41,6 +42,10 @@ module NfgOnboarder
         []
       end
 
+      def points_of_no_return
+        []
+      end
+
       protected
 
       def on_before_save
@@ -48,6 +53,38 @@ module NfgOnboarder
       end
 
       private
+
+      def maybe_jump_to_last_visited_point_of_no_return
+        jump_to(last_visited_point_of_no_return) if before_last_visited_point_of_no_return?
+      end
+
+      def before_last_visited_point_of_no_return?
+        return unless last_visited_point_of_no_return.present?
+        return unless onboarder_progress_with_current_step.present?
+        onboarder_progress_with_current_step.index(step.to_sym) < onboarder_progress_with_current_step.index(last_visited_point_of_no_return)
+      end
+
+      def last_visited_point_of_no_return
+        return unless points_of_no_return.present?
+        return unless onboarder_progress.present?
+
+        onboarder_progress_with_current_step.reverse.detect do |progress_step|
+          points_of_no_return.include?(progress_step.to_sym)
+        end
+      end
+
+      def onboarder_progress_with_current_step
+        (onboarder_progress || []) + [onboarding_session.current_step.to_sym]
+      end
+
+      def at_point_of_no_return?
+        points_of_no_return.include?(step.to_sym)
+      end
+      helper_method :at_point_of_no_return?
+
+      def onboarder_progress
+        onboarding_session.onboarder_progress[controller_name]
+      end
 
       def redirect_to_finish_wizard(options, params)
         redirect_to(finish_wizard_path + "?from_wicked_finish=true", options)
@@ -57,6 +94,7 @@ module NfgOnboarder
         # We can get stuck in a redirect loop if an onboarding_session's current_step is
         # set to wicked_finish and the onboarder is re-entered from e.g. the campaigns index page.
         # We set the from_wicked_finish param by redefining wicked wizard's #redirect_to_finish_wizard.
+
         return if params[:from_wicked_finish]
         return unless onboarding_admin
         return unless onboarding_session
