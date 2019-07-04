@@ -68,7 +68,7 @@ module NfgOnboarder
         # do not redirect if the current onboarding controller and step match what has been completed
         return if onboarding_session.does_current_completed_step_match_current_step?(controller_name, step)
 
-        redirect_to NfgOnboarder::UrlGenerator.new(onboarding_session).call and return
+        redirect_to NfgOnboarder::UrlGenerator.new(onboarding_session, self).call and return
       end
 
       def maybe_jump_to_next_step
