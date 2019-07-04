@@ -61,6 +61,7 @@ module NfgOnboarder
       def before_last_visited_point_of_no_return?
         return unless last_visited_point_of_no_return.present?
         return unless onboarder_progress_with_current_step.present?
+
         onboarder_progress_with_current_step.index(step.to_sym) < onboarder_progress_with_current_step.index(last_visited_point_of_no_return)
       end
 
@@ -80,6 +81,7 @@ module NfgOnboarder
       def at_point_of_no_return?
         points_of_no_return.include?(step.to_sym)
       end
+
       helper_method :at_point_of_no_return?
 
       def onboarder_progress
