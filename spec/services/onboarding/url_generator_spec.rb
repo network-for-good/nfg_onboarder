@@ -3,6 +3,7 @@ require 'rails_helper'
 describe NfgOnboarder::UrlGenerator do
 
   let(:admin) { create(:admin) }
+  let(:context) { ActionController::Base.new.view_context }
 
   let!(:onboarding_session) do
     create(:session,
@@ -16,7 +17,7 @@ describe NfgOnboarder::UrlGenerator do
           )
   end
 
-  subject { NfgOnboarder::UrlGenerator.new(onboarding_session).call }
+  subject { NfgOnboarder::UrlGenerator.new(onboarding_session, context).call }
 
   it "should return the path to the wicked finish step of the empowering fundraisers controller" do
     expect(subject).to eq('/onboarding/create_campaign/recruit_fundraisers/wicked_finish')
