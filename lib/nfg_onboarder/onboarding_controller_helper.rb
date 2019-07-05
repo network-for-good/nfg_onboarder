@@ -58,12 +58,17 @@ module NfgOnboarder
         jump_to(last_visited_point_of_no_return) if before_last_visited_point_of_no_return?
       end
 
-      def before_last_visited_point_of_no_return?
+      def before_last_visited_point_of_no_return?(step_to_check = nil)
+        step_to_check ||= step
+
         return unless last_visited_point_of_no_return.present?
         return unless onboarder_progress_with_current_step.present?
+        return unless index_of_step_to_check = onboarder_progress_with_current_step.index(step_to_check.to_sym)
 
-        onboarder_progress_with_current_step.index(step.to_sym) < onboarder_progress_with_current_step.index(last_visited_point_of_no_return)
+        index_of_step_to_check < onboarder_progress_with_current_step.index(last_visited_point_of_no_return)
       end
+
+      helper_method :before_last_visited_point_of_no_return?
 
       def last_visited_point_of_no_return
         return unless points_of_no_return.present?
