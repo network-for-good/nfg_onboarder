@@ -11,43 +11,23 @@ describe 'Testing' do
   end
 
   describe '#onboarding_session' do
-    context 'when name is passed as the argument' do
-      subject { test_model.onboarding_session(name: arg_name) }
 
-      context 'when there is a session with the passed name' do
-        it "should set the owner" do
-          expect(subject.id).to eq(onboarding_session.id)
-        end
-      end
+    let(:name) { 'testing_onboarder' }
 
-      context 'when there is no session with the passed name' do
-        let(:arg_name) { 'another-name' }
+    subject { test_model.onboarding_session }
 
-        it 'should be nil' do
-          expect(subject).to be_nil
-        end
+    context 'when there is a session with the name' do
+      it "should get the onboarding_session" do
+        expect(subject.id).to eq(onboarding_session.id)
       end
     end
 
-    context 'when there is no name param passed' do
-      let(:name) { 'testing_onboarder' }
+    context 'when there is no session with the name' do
+      let(:name) { 'another-name' }
 
-      subject { test_model.onboarding_session }
-
-      context 'when there is a session with the passed name' do
-        it "should get the onboarding_session" do
-          expect(subject.id).to eq(onboarding_session.id)
-        end
-      end
-
-      context 'when there is no session with the passed name' do
-        let(:name) { 'another-name' }
-
-        it 'should be nil' do
-          expect(subject).to be_nil
-        end
+      it 'should be nil' do
+        expect(subject).to be_nil
       end
     end
   end
-
 end

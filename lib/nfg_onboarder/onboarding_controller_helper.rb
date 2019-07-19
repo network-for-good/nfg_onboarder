@@ -162,6 +162,7 @@ module NfgOnboarder
         onboarding_session.current_high_level_step = controller_name
         onboarding_session.current_step = next_step
         onboarding_session.owner = get_event_target
+        onboarding_session.name = get_onboarder_name if get_event_target.present?
         update_onboarding_session_step_data
         update_onboarding_session_progress
         if self.respond_to?("#{step}_on_valid_step", true)
@@ -248,6 +249,10 @@ module NfgOnboarder
         else
           nil
         end
+      end
+
+      def get_onboarder_name
+        get_event_target.class.to_s.underscore + "_onboarder"
       end
     end
   end

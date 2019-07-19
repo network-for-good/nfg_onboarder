@@ -26,9 +26,19 @@ describe FakesController do
     allow_any_instance_of(FakesController).to receive(:performed?).and_return(false)
   end
 
-  it "should set the owner" do
+  it "should set the owner and onboarder name" do
     expect(onboarding_session).to receive(:owner=).with(model)
+    expect(onboarding_session).to receive(:name=).with(model.class.to_s.underscore + "_onboarder")
     expect(onboarding_session).to receive(:save)
     subject.update
+  end
+
+  context 'when event target is not present' do
+    before { allow_any_instance_of(FakesController).to receive(:get_form_object).and_return(form) }
+
+    it 'should not set onboarding session name' do
+      expect(onboarding_session).to_not receive(:name=)
+    end
+
   end
 end
