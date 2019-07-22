@@ -161,6 +161,7 @@ module NfgOnboarder
       def on_valid_step
         onboarding_session.current_high_level_step = controller_name
         onboarding_session.current_step = next_step
+        onboarding_session.owner = get_event_target if onboarding_session.owner.nil? && get_event_target&.onboarding_sessions&.is_a?(ActiveRecord::Associations::CollectionProxy)
         update_onboarding_session_step_data
         update_onboarding_session_progress
         if self.respond_to?("#{step}_on_valid_step", true)
