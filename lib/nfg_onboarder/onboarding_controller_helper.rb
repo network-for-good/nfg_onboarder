@@ -161,6 +161,9 @@ module NfgOnboarder
       def on_valid_step
         onboarding_session.current_high_level_step = controller_name
         onboarding_session.current_step = next_step
+        # below we need to check for the CollectionProxy as during the course of an onboarder
+        # there may be different objects for form.model.  we need to check if this object has onboarding_sessions
+        # which will confirm that this object then can be the owner
         onboarding_session.owner = get_event_target if onboarding_session.owner.nil? && get_event_target&.onboarding_sessions&.is_a?(ActiveRecord::Associations::CollectionProxy)
         update_onboarding_session_step_data
         update_onboarding_session_progress
