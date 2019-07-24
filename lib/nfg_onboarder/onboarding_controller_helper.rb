@@ -167,17 +167,9 @@ module NfgOnboarder
         onboarding_session.owner = get_event_target if onboarding_session.owner.nil? && get_event_target&.onboarding_sessions&.is_a?(ActiveRecord::Associations::CollectionProxy)
         update_onboarding_session_step_data
         update_onboarding_session_progress
-        if self.respond_to?("#{step}_on_valid_step", true)
-          # if there is an error validating headers, we  need to revert session step changes
-          self.send("#{step}_on_valid_step") { |error, step| reset_on_failure(step) if error }
-        end
+        self.send("#{step}_on_valid_step") if self.respond_to?("#{step}_on_valid_step", true)
         onboarding_session.save
         jump_to(@override_next_step || next_step) unless @stay_on_step
-      end
-
-      def reset_on_failure(step)
-        onboarding_session.update(current_step: step)
-        @override_next_step = step
       end
 
       def get_onboarding_session
