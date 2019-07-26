@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2019_07_13_173339) do
   end
 
   create_table "testings", force: :cascade do |t|
+    t.text "name"
   end
 
 end
