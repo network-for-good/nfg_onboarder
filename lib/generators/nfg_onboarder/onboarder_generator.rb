@@ -107,7 +107,7 @@ module NfgOnboarder
           # add the steps to the navigation area
           steps.each do |step_name|
             inject_into_file locales_file, before: "# end of file" do <<-STRING
-        #{step_name.underscore}: #{step_name.humanize}
+          #{step_name.underscore}: #{step_name.humanize}
           STRING
             end
           end
@@ -133,7 +133,7 @@ module NfgOnboarder
           # add the steps to the navigation area
           steps.each do |step_name|
             inject_into_file locales_file, before: "# end of file" do <<-STRING
-      #{step_name.underscore}: #{step_name.humanize}
+        #{step_name.underscore}: #{step_name.humanize}
           STRING
             end
           end
