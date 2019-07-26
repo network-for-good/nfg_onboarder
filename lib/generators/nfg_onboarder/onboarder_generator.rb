@@ -15,7 +15,7 @@ module NfgOnboarder
 
       def add_steps_to_controller
         inject_into_file controller, after: "def self.step_list\n" do <<-STRING
-  i%[#{ steps_to_symbols }]
+    %i[#{ steps_to_symbols }]
         STRING
         end
       end
@@ -48,8 +48,8 @@ module NfgOnboarder
         inject_into_file controller, before: "    # catch all" do
           steps.inject("") do |str, step_name|
             str += <<-STRING
-        when :#{ step_name.underscore }
-          OpenStruct.new(name: '') # replace with your object that the step will update
+    when :#{ step_name.underscore }
+      OpenStruct.new(name: '') # replace with your object that the step will update
     STRING
           end
         end
@@ -85,6 +85,7 @@ module NfgOnboarder
       def add_entries_to_locals_file
         template "locales.rb", locales_file unless File.exists?(locales_file)
         if onboarding_group.present?
+          # add the language areas for each page
           steps.each do |step_name|
             inject_into_file locales_file, before: "        step_navigations:" do <<-STRING
         #{step_name.underscore}:
@@ -93,7 +94,7 @@ module NfgOnboarder
             form: 'Replace me too'
             page:
           button:
-            submit: Next
+            <<: *default_buttons
           label:
           placeholder:
           hint:
@@ -102,7 +103,16 @@ module NfgOnboarder
           STRING
             end
           end
+
+          # add the steps to the navigation area
+          steps.each do |step_name|
+            inject_into_file locales_file, before: "# end of file" do <<-STRING
+        #{step_name.underscore}: #{step_name.humanize}
+          STRING
+            end
+          end
         else
+          # add the language areas for each page
           steps.each do |step_name|
             inject_into_file locales_file, before: "      step_navigations:" do <<-STRING
       #{step_name.underscore}:
@@ -111,12 +121,19 @@ module NfgOnboarder
           form: 'Replace me too'
           page:
         button:
-          submit: Next
+          <<: *default_buttons
         label:
         placeholder:
         hint:
         guidance:
           modal:
+          STRING
+            end
+          end
+          # add the steps to the navigation area
+          steps.each do |step_name|
+            inject_into_file locales_file, before: "# end of file" do <<-STRING
+      #{step_name.underscore}: #{step_name.humanize}
           STRING
             end
           end
