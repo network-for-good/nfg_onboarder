@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :onboarding_session, class: Onboarding::Session do
-    owner NfgOnboarder::Testing.new
+    owner { Testing.create(name: "this" ) }
     completed_at nil
     name "import_data_onboarder"
   end
