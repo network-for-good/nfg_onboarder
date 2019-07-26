@@ -8,3 +8,4 @@ en:
     <%= onboarder_name.underscore %>:
       step_navigations:
 <% end %>
+# end of file

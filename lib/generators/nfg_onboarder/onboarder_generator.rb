@@ -14,15 +14,15 @@ module NfgOnboarder
       end
 
       def add_steps_to_controller
-        inject_into_file controller, after: "# steps list\n" do <<-STRING
-  steps #{ steps_to_symbols }
+        inject_into_file controller, after: "def self.step_list\n" do <<-STRING
+  i%[#{ steps_to_symbols }]
         STRING
         end
       end
 
       def add_on_valid_methods_to_controller
         steps.each do |step_name|
-          inject_into_file controller, after: "# on valid steps\n" do <<-STRING
+          inject_into_file controller, before: "  # end on valid steps" do <<-STRING
   def #{ step_name }_on_valid_step
     # you can add logic here to perform actions once a step has completed successfully
   end
@@ -34,9 +34,9 @@ module NfgOnboarder
 
       def add_on_before_save_methods_to_controller
         steps.each do |step_name|
-          inject_into_file controller, after: "# on before save steps\n" do <<-STRING
+          inject_into_file controller, before: "  # end on before save steps" do <<-STRING
   def #{ step_name }_on_before_save
-    # you can add logic here to perform, such as appending data to the params, before the form is to be saved
+    # you can add logic here to perform an action, such as appending data to the params, before the form is to be saved
   end
 
           STRING
@@ -45,7 +45,7 @@ module NfgOnboarder
       end
 
       def add_get_form_target_entry
-        inject_into_file controller, after: "case step\n" do
+        inject_into_file controller, before: "    # catch all" do
           steps.inject("") do |str, step_name|
             str += <<-STRING
         when :#{ step_name.underscore }
@@ -86,7 +86,7 @@ module NfgOnboarder
         template "locales.rb", locales_file unless File.exists?(locales_file)
         if onboarding_group.present?
           steps.each do |step_name|
-            inject_into_file locales_file, after: "#{onboarder_name.underscore}:\n" do <<-STRING
+            inject_into_file locales_file, before: "        step_navigations:" do <<-STRING
         #{step_name.underscore}:
           header:
             message: 'Replace me at config/locales/view/onboarding/#{onboarder_name.underscore}'
@@ -104,7 +104,7 @@ module NfgOnboarder
           end
         else
           steps.each do |step_name|
-            inject_into_file locales_file, after: "#{onboarder_name.underscore}:\n" do <<-STRING
+            inject_into_file locales_file, before: "      step_navigations:" do <<-STRING
       #{step_name.underscore}:
         header:
           message: 'Replace me at config/locales/view/onboarding/#{onboarder_name.underscore}'
@@ -125,7 +125,7 @@ module NfgOnboarder
 
       def add_step_navigations
         steps.each do |step_name|
-          inject_into_file locales_file, after: "step_navigations:\n" do
+          inject_into_file locales_file, before: "# end of file" do
         "    #{step_name.underscore}:\n"
           end
         end
