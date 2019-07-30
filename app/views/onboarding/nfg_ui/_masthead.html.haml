@@ -1,9 +1,12 @@
 - show_exit_button = true if local_assigns[:show_exit_button].nil?
+- render_title = true if local_assigns[:render_title].nil?
 
 .p-2.bg-dark
   .row.align-items-center.justify-content-between
     .col.pl-3
+      = ui.nfg :typeface, title: t('onboarding.quickbooks_online_setup.title_bar.title'), class: 'text-white', render_if: render_title
       = ui.nfg :typeface, :muted, caption: t('onboarding.quickbooks_online_setup.title_bar.caption'), class: 'mb-0'
+
 
     - if show_exit_button
       .col-auto.py-1
