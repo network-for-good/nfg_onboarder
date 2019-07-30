@@ -1,0 +1,15 @@
+- show_exit_button = true if local_assigns[:show_exit_button].nil?
+
+.p-2.bg-dark
+  .row.align-items-center.justify-content-between
+    .col.pl-3
+      = ui.nfg :typeface, :muted, caption: t('onboarding.quickbooks_online_setup.title_bar.caption'), class: 'mb-0'
+
+    - if show_exit_button
+      .col-auto.py-1
+
+        - if first_step
+          = ui.nfg :button, :link, href: integrations_quickbooks_path, body: t('onboarding.quickbooks_online_setup.title_bar.buttons.exit'), class: 'text-light'
+
+        - else
+          = ui.nfg :button, :link, href: '#', id: 'save_and_exit', body: t('onboarding.quickbooks_online_setup.title_bar.buttons.save_and_exit'), class: 'text-light'
