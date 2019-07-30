@@ -45,5 +45,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'wicked'
   spec.add_dependency 'decent_exposure'
   spec.add_dependency 'haml'
-
+  spec.add_dependency 'nfg_ui', '~> 0.9'
 end
