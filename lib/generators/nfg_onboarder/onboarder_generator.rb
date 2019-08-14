@@ -15,7 +15,7 @@ module NfgOnboarder
 
       def add_steps_to_controller
         inject_into_file controller, after: "def self.step_list\n" do <<-STRING
-    %i[#{ steps_to_symbols }]
+    %i[#{ steps.join(" ") }]
         STRING
         end
       end
@@ -225,10 +225,6 @@ module NfgOnboarder
 
       def onboarder_and_group_name_split
         onboarder_and_group_name.split("::")
-      end
-
-      def steps_to_symbols
-        steps.map { |step_name| ":#{ step_name.underscore }" }.join(", ")
       end
 
       # def add_step_to_controller
