@@ -12,7 +12,7 @@
 .p-3.bg-white.border-bottom
   .row.align-items-center.justify-content-between
     .col-12.col-lg-8.py-1.mx-auto.order-lg-2
-      = ui.nfg :steps, render_if: presenter.show_nav? do
+      = ui.nfg :steps, describe: 'nav-steps', render_if: presenter.show_nav? do
         - controller.wizard_steps.each_with_index do |step, i|
           - i += 1
           = ui.nfg :step, presenter.step_status(step), step: i, href: presenter.href(step, path: wizard_path(step)), describe: "#{step}-step", icon: presenter.step_icon(step) do
