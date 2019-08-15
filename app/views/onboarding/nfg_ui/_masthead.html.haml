@@ -1,18 +1,18 @@
 - show_exit_button = true if local_assigns[:show_exit_button].nil?
 - render_title = true if local_assigns[:render_title].nil?
+- exit_path = 'javascript:;' if local_assigns[:exit_path].nil?
 
 .p-2.bg-dark
   .row.align-items-center.justify-content-between
     .col.pl-3
-      = ui.nfg :typeface, title: t('onboarding.quickbooks_online_setup.title_bar.title'), class: 'text-white', render_if: render_title
-      = ui.nfg :typeface, :muted, caption: t('onboarding.quickbooks_online_setup.title_bar.caption'), class: 'mb-0'
-
+      = ui.nfg :typeface, title: t('title_bar.title', scope: locale_namespace), class: 'text-white', render_if: render_title
+      = ui.nfg :typeface, :muted, caption: t('title_bar.caption', scope: locale_namespace), class: 'mb-0'
 
     - if show_exit_button
       .col-auto.py-1
 
         - if first_step
-          = ui.nfg :button, :link, href: integrations_quickbooks_path, body: t('onboarding.quickbooks_online_setup.title_bar.buttons.exit'), class: 'text-light'
+          = ui.nfg :button, :link, href: exit_path, body: t('title_bar.buttons.exit', scope: locale_namespace), class: 'text-light'
 
         - else
-          = ui.nfg :button, :link, href: '#', id: 'save_and_exit', body: t('onboarding.quickbooks_online_setup.title_bar.buttons.save_and_exit'), class: 'text-light'
+          = ui.nfg :button, :link, href: exit_path, id: 'save_and_exit', body: t('title_bar.buttons.save_and_exit', scope: locale_namespace), class: 'text-light'

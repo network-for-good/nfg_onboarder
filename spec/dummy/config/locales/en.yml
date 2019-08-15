@@ -20,4 +20,15 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  onboarding:
+    defaults:
+      button: &default_buttons
+        back: 'Prev'
+        submit: 'Next'
+    sample_onboarder:
+      title_bar:
+        title: 'Test Title'
+        caption: 'Test Caption'
+        buttons:
+          save_and_exit: 'Save & Exit'
+          exit: 'Exit'
