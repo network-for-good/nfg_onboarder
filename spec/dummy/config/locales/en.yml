@@ -32,3 +32,39 @@ en:
         buttons:
           save_and_exit: 'Save & Exit'
           exit: 'Exit'
+      first:
+        header:
+          message: 'First step'
+          form: ''
+          page:
+        button:
+          <<: *default_buttons
+        label:
+        placeholder:
+        hint:
+        guidance:
+          modal:
+      second:
+        header:
+          message: 'First step'
+          form: ''
+          page:
+        button:
+          <<: *default_buttons
+        label:
+        placeholder:
+        hint:
+        guidance:
+          modal:
+      last:
+        header:
+          message: 'First step'
+          form: ''
+          page:
+        button:
+          <<: *default_buttons
+        label:
+        placeholder:
+        hint:
+        guidance:
+          modal:

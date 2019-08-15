@@ -1,7 +1,6 @@
 module NfgOnboarder
   # Ex usage on a view: NfgOnboarder::NavigationBarPresenter.new(onboarding_session, self)
   class HighLevelNavigationBarPresenter < NfgOnboarder::GemPresenter
-
     # Returns an nfg_ui friendly status for the :step component's status trait
     #
     # Example usage:
@@ -18,10 +17,6 @@ module NfgOnboarder
       step == all_steps.last ? 'check' : nil
     end
 
-    def show_step?(step)
-      true
-    end
-
     # Ensure that the href is nil (thus supporting accessibility via the nfg_ui Step)
     # when the step is disabled / unclickable
     # or on the last step, all links should have a nil :href
@@ -29,8 +24,12 @@ module NfgOnboarder
       h.before_last_visited_point_of_no_return?(step) ? nil : path
     end
 
+    # set this to false on your own presenter if you would like to hide
+    # the nav, for example to hide on the first step:
+    #
+    # active_step.to_sym != first_step
     def show_nav?
-      active_step.to_sym != first_step
+      true
     end
 
     def points_of_no_return
