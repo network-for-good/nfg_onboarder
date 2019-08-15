@@ -133,7 +133,10 @@ module NfgOnboarder
       end
 
       def get_form_object
-        if (Object.const_get(get_form_object_name) rescue false)
+        # here we are trying two different ways to check whether there is a form defined for this step
+        # Object.const_get seems to be failing sometimes when constantize works. But it is not clear why
+        # so we try both, rescuing if an error is raised.
+        if (Object.const_get(get_form_object_name) rescue false) || (get_form_object_name.constantize rescue false)
           get_form_object_name.constantize.new(get_form_target)
         else
           #supply a dummy form
@@ -142,7 +145,7 @@ module NfgOnboarder
       end
 
       def get_form_object_name
-        "#{self.class.name.gsub('Controller', '')}::#{step.to_s.camelize}Form"
+        "::#{self.class.name.gsub('Controller', '')}::#{step.to_s.camelize}Form"
       end
 
       def get_onboarding_admin
