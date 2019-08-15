@@ -12,7 +12,7 @@
       .col-auto.py-1
 
         - if first_step
-          = ui.nfg :button, :link, href: exit_path, body: t('title_bar.buttons.exit', scope: locale_namespace), class: 'text-light'
+          = ui.nfg :button, :link, href: exit_path, body: t('title_bar.buttons.exit', scope: locale_namespace), class: 'text-light', id: 'exit_button'
 
         - else
           = ui.nfg :button, :link, href: exit_path, id: 'save_and_exit', body: t('title_bar.buttons.save_and_exit', scope: locale_namespace), class: 'text-light'

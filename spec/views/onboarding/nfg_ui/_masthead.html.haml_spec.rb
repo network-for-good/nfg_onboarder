@@ -35,4 +35,68 @@ RSpec.describe 'onboarding/nfg_ui/_masthead.html.haml', type: :view do
       end
     end
   end
+
+  describe 'the caption' do
+    it 'shows the caption' do
+      expect(subject).to have_css "p", text: I18n.t('onboarding.sample_onboarder.title_bar.caption')
+    end
+  end
+
+  describe 'the exit button' do
+    context 'when show_exit_button is true via local_assigns variables' do
+      let(:show_exit_button) { true }
+
+      context 'when first_step is true' do
+        let(:first_step) { true }
+        it 'renders the first step appropriate exit button' do
+          expect(subject).to have_css '#exit_button', text: I18n.t('title_bar.buttons.exit', scope: locale_namespace)
+
+          and_it 'does not render the second+ step button' do
+            expect(subject).not_to have_css '#save_and_exit'
+          end
+        end
+      end
+
+      context 'when first_step is false' do
+        let(:first_step) { false }
+        it 'renders the appropriate button' do
+          expect(subject).to have_css '#save_and_exit'
+
+          and_it 'does not render the first step button' do
+            expect(subject).not_to have_css '#exit_button'
+          end
+        end
+      end
+
+      context 'and when the exit_path is present in locals' do
+        let(:exit_path) { '/test_exit_path' }
+        it 'uses the local assigned exit path as the href' do
+          expect(subject).to have_css "[id*='exit'][href='#{exit_path}']"
+        end
+      end
+
+      context 'and when the exit_path is nil in locals' do
+        let(:exit_path) { nil }
+        it 'uses the fallback href' do
+          expect(subject).to have_css "[id*='exit'][href='javascript:;']"
+        end
+      end
+    end
+
+    context 'when show_exit_button is false via local_assigns variables' do
+      let(:show_exit_button) { false }
+
+      it 'does not render an exit button' do
+        expect(subject).not_to have_css '#save_and_exit'
+        expect(subject).not_to have_css '#exit_button'
+      end
+    end
+
+    context 'when show_exit_button is nil in local_assigns variables' do
+      let(:show_exit_button) { nil }
+      it 'defaults to true' do
+        expect(subject).to have_css '#save_and_exit'
+      end
+    end
+  end
 end
