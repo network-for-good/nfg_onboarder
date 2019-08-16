@@ -20,6 +20,6 @@
     .col-6.col-lg.pt-2.pt-lg-0.order-lg-1
       = ui.nfg :button, :secondary, :outlined, href: previous_wizard_path, body: back_button_text.html_safe, left_icon: 'arrow-left', disable_with: ui.nfg(:icon, :loader), render_unless: (first_step or controller.single_use_steps.include?(controller.previous_step) or at_point_of_no_return?)
     .col-6.col-lg.pt-2.pt-lg-0.text-right.order-lg-3
-      = ui.nfg :button, traits: [:submit, (:disabled if disable_next_button)], body: submit_button_text.html_safe, icon: 'arrow-right', confirm: next_step_confirmation, disable_with: ui.nfg(:icon, :loader)
+      = ui.nfg :button, *[:submit, (:disabled if disable_next_button)], body: submit_button_text.html_safe, icon: 'arrow-right', confirm: next_step_confirmation, disable_with: ui.nfg(:icon, :loader)
 
 
