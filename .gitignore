@@ -10,3 +10,4 @@ spec/dummy/log/
 spec/dummy/db/*.sqlite3
 .idea/
 .idea/*
+spec/dummy/tmp

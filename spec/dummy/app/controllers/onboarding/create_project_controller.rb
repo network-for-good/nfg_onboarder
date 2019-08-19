@@ -59,6 +59,12 @@ class Onboarding::CreateProjectController < NfgOnboarder::BaseController
   end
 
   def get_onboarding_session
+    # we have to find the onboarding session first from the user session, if we can't find it then we need to look at the params
+    # if still can't find it then we create a new onboarding session
+    onboarding_sess = nil
+    onboarding_sess = ::Onboarding::Session.find_by(id: session[:onboarding_session_id]) if session[:onboarding_session_id]
+    onboarding_sess ||= new_onboarding_session
+    onboarding_sess.tap { |os| session[:onboarding_session_id] = os.id }
     # Use the following as an example of how an onboarding session would be either retrieved or instantiated
     # We call new rather than create because we don't want the onboarding session
     # to be saved if the user does not continue past the first step.
@@ -73,5 +79,23 @@ class Onboarding::CreateProjectController < NfgOnboarder::BaseController
       related_objects: {} ,# a hash containing the whatever object will be saved first, i.e. { project: get_project },
       name: onboarder_name
     }
+  end
+
+  def new_onboarding_session
+    ::Onboarding::Session.create(onboarding_session_parameters)
+  end
+
+  def onboarding_session_parameters
+    {
+      entity: nil,# supply the parent object to the onboarding session
+      owner: nil,
+      current_step: "project_name",  #typically the first step
+      related_objects: {} ,# a hash containing the whatever object will be saved first, i.e. { project: get_project },
+      name: onboarder_name
+    }
+  end
+
+  def onboarder_name
+    "project_onboarder"
   end
 end

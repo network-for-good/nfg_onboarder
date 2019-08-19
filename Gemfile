@@ -17,3 +17,6 @@ gem 'bundler', '~> 1.14'
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
+group :development do
+  gem 'reform-rails'
+end
