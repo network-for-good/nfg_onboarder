@@ -20,6 +20,8 @@ module NfgOnboarder
       expose(:last_step) { steps.last == step }
       expose(:locale_namespace) { self.class.name.underscore.gsub('_controller', '').split('/') }
       expose(:form_params) { params.fetch("#{field_prefix}_#{step}", {}).permit! }
+      expose(:exit_without_saving?) { exit_without_save_steps.include?(onboarding_session.current_step) }
+      expose(:exit_with_saving?) { exit_with_save_steps.include?(onboarding_session.current_step) }
 
       def show
         on_before_show
@@ -27,11 +29,13 @@ module NfgOnboarder
       end
 
       def update
+        redirect_to finish_wizard_path and return if exit_without_saving? && exit?
         if form.validate(form_params)
           on_before_save
           form.save
           on_valid_step
           process_on_last_step if last_step
+          redirect_to finish_wizard_path and return if exit_with_saving? && exit?
         else
           on_invalid_step
         end
@@ -43,6 +47,14 @@ module NfgOnboarder
       end
 
       def points_of_no_return
+        []
+      end
+
+      def exit_without_save_steps
+        []
+      end
+
+      def exit_with_save_steps
         []
       end
 
@@ -246,6 +258,10 @@ module NfgOnboarder
         else
           nil
         end
+      end
+
+      def exit?
+        params[:exit]
       end
     end
   end

@@ -1,7 +1,7 @@
 - show_exit_button = true if local_assigns[:show_exit_button].nil?
 - render_title = true if local_assigns[:render_title].nil?
 - exit_path = 'javascript:;' if local_assigns[:exit_path].nil?
-
+- exit_without_saving = true if local_assigns[:exit_without_saving]
 .p-2.bg-dark
   .row.align-items-center.justify-content-between
     .col.pl-3
@@ -10,9 +10,8 @@
 
     - if show_exit_button
       .col-auto.py-1
-
-        - if first_step
-          = ui.nfg :button, :link, href: exit_path, body: t('title_bar.buttons.exit', scope: locale_namespace), class: 'text-light', id: 'exit_button'
+        - if first_step || exit_without_saving
+          = ui.nfg :button, :link, href: exit_path, body: t('title_bar.buttons.exit', scope: locale_namespace), onclick: 'NfgOnboarder.submitOnboardingExitForm()', class: 'text-light', id: 'exit_button'
 
         - else
-          = ui.nfg :button, :link, href: exit_path, id: 'save_and_exit', body: t('title_bar.buttons.save_and_exit', scope: locale_namespace), class: 'text-light'
+          = ui.nfg :button, :link, href: exit_path, id: 'save_and_exit',  body: t('title_bar.buttons.save_and_exit', scope: locale_namespace), onclick: 'NfgOnboarder.submitOnboardingExitForm()', class: 'text-light'
