@@ -9,6 +9,7 @@ if(typeof NfgOnboarder == 'undefined') { // this checks for null and undefined
       });
       this.link.on('click', e => {
         NfgOnboarder.submitOnboardingForm(this.form);
+        return false
       });
     }
   };
@@ -17,7 +18,6 @@ if(typeof NfgOnboarder == 'undefined') { // this checks for null and undefined
     const action = form.attr("action");
     form.attr("action", action + "?exit=true");
     form.submit();
-    return false;
   };
 
   NfgOnboarder.submitOnboardingExitForm = function () {
