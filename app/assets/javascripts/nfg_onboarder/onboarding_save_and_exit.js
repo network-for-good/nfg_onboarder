@@ -1,18 +1,5 @@
 if(typeof NfgOnboarder == 'undefined') { // this checks for null and undefined
   window.NfgOnboarder = {};
-  NfgOnboarder.OnboardingSaveAndExit = class OnboardingSaveAndExit {
-    constructor(link) {
-      this.link = link;
-      this.form = $('form#onboarding_main_form');
-      this.form.on('submit', e => {
-        this.link.addClass('disabled');
-      });
-      this.link.on('click', e => {
-        NfgOnboarder.submitOnboardingForm(this.form);
-        return false
-      });
-    }
-  };
 
   NfgOnboarder.submitOnboardingForm = function (form) {
     const action = form.attr("action");
@@ -24,12 +11,4 @@ if(typeof NfgOnboarder == 'undefined') { // this checks for null and undefined
     let form = $('form#onboarding_main_form');
     NfgOnboarder.submitOnboardingForm(form)
   };
-
-  $(document).on('ready', function () {
-    let link = $('body.onboarding-email_creator, body.onboarding-mailing_creator').find('#save_and_exit');
-    if (!link.length) {
-      return;
-    }
-    new NfgOnboarder.OnboardingSaveAndExit(link);
-  });
 }
