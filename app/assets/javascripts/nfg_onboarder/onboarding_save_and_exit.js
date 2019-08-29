@@ -25,7 +25,7 @@ if(typeof NfgOnboarder == 'undefined') { // this checks for null and undefined
     NfgOnboarder.submitOnboardingForm(form)
   };
 
-  $(document).on('turbolinks:load', function () {
+  $(document).on('ready', function () {
     let link = $('body.onboarding-email_creator, body.onboarding-mailing_creator').find('#save_and_exit');
     if (!link.length) {
       return;
