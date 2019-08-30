@@ -20,6 +20,7 @@ module NfgOnboarder
       expose(:last_step) { steps.last == step }
       expose(:locale_namespace) { self.class.name.underscore.gsub('_controller', '').split('/') }
       expose(:form_params) { params.fetch("#{field_prefix}_#{step}", {}).permit! }
+      expose(:finish_wizard_params) { params.merge(import_id: import&.id).select { |key| %w[import_id alternative_finish_wizard_path].include?(key) }.permit! }
 
       def show
         on_before_show
@@ -35,7 +36,7 @@ module NfgOnboarder
         else
           on_invalid_step
         end
-        render_wizard unless performed?
+        render_wizard(nil, {}, finish_wizard_params) unless performed?
       end
 
       def single_use_steps
