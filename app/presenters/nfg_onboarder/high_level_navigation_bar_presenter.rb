@@ -1,5 +1,5 @@
 module NfgOnboarder
-  # Ex usage on a view: NfgOnboarder::NavigationBarPresenter.new(onboarding_session, self)
+  # Ex usage on a view: NfgOnboarder::HighLevelNavigationBarPresenter.new(onboarding_session, self)
   class HighLevelNavigationBarPresenter < NfgOnboarder::GemPresenter
     # Returns an nfg_ui friendly status for the :step component's status trait
     #
