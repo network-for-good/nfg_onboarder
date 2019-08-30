@@ -21,6 +21,8 @@ module NfgOnboarder
       expose(:locale_namespace) { self.class.name.underscore.gsub('_controller', '').split('/') }
       expose(:form_params) { params.fetch("#{field_prefix}_#{step}", {}).permit! }
       expose(:finish_wizard_params) { params.merge(import_id: import&.id).select { |key| %w[import_id alternative_finish_wizard_path].include?(key) }.permit! }
+      expose(:exit_without_saving?) { exit_without_save_steps.include?(onboarding_session.current_step) }
+      expose(:exit_with_saving?) { exit_with_save_steps.include?(onboarding_session.current_step) }
 
       def show
         on_before_show
@@ -28,11 +30,13 @@ module NfgOnboarder
       end
 
       def update
+        redirect_to finish_wizard_path and return if exit_without_saving? && exit?
         if form.validate(form_params)
           on_before_save
           form.save
           on_valid_step
           process_on_last_step if last_step
+          redirect_to finish_wizard_path and return if exit_with_saving? && exit?
         else
           on_invalid_step
         end
@@ -44,6 +48,14 @@ module NfgOnboarder
       end
 
       def points_of_no_return
+        []
+      end
+
+      def exit_without_save_steps
+        []
+      end
+
+      def exit_with_save_steps
         []
       end
 
@@ -134,7 +146,10 @@ module NfgOnboarder
       end
 
       def get_form_object
-        if (Object.const_get(get_form_object_name) rescue false)
+        # here we are trying two different ways to check whether there is a form defined for this step
+        # Object.const_get seems to be failing sometimes when constantize works. But it is not clear why
+        # so we try both, rescuing if an error is raised.
+        if (Object.const_get(get_form_object_name) rescue false) || (get_form_object_name.constantize rescue false)
           get_form_object_name.constantize.new(get_form_target)
         else
           #supply a dummy form
@@ -143,7 +158,7 @@ module NfgOnboarder
       end
 
       def get_form_object_name
-        "#{self.class.name.gsub('Controller', '')}::#{step.to_s.camelize}Form"
+        "::#{self.class.name.gsub('Controller', '')}::#{step.to_s.camelize}Form"
       end
 
       def get_onboarding_admin
@@ -244,6 +259,10 @@ module NfgOnboarder
         else
           nil
         end
+      end
+
+      def exit?
+        params[:exit]
       end
     end
   end

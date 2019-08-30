@@ -65,7 +65,7 @@ class Onboarding::CreateCampaign::RecruitFundraisersController < Onboarding::Cre
     {
       entity: nil,# supply the parent object to the onboarding session
       user: onboarding_admin,
-      current_step: ,  #typically the first step
+      current_step: 'initial_setup',  #typically the first step
       related_objects: {} ,# a hash containing the whatever object will be saved first, i.e. { project: get_project },
       name: onboarder_name
     }

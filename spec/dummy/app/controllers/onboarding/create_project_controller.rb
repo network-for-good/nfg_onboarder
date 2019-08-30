@@ -1,4 +1,4 @@
-class Onboarding::CreateProjectController < Onboarding::BaseController
+class Onboarding::CreateProjectController < NfgOnboarder::BaseController
 
   # steps list
   steps :project_name, :project_description
@@ -6,6 +6,10 @@ class Onboarding::CreateProjectController < Onboarding::BaseController
   expose(:onboarding_group_steps) { [] } # this should be removed if you are using a group step controller as a parent of this controller
 
   private
+
+  def get_onboarding_admin
+    defined?(current_admin) ? current_admin : OpenStruct.new(id: 999, first_name: 'Any', last_name: 'User', email: 'any@user.com', primary_key: 'id')
+  end
 
   # on before save steps
   def project_description_on_before_save
@@ -65,7 +69,7 @@ class Onboarding::CreateProjectController < Onboarding::BaseController
     {
       entity: nil,# supply the parent object to the onboarding session
       user: onboarding_admin,
-      current_step: ,  #typically the first step
+      current_step: 'project_name',  #typically the first step
       related_objects: {} ,# a hash containing the whatever object will be saved first, i.e. { project: get_project },
       name: onboarder_name
     }
