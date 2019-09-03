@@ -5,6 +5,14 @@ class Onboarding::<%= combined_onboarder_name %>Controller < <%= inherited_contr
   def self.step_list
   end
 
+  def exit_without_save_steps
+    []
+  end
+
+  def exit_with_save_steps
+    []
+  end
+
   # steps list
   steps *step_list
 
