@@ -8,7 +8,7 @@ describe FakesController do
   let(:form) { double('form', model: model, build_errors: nil, validate: true, save: nil) }
   let(:model) { double('model', name: '', persisted?: true, onboarding_sessions: onboarding_sessions) }
   let(:onboarding_session) { FactoryBot.create(:onboarding_session, step_data: {}, onboarder_progress: {}, current_high_level_step: nil, current_step: nil, owner: nil, completed_high_level_steps: nil) }
-  let(:params) { double('params', fetch: double('fetch', permit!: true)) }
+  let(:params) { double('params', fetch: double('fetch', permit!: true), select: double('select', permit!: nil)) }
   let(:onboarding_sessions) { double('onboarding_sessions', is_a?: activerecord_proxy) }
   let(:activerecord_proxy) { true }
 
