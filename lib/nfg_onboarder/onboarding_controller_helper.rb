@@ -35,7 +35,7 @@ module NfgOnboarder
           form.save
           on_valid_step
           process_on_last_step if last_step
-          redirect_to finish_wizard_path and return if exit_with_saving? && exit?
+          redirect_to finish_wizard_path and return if exit? && (exit_with_saving? || (!exit_without_saving? && !exit_with_saving?))
         else
           on_invalid_step
         end
