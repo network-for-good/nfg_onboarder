@@ -35,7 +35,10 @@ module NfgOnboarder
           form.save
           on_valid_step
           process_on_last_step if last_step
-          redirect_to finish_wizard_path and return if exit? && (exit_with_saving? || (!exit_without_saving? && !exit_with_saving?))
+          # Exit if onboarder needs to exit and the current step is included in exit_with_save_steps
+          # Also if onboarder needs to exit and the current step is not included in exit_with_save_steps or exit_without_save_steps
+          # then we should also exit after saving instead of not saving, just to make sure no changes are lost
+          redirect_to finish_wizard_path and return if exit? && (exit_with_saving? || !(exit_without_saving? && exit_with_saving?))
         else
           on_invalid_step
         end
@@ -50,10 +53,12 @@ module NfgOnboarder
         []
       end
 
+      # this specifies steps that should exit before saving the current step when exiting the onboarder
       def exit_without_save_steps
         []
       end
 
+      # this specifies steps that should exit after saving the current step when exiting the onboarder
       def exit_with_save_steps
         []
       end
