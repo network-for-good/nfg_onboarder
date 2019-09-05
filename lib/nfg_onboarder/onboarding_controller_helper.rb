@@ -34,7 +34,9 @@ module NfgOnboarder
           form.save
           on_valid_step
           process_on_last_step if last_step
-          redirect_to finish_wizard_path and return if exit?
+          # redirect if exit hasn't happened already
+          # exit can sometimes happen in onboarders where on_valid_method is overriden to redirect
+          redirect_to finish_wizard_path and return if exit? && !performed?
         else
           on_invalid_step
         end
