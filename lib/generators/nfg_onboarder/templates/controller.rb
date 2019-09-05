@@ -5,6 +5,14 @@ class Onboarding::<%= combined_onboarder_name %>Controller < <%= inherited_contr
   def self.step_list
   end
 
+  # if a step is included in exit_without_save_steps, it will exit onboarder without saving.
+  # it will also show 'exit' button instead of 'save and exit'
+  # otherwise it will save and exit
+
+  def exit_without_save_steps
+    []
+  end
+
   # steps list
   steps *step_list
 

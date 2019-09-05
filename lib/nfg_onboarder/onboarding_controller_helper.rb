@@ -21,7 +21,6 @@ module NfgOnboarder
       expose(:locale_namespace) { self.class.name.underscore.gsub('_controller', '').split('/') }
       expose(:form_params) { params.fetch("#{field_prefix}_#{step}", {}).permit! }
       expose(:exit_without_saving?) { exit_without_save_steps.include?(onboarding_session.current_step) }
-      expose(:exit_with_saving?) { exit_with_save_steps.include?(onboarding_session.current_step) }
       expose(:finish_wizard_params) { params.select { |key| %w[alternative_finish_wizard_path].include?(key) }.permit! }
 
       def show
@@ -36,7 +35,9 @@ module NfgOnboarder
           form.save
           on_valid_step
           process_on_last_step if last_step
-          redirect_to finish_wizard_path and return if exit_with_saving? && exit?
+          # redirect if exit hasn't happened already
+          # exit can sometimes happen in onboarders where on_valid_method is overriden to redirect
+          redirect_to finish_wizard_path and return if exit? && !performed?
         else
           on_invalid_step
         end
@@ -51,11 +52,8 @@ module NfgOnboarder
         []
       end
 
+      # this specifies steps that should exit before saving the current step when exiting the onboarder
       def exit_without_save_steps
-        []
-      end
-
-      def exit_with_save_steps
         []
       end
 
