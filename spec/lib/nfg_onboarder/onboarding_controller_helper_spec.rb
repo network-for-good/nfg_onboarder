@@ -57,21 +57,6 @@ describe FakesController do
         end
 
         context 'when the step requires saving' do
-          before { allow_any_instance_of(FakesController).to receive(:exit_with_save_steps).and_return([step]) }
-
-          it 'should set the owner' do
-            expect(onboarding_session).to receive(:owner=).with(model)
-            expect(onboarding_session).to receive(:save)
-            subject.update
-          end
-        end
-
-        context 'when the step neither requires saving nor not-saving' do
-          before do
-            allow_any_instance_of(FakesController).to receive(:exit_with_save_steps).and_return([])
-            allow_any_instance_of(FakesController).to receive(:exit_without_save_steps).and_return([])
-          end
-
           it 'should set the owner' do
             expect(onboarding_session).to receive(:owner=).with(model)
             expect(onboarding_session).to receive(:save)
