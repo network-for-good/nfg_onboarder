@@ -20,7 +20,9 @@ module NfgOnboarder
       expose(:last_step) { steps.last == step }
       expose(:locale_namespace) { self.class.name.underscore.gsub('_controller', '').split('/') }
       expose(:form_params) { params.fetch("#{field_prefix}_#{step}", {}).permit! }
-      expose(:finish_wizard_params) { params.select { |key| %w[alternative_finish_wizard_path].include?(key) }.permit! }
+
+      # This gets prepended to a value of a route.  finished_wizard_path then redirects to this route
+      ALT_FINISH_PATH_PREPEND_KEY = 'alternative_finished_wizard_path'
 
       def show
         on_before_show
@@ -245,6 +247,17 @@ module NfgOnboarder
           nil
         end
       end
+
+      def finish_wizard_params
+        # This allows a button to route to a specific path.  This path is appended to the ALT_FINISH_PATH_PREPEND_KEY
+        return {} unless last_step
+        finished_wizard_param = params.keys.select { |key| key.include?(ALT_FINISH_PATH_PREPEND_KEY) }.first # check if params include alternative finish path
+        return {} if finished_wizard_param.nil?
+        finished_wizard_url = finished_wizard_param&.remove("#{ALT_FINISH_PATH_PREPEND_KEY}_") # retrieve the alternative path
+        params.merge!({ ALT_FINISH_PATH_PREPEND_KEY => finished_wizard_url })
+        params.select { |key| key == ALT_FINISH_PATH_PREPEND_KEY }.permit!
+      end
+
     end
   end
 end
