@@ -21,6 +21,7 @@ module NfgOnboarder
       true
     end
 
+    # Returns a check mark for the last step's icon
     def step_icon(step)
       step == all_steps.last ? 'check' : nil
     end
