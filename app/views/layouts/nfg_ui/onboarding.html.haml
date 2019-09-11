@@ -11,4 +11,6 @@
   %body{ class: "#{controller_path.gsub('/', '-')} #{try(:step).try(:to_s)}" }
 
     = yield
+
+    = javascript_include_tag 'https://www.google.com/jsapi'
     = yield :before_closing_body
