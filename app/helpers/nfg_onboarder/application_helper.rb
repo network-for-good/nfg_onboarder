@@ -18,6 +18,21 @@ module NfgOnboarder
       calculate_onboarding_nav_status(nav_step, controller.wizard_steps, controller.step)
     end
 
+    # Provide a fallback page title based on the name
+    # provided for the onboarder.
+    #
+    # Or manually set your own page title by adding a page_title entry to your onboarder yml file:
+    #
+    # Example on the generated onboarder yml file:
+    #
+    # en:
+    #   onboarding:
+    #     the_onboarder_name:
+    #       page_title: 'Custom Page Title in Host App'
+    def onboarder_page_title
+      "#{I18n.t('page_title', scope: locale_namespace, default: onboarding_session.name.to_s.humanize.titleize)} - #{step.to_s.humanize.titleize}"
+    end
+
     def onboarding_nav_classes
       { success: 'text-success',
         active: 'active',
