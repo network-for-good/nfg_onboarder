@@ -2,11 +2,13 @@
 - render_title = true if local_assigns[:render_title].nil?
 - exit_path = 'javascript:;' if local_assigns[:exit_path].nil?
 - exit_without_saving = true if local_assigns[:exit_without_saving]
+- presenter = NfgOnboarder::MastheadPresenter.new(onboarding_session, self) if local_assigns[:presenter].nil?
+
 .p-2.bg-dark
   .row.align-items-center.justify-content-between
     .col.pl-3
-      = ui.nfg :typeface, title: t('title_bar.title', scope: locale_namespace), class: 'text-white', render_if: render_title
-      = ui.nfg :typeface, :muted, caption: t('title_bar.caption', scope: locale_namespace), class: 'mb-0'
+      = ui.nfg :typeface, title: presenter.title_bar_title, class: 'text-white', render_if: render_title
+      = ui.nfg :typeface, :muted, caption: presenter.title_bar_caption, class: 'mb-0'
 
     - if show_exit_button
       .col-auto.py-1
