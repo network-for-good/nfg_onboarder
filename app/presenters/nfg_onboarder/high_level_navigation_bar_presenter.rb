@@ -1,6 +1,6 @@
 module NfgOnboarder
   # Ex usage on a view: NfgOnboarder::HighLevelNavigationBarPresenter.new(onboarding_session, self)
-  class HighLevelNavigationBarPresenter < NfgOnboarder::GemPresenter
+  class HighLevelNavigationBarPresenter < NfgOnboarder::OnboarderPresenter
     # Ensure that the href is nil (thus supporting accessibility via the nfg_ui Step)
     # when the step is disabled / unclickable
     # or on the last step, all links should have a nil :href

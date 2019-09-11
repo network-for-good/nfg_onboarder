@@ -23,7 +23,7 @@ module NfgOnboarder
     #
     # Or manually set your own page title by adding a page_title entry to your onboarder yml file:
     #
-    # Example on the generated onboarder yml file:
+    # Example on the generated onboarder yml file within the host app:
     #
     # en:
     #   onboarding:
