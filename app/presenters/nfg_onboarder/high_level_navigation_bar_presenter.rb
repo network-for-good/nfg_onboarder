@@ -12,15 +12,6 @@ module NfgOnboarder
       @points_of_no_return ||= h.controller.send(:points_of_no_return)
     end
 
-    # Manually turn the steps navigation off under some condition of your choosing
-    def show_nav?
-      # set this to false on your own presenter if you would like to hide
-      # the nav, for example to hide on the first step:
-      #
-      # active_step.to_sym != first_step
-      true
-    end
-
     # Returns a check mark for the last step's icon
     def step_icon(step)
       step == all_steps.last ? 'check' : nil

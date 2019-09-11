@@ -49,13 +49,6 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
     end
   end
 
-  describe '#show_nav?' do
-    subject { high_level_navigation_bar_presenter.show_nav? }
-    it 'defaults to true in the gem' do
-      expect(subject).to be
-    end
-  end
-
   describe '#step_icon(step)' do
     subject { high_level_navigation_bar_presenter.step_icon(step) }
     context 'when the step is the last step' do
