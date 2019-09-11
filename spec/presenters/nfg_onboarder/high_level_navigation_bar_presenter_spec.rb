@@ -40,16 +40,37 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
 
   describe '#points_of_no_return' do
     subject { high_level_navigation_bar_presenter.points_of_no_return }
+    let(:tested_points_of_no_return) { [current_step] }
+
+    before { allow(h.controller).to receive(:points_of_no_return).and_return(tested_points_of_no_return) }
+
+    it "provides easy access to the controller's points_of_no_return by returning the controller's points_of_no_return" do
+      expect(subject).to eq tested_points_of_no_return
+    end
   end
 
   describe '#show_nav?' do
     subject { high_level_navigation_bar_presenter.show_nav? }
-    it { is_expected.to be }
+    it 'defaults to true in the gem' do
+      expect(subject).to be
+    end
   end
 
   describe '#step_icon(step)' do
     subject { high_level_navigation_bar_presenter.step_icon(step) }
-    pending ''
+    context 'when the step is the last step' do
+      let(:step) { last_step }
+      it 'returns the icon string' do
+        expect(subject).to eq 'check'
+      end
+    end
+
+    context 'when the step is not the last step' do
+      let(:step) { first_step }
+      it 'returns nil so as to disable the icon via the component options' do
+        expect(subject).to eq nil
+      end
+    end
   end
 
   describe '#step_status(step)' do
@@ -62,12 +83,18 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
     context 'when step has been completed' do
       let(:current_step) { last_step }
       let(:step) { first_step }
-      # onboarding_session.completed_steps
-      pending 'coming soon'
+      before { allow(onboarding_session).to receive(:completed_steps).and_return([step]) }
+      it 'is determined to be visited' do
+        expect(subject).to eq :visited
+      end
     end
 
     context 'when step has not yet been visited' do
-      pending 'coming soon'
+      let(:current_step) { first_step }
+      let(:step) { last_step }
+      it 'returns a status conducive to being visited' do
+        expect(subject).to eq :disabled
+      end
     end
   end
 end

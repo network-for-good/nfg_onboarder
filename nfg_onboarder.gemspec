@@ -40,7 +40,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'shoulda-matchers', '~> 4.0.0.rc1'
   spec.add_development_dependency "capybara"
 
-
   spec.add_dependency 'rails', '~> 5.0'
   spec.add_dependency 'reform'
   spec.add_dependency 'wicked'
