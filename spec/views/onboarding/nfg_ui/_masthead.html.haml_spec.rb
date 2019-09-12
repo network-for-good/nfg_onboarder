@@ -6,11 +6,17 @@ RSpec.describe 'onboarding/nfg_ui/_masthead.html.haml', type: :view do
   let(:exit_path) { nil }
   let(:first_step) { nil }
   let(:locale_namespace) { ['onboarding', 'sample_onboarder'] }
+  let(:onboarding_session) { FactoryBot.create(:onboarding_session) }
+  let(:locale_namespace) { ['onboarding', 'sample_onboarder'] }
+  let(:h) { ActionController::Base.new.view_context }
+  let(:presenter) { NfgOnboarder::MastheadPresenter.new(onboarding_session, h) }
 
-  subject { render partial: 'onboarding/nfg_ui/masthead', locals: { show_exit_button: show_exit_button, render_title: render_title, exit_path: exit_path, locale_namespace: locale_namespace } }
+  subject { render partial: 'onboarding/nfg_ui/masthead', locals: { show_exit_button: show_exit_button, render_title: render_title, exit_path: exit_path, locale_namespace: locale_namespace, presenter: presenter } }
 
   before do
     allow(view).to receive(:first_step).and_return(first_step)
+    allow(view).to receive(:onboarding_session).and_return(onboarding_session)
+    allow(h).to receive(:locale_namespace).and_return(locale_namespace)
   end
 
   describe 'the title' do
