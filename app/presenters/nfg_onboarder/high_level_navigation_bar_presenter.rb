@@ -13,7 +13,7 @@ module NfgOnboarder
     end
 
     def render_previous_button_unless?
-      (first_step == current_step.to_sym) or h.controller.single_use_steps.include?(h.controller.previous_step) or h.at_point_of_no_return?
+      on_first_step? or h.controller.single_use_steps.include?(h.controller.previous_step) or h.at_point_of_no_return?
     end
 
     # Provide a custom locale lookup
