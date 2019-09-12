@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'reform'
 
 RSpec.describe 'onboarding/nfg_ui/_sub_layout.html.haml', type: :view do
 
@@ -18,7 +17,7 @@ RSpec.describe 'onboarding/nfg_ui/_sub_layout.html.haml', type: :view do
   # View spec setup
   let(:locale_namespace) { ['onboarding', 'sample_onboarder'] }
   let(:step) { :first }
-  let(:form) { OpenStruct.new(name: '') }
+  let(:form) { NfgOnboarder::InformationalForm.new(OpenStruct.new(name: '')) }
   let(:wizard_path) { '/test/path' }
 
   subject { render layout: 'onboarding/nfg_ui/sub_layout', locals: {
@@ -39,9 +38,7 @@ RSpec.describe 'onboarding/nfg_ui/_sub_layout.html.haml', type: :view do
      allow(view).to receive(:step).and_return(step)
      allow(view).to receive(:form).and_return(form)
      allow(view).to receive(:wizard_path).and_return(wizard_path)
-     allow(form).to receive(:errors).and_return([])
    end
 
-   pending 'spec coming soon'
-
+   pending 'coming soon -- cannot yet stub the `form` object'
 end
