@@ -22,6 +22,7 @@ RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view
   let(:wizard_path) { '/test_path' }
   let(:before_point_of_no_return) { false }
   let(:locale_namespace) { ['onboarding', 'sample_onboarder'] }
+  let(:render_previous_button_unless) { true }
 
   before do
     # Both controller stubs are required:
@@ -29,6 +30,7 @@ RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view
     allow(h.controller).to receive(:wizard_steps).and_return(steps) # necessary for presenter
 
     allow(h.controller).to receive(:params).and_return(id: current_step)
+    allow(h).to receive(:locale_namespace).and_return(locale_namespace)
     allow(view).to receive(:onboarding_session).and_return(onboarding_session)
     allow(view).to receive(:wizard_path).and_return(wizard_path)
     allow(h).to receive(:before_last_visited_point_of_no_return?).and_return(before_point_of_no_return)
@@ -36,28 +38,10 @@ RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view
     allow(view).to receive(:previous_wizard_path).and_return(wizard_path)
     allow(view).to receive(:first_step).and_return(first_step)
     allow(presenter).to receive(:completed_steps).and_return(completed_steps)
+    allow(presenter).to receive(:render_previous_button_unless?).and_return(render_previous_button_unless)
   end
 
   subject { render partial: 'onboarding/nfg_ui/high_level_navigation', locals: { next_step_confirmation: next_step_confirmation, disable_next_button: disable_next_button, back_button_text: back_button_text, submit_button_text: submit_button_text, presenter: presenter } }
-
-  describe 'rendering the steps nav' do
-    let(:show_nav) { nil }
-    before { allow(presenter).to receive(:show_nav?).and_return(show_nav) }
-
-    context 'when show_nav? is false in the presenter' do
-      let(:show_nav) { false }
-      it 'does not render the steps nav' do
-        expect(subject).not_to have_css "[data-describe='nav-steps']"
-      end
-    end
-
-    context 'when show_nav? is true in the presenter' do
-      let(:show_nav) { true }
-      it 'renders the steps nav' do
-        expect(subject).to have_css "[data-describe='nav-steps']"
-      end
-    end
-  end
 
   describe 'the steps in the step nav' do
     it 'lists a nav item for each step' do
@@ -103,6 +87,23 @@ RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view
         it 'is indicated with a checkmark' do
           expect(subject).to have_css "[data-describe='last-step'] .fa-check"
         end
+      end
+    end
+  end
+
+  describe 'the previous button' do
+    context 'when render_previous_button_unless? is true' do
+      let(:render_previous_button_unless) { true }
+      it 'renders the previous button' do
+        expect(subject).not_to have_css "[data-describe='previous-button']"
+      end
+    end
+
+    context 'when render_previous_button_unless? is false' do
+      let(:render_previous_button_unless) { false }
+
+      it 'does not render the previous button' do
+        expect(subject).to have_css "[data-describe='previous-button']"
       end
     end
   end
