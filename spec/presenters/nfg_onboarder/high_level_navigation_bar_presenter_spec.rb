@@ -8,11 +8,12 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
   let(:tested_last_step) { :last }
   let(:steps) { [tested_first_step, :second, tested_last_step] }
   let(:current_step) { tested_first_step }
+  let(:on_first_step) { current_step == tested_first_step }
 
   before do
     allow(h.controller).to receive(:params).and_return(id: current_step)
     allow(h.controller).to receive(:wizard_steps).and_return(steps)
-    allow(h).to receive(:first_step).and_return(steps.first)
+    allow(h).to receive(:first_step).and_return(on_first_step)
   end
 
   describe "#href(step, path: '')" do
