@@ -21,13 +21,14 @@ describe NfgOnboarder::OnboarderPresenter do
 
   describe '#on_first_step?' do
     subject { onboarder_presenter.on_first_step? }
-    context 'when the current step is the first step' do
-      let(:current_step) { tested_first_step }
+    before { allow(h).to receive(:first_step).and_return(on_first_step) }
+    context 'When first_step is true' do
+      let(:on_first_step) { true }
       it { is_expected.to be }
     end
 
-    context 'when the current step is not the first step' do
-      let(:current_step) { tested_last_step }
+    context 'When first_step is false' do
+      let(:on_first_step) { false }
       it { is_expected.not_to be }
     end
   end
