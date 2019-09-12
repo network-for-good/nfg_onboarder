@@ -15,7 +15,7 @@ module NfgOnboarder
     # Used for supporting whether or not to show things on the
     # first step (e.g.: the steps nav)
     def on_first_step?
-      first_step == current_step
+      first_step == active_step
     end
 
     def first_step
