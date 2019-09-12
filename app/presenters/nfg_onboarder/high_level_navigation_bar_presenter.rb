@@ -12,6 +12,18 @@ module NfgOnboarder
       @points_of_no_return ||= h.controller.send(:points_of_no_return)
     end
 
+    def render_previous_button_unless?
+      (first_step == current_step.to_sym) or h.controller.single_use_steps.include?(h.controller.previous_step) or h.at_point_of_no_return?
+    end
+
+    # Provide a custom locale lookup
+    # for the step nav body text
+    # or default to humanizing the
+    # step's symbol.
+    def step_body(step)
+      I18n.t(step, scope: h.locale_namespace + [:step_navigations], default: step.to_s.humanize)
+    end
+
     # Returns a check mark for the last step's icon
     def step_icon(step)
       step == all_steps.last ? 'check' : nil
