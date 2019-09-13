@@ -43,7 +43,5 @@ RSpec.describe 'onboarding/nfg_ui/_sub_layout.html.haml', type: :view do
      allow(view).to receive(:first_step).and_return(false)
    end
 
-  it { raise subject.inspect }
-
    pending 'coming soon -- cannot yet stub the `form` object'
 end
