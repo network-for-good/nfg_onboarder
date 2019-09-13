@@ -12,7 +12,7 @@ RSpec.describe 'onboarding/nfg_ui/_sub_layout.html.haml', type: :view do
   let(:back_button_text) { nil }
   let(:submit_button_text) { nil }
   let(:framed) { nil }
-  let(:hide_navigation_bar) { nil }
+  let(:hide_navigation_bar) { true }
 
   # View spec setup
   let(:locale_namespace) { ['onboarding', 'sample_onboarder'] }
@@ -38,7 +38,12 @@ RSpec.describe 'onboarding/nfg_ui/_sub_layout.html.haml', type: :view do
      allow(view).to receive(:step).and_return(step)
      allow(view).to receive(:form).and_return(form)
      allow(view).to receive(:wizard_path).and_return(wizard_path)
+     allow(view).to receive(:onboarding_session).and_return(nil)
+     allow(view).to receive(:exit_without_saving?).and_return(false)
+     allow(view).to receive(:first_step).and_return(false)
    end
+
+  it { raise subject.inspect }
 
    pending 'coming soon -- cannot yet stub the `form` object'
 end
