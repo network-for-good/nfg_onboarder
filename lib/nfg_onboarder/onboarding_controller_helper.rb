@@ -22,6 +22,9 @@ module NfgOnboarder
       expose(:form_params) { params.fetch("#{field_prefix}_#{step}", {}).permit! }
       expose(:exit_without_saving?) { exit_without_save_steps.include?(onboarding_session.current_step) }
 
+      # This gets prepended to a value of a route.  finished_wizard_path then redirects to this route
+      ALT_FINISH_PATH_PREPEND_KEY = 'alternative_finished_wizard_path'
+
       def show
         on_before_show
         render_wizard
@@ -40,7 +43,7 @@ module NfgOnboarder
         else
           on_invalid_step
         end
-        render_wizard unless performed?
+        render_wizard(nil, {}, finish_wizard_params) unless performed?
       end
 
       def single_use_steps
@@ -257,6 +260,19 @@ module NfgOnboarder
           nil
         end
       end
+
+      def finish_wizard_params
+        # In some cases we need to be able to return a user to different location then the default finish wizard path. We do this by placing a button on the last step of the onboarder whose name is prefixed with the ALT_FINISH_PATH_PREPEND_KEY and suffixed with the alternative path that we want the user sent to (i.e "#{ALT_FINISH_PATH_PREPEND_KEY}_#{path/to/other/destination}"). Clicking the button still takes the user through the last step (and the on_valid method related to that step), but instead of redirecting the user to the default finish wizard destination, it redirects them to the alternative path.
+        # This can only be used on the last step, as it is tied to the finish wizard path. Any number of buttons, with different paths, can be included on that last step.
+
+        return {} unless last_step
+        finished_wizard_param = params.keys.select { |key| key.include?(ALT_FINISH_PATH_PREPEND_KEY) }.first # check if params include alternative finish path
+        return {} if finished_wizard_param.nil?
+        finished_wizard_url = finished_wizard_param&.remove("#{ALT_FINISH_PATH_PREPEND_KEY}_") # retrieve the alternative path
+        params.merge!({ ALT_FINISH_PATH_PREPEND_KEY => finished_wizard_url })
+        params.select { |key| key == ALT_FINISH_PATH_PREPEND_KEY }.permit!
+      end
+
 
       def exit?
         params[:exit]
