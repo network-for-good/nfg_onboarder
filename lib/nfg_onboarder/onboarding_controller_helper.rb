@@ -22,7 +22,7 @@ module NfgOnboarder
       expose(:form_params) { params.fetch("#{field_prefix}_#{step}", {}).permit! }
 
       # This gets prepended to a value of a route.  finished_wizard_path then redirects to this route
-      ALT_FINISH_PATH_PREPEND_KEY = 'alternative_finished_wizard_path'
+      ALT_FINISH_PATH_PREPEND_KEY ||= 'alternative_finished_wizard_path'
 
       def show
         on_before_show
