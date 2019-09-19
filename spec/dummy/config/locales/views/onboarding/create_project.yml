@@ -26,4 +26,5 @@ en:
         guidance:
           modal:
       step_navigations:
+        project_description: 'Describe Project'
 

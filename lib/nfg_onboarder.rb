@@ -3,7 +3,8 @@ require 'nfg_onboarder/onboarding_controller_helper'
 require "reform"
 require 'wicked'
 require 'decent_exposure'
-
+require 'nfg_ui'
+require 'simple_form'
 
 module NfgOnboarder
 

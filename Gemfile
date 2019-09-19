@@ -8,6 +8,9 @@ gemspec
 gem 'rails', '~> 5.0'
 gem 'bundler', '~> 1.14'
 
+group :test do
+  gem 'reform-rails'
+end
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
