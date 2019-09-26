@@ -9,7 +9,7 @@
     = javascript_include_tag "nfg_onboarder/application", "data-turbolinks-track" => "reload"
     = csrf_meta_tags
   %body{ class: "#{controller_path.gsub('/', '-')} #{try(:step).try(:to_s)}" }
-
+    = yield :after_opening_body
     = yield
 
     = javascript_include_tag 'https://www.google.com/jsapi'
