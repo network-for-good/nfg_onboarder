@@ -1,28 +1,10 @@
-GIT
-  remote: https://github.com/network-for-good/nfg_ui
-  revision: b57c48febc61dc881185bff96acc8b646331faf7
-  branch: feature/DM-6369_TURBOLINKS_introduce_conversion_tracker_for_nfg_ui_conversion
-  specs:
-    nfg_ui (0.10.5)
-      autoprefixer-rails (= 9.4.9)
-      bootstrap (= 4.3.1)
-      browser (~> 2.7.1)
-      coffee-script (~> 2.4)
-      font-awesome-rails (~> 4.7)
-      inky-rb (~> 1.3.7)
-      jquery-rails (~> 4.3)
-      momentjs-rails (~> 2.11, >= 2.11.1)
-      nokogiri (>= 1.10.4)
-      rails (>= 4.2.0)
-      sass-rails (~> 5.0)
-      select2-rails (~> 4.0)
-
 PATH
   remote: .
   specs:
     nfg_onboarder (0.0.3)
       decent_exposure
       haml
+      nfg_ui (~> 0.10)
       rails (~> 5.0)
       reform
       simple_form
@@ -116,7 +98,7 @@ GEM
     factory_bot_rails (4.11.1)
       factory_bot (~> 4.11.1)
       railties (>= 3.0.0)
-    ffi (1.12.1)
+    ffi (1.11.3)
     font-awesome-rails (4.7.0.5)
       railties (>= 3.2, < 6.1)
     foundation_emails (2.2.1.0)
@@ -148,6 +130,19 @@ GEM
     minitest (5.14.0)
     momentjs-rails (2.20.1)
       railties (>= 3.1)
+    nfg_ui (0.10.4.1)
+      autoprefixer-rails (= 9.4.9)
+      bootstrap (= 4.3.1)
+      browser (~> 2.7.1)
+      coffee-script (~> 2.4)
+      font-awesome-rails (~> 4.7)
+      inky-rb (~> 1.3.7)
+      jquery-rails (~> 4.3)
+      momentjs-rails (~> 2.11, >= 2.11.1)
+      nokogiri (>= 1.10.4)
+      rails (>= 4.2.0)
+      sass-rails (~> 5.0)
+      select2-rails (~> 4.0)
     nio4r (2.5.2)
     nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
@@ -274,7 +269,6 @@ DEPENDENCIES
   capybara
   factory_bot_rails
   nfg_onboarder!
-  nfg_ui!
   rails (~> 5.0)
   rake (~> 10.0)
   reform-rails
