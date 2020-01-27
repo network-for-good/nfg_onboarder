@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/network-for-good/nfg_ui
-  revision: 43a587a5d5eecefa3705d354ad05fb5a251c7dcf
+  revision: b57c48febc61dc881185bff96acc8b646331faf7
   branch: feature/DM-6369_TURBOLINKS_introduce_conversion_tracker_for_nfg_ui_conversion
   specs:
     nfg_ui (0.10.5)
@@ -116,7 +116,7 @@ GEM
     factory_bot_rails (4.11.1)
       factory_bot (~> 4.11.1)
       railties (>= 3.0.0)
-    ffi (1.11.3)
+    ffi (1.12.1)
     font-awesome-rails (4.7.0.5)
       railties (>= 3.2, < 6.1)
     foundation_emails (2.2.1.0)
