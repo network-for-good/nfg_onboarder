@@ -1,0 +1,19 @@
+- show_exit_button = true if local_assigns[:show_exit_button].nil?
+- render_title = true if local_assigns[:render_title].nil?
+- exit_path = 'javascript:;' if local_assigns[:exit_path].nil?
+- exit_without_saving = true if local_assigns[:exit_without_saving]
+- presenter = NfgOnboarder::MastheadPresenter.new(onboarding_session, self) if local_assigns[:presenter].nil?
+
+.p-2.bg-dark
+  .row.align-items-center.justify-content-between
+    .col.pl-3
+      = ui.nfg :typeface, title: presenter.title_bar_title, class: 'text-white', render_if: render_title
+      = ui.nfg :typeface, :muted, caption: presenter.title_bar_caption, class: 'mb-0'
+
+    - if show_exit_button
+      .col-auto.py-1
+        - if first_step || exit_without_saving
+          = ui.nfg :button, :link, href: exit_path, body: t('title_bar.buttons.exit', scope: locale_namespace), onclick: 'NfgOnboarder.submitOnboardingExitForm()', class: 'text-light', id: 'exit_button'
+
+        - else
+          = ui.nfg :button, :link, href: exit_path, id: 'save_and_exit',  body: t('title_bar.buttons.save_and_exit', scope: locale_namespace), onclick: 'NfgOnboarder.submitOnboardingExitForm()', class: 'text-light'

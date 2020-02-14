@@ -20,6 +20,10 @@ module NfgOnboarder
       expose(:last_step) { steps.last == step }
       expose(:locale_namespace) { self.class.name.underscore.gsub('_controller', '').split('/') }
       expose(:form_params) { params.fetch("#{field_prefix}_#{step}", {}).permit! }
+      expose(:exit_without_saving?) { exit_without_save_steps.include?(onboarding_session.current_step) }
+
+      # This gets prepended to a value of a route.  finished_wizard_path then redirects to this route
+      ALT_FINISH_PATH_PREPEND_KEY ||= 'alternative_finished_wizard_path'
 
       def show
         on_before_show
@@ -27,15 +31,19 @@ module NfgOnboarder
       end
 
       def update
+        redirect_to finish_wizard_path and return if exit_without_saving? && exit?
         if form.validate(form_params)
           on_before_save
           form.save
           on_valid_step
           process_on_last_step if last_step
+          # redirect if exit hasn't happened already
+          # exit can sometimes happen in onboarders where on_valid_method is overriden to redirect
+          redirect_to finish_wizard_path and return if exit? && !performed?
         else
           on_invalid_step
         end
-        render_wizard unless performed?
+        render_wizard(nil, {}, finish_wizard_params) unless performed?
       end
 
       def single_use_steps
@@ -43,6 +51,11 @@ module NfgOnboarder
       end
 
       def points_of_no_return
+        []
+      end
+
+      # this specifies steps that should exit before saving the current step when exiting the onboarder
+      def exit_without_save_steps
         []
       end
 
@@ -133,7 +146,10 @@ module NfgOnboarder
       end
 
       def get_form_object
-        if (Object.const_get(get_form_object_name) rescue false)
+        # here we are trying two different ways to check whether there is a form defined for this step
+        # Object.const_get seems to be failing sometimes when constantize works. But it is not clear why
+        # so we try both, rescuing if an error is raised.
+        if (Object.const_get(get_form_object_name) rescue false) || (get_form_object_name.constantize rescue false)
           get_form_object_name.constantize.new(get_form_target)
         else
           #supply a dummy form
@@ -142,7 +158,7 @@ module NfgOnboarder
       end
 
       def get_form_object_name
-        "#{self.class.name.gsub('Controller', '')}::#{step.to_s.camelize}Form"
+        "::#{self.class.name.gsub('Controller', '')}::#{step.to_s.camelize}Form"
       end
 
       def get_onboarding_admin
@@ -243,6 +259,23 @@ module NfgOnboarder
         else
           nil
         end
+      end
+
+      def finish_wizard_params
+        # In some cases we need to be able to return a user to different location then the default finish wizard path. We do this by placing a button on the last step of the onboarder whose name is prefixed with the ALT_FINISH_PATH_PREPEND_KEY and suffixed with the alternative path that we want the user sent to (i.e "#{ALT_FINISH_PATH_PREPEND_KEY}_#{path/to/other/destination}"). Clicking the button still takes the user through the last step (and the on_valid method related to that step), but instead of redirecting the user to the default finish wizard destination, it redirects them to the alternative path.
+        # This can only be used on the last step, as it is tied to the finish wizard path. Any number of buttons, with different paths, can be included on that last step.
+
+        return {} unless last_step
+        finished_wizard_param = params.keys.select { |key| key.include?(ALT_FINISH_PATH_PREPEND_KEY) }.first # check if params include alternative finish path
+        return {} if finished_wizard_param.nil?
+        finished_wizard_url = finished_wizard_param&.remove("#{ALT_FINISH_PATH_PREPEND_KEY}_") # retrieve the alternative path
+        params.merge!({ ALT_FINISH_PATH_PREPEND_KEY => finished_wizard_url })
+        params.select { |key| key == ALT_FINISH_PATH_PREPEND_KEY }.permit!
+      end
+
+
+      def exit?
+        params[:exit]
       end
     end
   end
