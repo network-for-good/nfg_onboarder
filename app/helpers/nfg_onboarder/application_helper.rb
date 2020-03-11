@@ -67,6 +67,22 @@ module NfgOnboarder
       entity.main_logo.present? ? 'navbar-brand image' : 'navbar-brand text'
     end
 
+    def asset_exists?(filename, extension)
+      asset_pathname = "#{Rails.root}/app/assets/"
+      asset_file_path = "#{asset_pathname}/#{filename.split(".")[0]}"
+      !Dir.glob("#{asset_file_path}.#{extension}*").empty?
+    end
+
+    def js_asset_exists?(filename)
+      return true if asset_exists?("javascripts/#{filename}", "js")
+      asset_exists?("javascripts/#{filename}", "coffee")
+    end
+
+    def css_asset_exists?(filename)
+      return true if asset_exists?("stylesheets/#{filename}", "css")
+      asset_exists?("stylesheets/#{filename}", "scss")
+    end
+
     private
 
     def color_is_selected?(color)
