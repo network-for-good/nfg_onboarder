@@ -59,6 +59,5 @@ Rails.application.routes.draw do
       resources :recruit_fundraisers, controller: :recruit_fundraisers
     end
     resources :create_project, controller: :create_project
-
   end
 end
