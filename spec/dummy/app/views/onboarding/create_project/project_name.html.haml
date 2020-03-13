@@ -1,2 +1,4 @@
 = render layout: 'onboarding/sub_layout', locals: { header_message: t('.header.message'), header_page: t('.header.page', default: ''), header_form: t('.header.form'), guidance: t('.guidance.modal', default: '')} do |f|
   .form-group
+    = f.label :name, 'Project Name'
+    = f.text_field :name

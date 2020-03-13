@@ -32,7 +32,7 @@ module NfgOnboarder
 
       def update
         redirect_to finish_wizard_path and return if exit_without_saving? && exit?
-        if form.validate(form_params)
+        if (!use_recaptcha || verify_recaptcha(model: form)) && form.validate(form_params)
           on_before_save
           form.save
           on_valid_step
@@ -153,6 +153,7 @@ module NfgOnboarder
           get_form_object_name.constantize.new(get_form_target)
         else
           #supply a dummy form
+          p "here"
           NfgOnboarder::InformationalForm.new(OpenStruct.new(name: ''))
         end
       end
@@ -241,6 +242,10 @@ module NfgOnboarder
         onboarding_session.onboarder_progress = {} if onboarding_session.onboarder_progress.nil?
         onboarding_session.onboarder_progress[controller_name] = [] if onboarding_session.onboarder_progress[controller_name].nil?
         onboarding_session.onboarder_progress[controller_name] << step unless onboarding_session.onboarder_progress[controller_name].include?(step)
+      end
+
+      def use_recaptcha
+        false
       end
 
       def field_prefix

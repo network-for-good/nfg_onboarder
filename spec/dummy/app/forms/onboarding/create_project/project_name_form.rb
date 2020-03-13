@@ -4,7 +4,9 @@ module Onboarding
   module CreateProject
     class ProjectNameForm < Onboarding::CreateProject::BaseForm
       ## Add properties for your form below:
-      # property :my_property
+      property :name
+
+      validates :name, presence: true
     end
   end
 end
