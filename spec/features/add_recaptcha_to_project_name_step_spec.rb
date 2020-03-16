@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "When recaptcha is required on the project name step", js: true do
   before do
-    allow_any_instance_of(Onboarding::CreateProjectController).to receive(:use_recaptcha).and_return(true)
+    allow_any_instance_of(Onboarding::CreateProjectController).to receive(:use_recaptcha?).and_return(true)
     allow_any_instance_of(Onboarding::CreateProjectController).to receive(:verify_recaptcha).and_return(verify_recaptcha)
   end
 

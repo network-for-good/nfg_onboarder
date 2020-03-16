@@ -21,6 +21,7 @@ module NfgOnboarder
       expose(:locale_namespace) { self.class.name.underscore.gsub('_controller', '').split('/') }
       expose(:form_params) { params.fetch("#{field_prefix}_#{step}", {}).permit! }
       expose(:exit_without_saving?) { exit_without_save_steps.include?(onboarding_session.current_step) }
+      expose(:use_recaptcha?) { false }
 
       # This gets prepended to a value of a route.  finished_wizard_path then redirects to this route
       ALT_FINISH_PATH_PREPEND_KEY ||= 'alternative_finished_wizard_path'
@@ -32,7 +33,7 @@ module NfgOnboarder
 
       def update
         redirect_to finish_wizard_path and return if exit_without_saving? && exit?
-        if (!use_recaptcha || verify_recaptcha(model: form)) && form.validate(form_params)
+        if (!use_recaptcha? || verify_recaptcha(model: form)) && form.validate(form_params)
           on_before_save
           form.save
           on_valid_step
@@ -242,10 +243,6 @@ module NfgOnboarder
         onboarding_session.onboarder_progress = {} if onboarding_session.onboarder_progress.nil?
         onboarding_session.onboarder_progress[controller_name] = [] if onboarding_session.onboarder_progress[controller_name].nil?
         onboarding_session.onboarder_progress[controller_name] << step unless onboarding_session.onboarder_progress[controller_name].include?(step)
-      end
-
-      def use_recaptcha
-        false
       end
 
       def field_prefix
