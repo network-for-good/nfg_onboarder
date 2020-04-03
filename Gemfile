@@ -7,7 +7,6 @@ gemspec
 
 gem 'rails', '~> 5.0'
 gem 'bundler', '~> 1.14'
-gem 'nfg_ui', git: 'https://github.com/network-for-good/nfg_ui', branch: 'dependabot/bundler/actionview-5.2.4.2'
 
 group :test do
   gem 'reform-rails'
