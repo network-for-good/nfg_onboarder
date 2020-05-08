@@ -23,7 +23,7 @@ RSpec.describe 'onboarding/nfg_ui/_masthead.html.haml', type: :view do
     context 'when render_title is true via local_assigns' do
       let(:render_title) { true }
       it 'renders the title' do
-        expect(subject).to have_css "h6", text: I18n.t('onboarding.sample_onboarder.title_bar.title')
+        expect(subject).to have_css "h5", text: I18n.t('onboarding.sample_onboarder.title_bar.title')
       end
     end
 
