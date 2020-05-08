@@ -11,9 +11,9 @@
       = ui.nfg :typeface, :white, heading: presenter.title_bar_title, render_if: render_title
 
     - if show_exit_button
-      .col-auto.py-1
+      .col-auto
         - if first_step || exit_without_saving
-          = ui.nfg :button, :link, href: exit_path, body: t('title_bar.buttons.exit', scope: locale_namespace), onclick: 'NfgOnboarder.submitOnboardingExitForm()', class: 'text-light', id: 'exit_button'
+          = ui.nfg :button, :link, href: exit_path, body: t('title_bar.buttons.exit', scope: locale_namespace), onclick: 'NfgOnboarder.submitOnboardingExitForm()', class: 'my-1 text-light', id: 'exit_button'
 
         - else
-          = ui.nfg :button, :link, href: exit_path, id: 'save_and_exit',  body: t('title_bar.buttons.save_and_exit', scope: locale_namespace), onclick: 'NfgOnboarder.submitOnboardingExitForm()', class: 'text-light'
+          = ui.nfg :button, :link, href: exit_path, id: 'save_and_exit',  body: t('title_bar.buttons.save_and_exit', scope: locale_namespace), onclick: 'NfgOnboarder.submitOnboardingExitForm()', class: 'my-1 text-light'
