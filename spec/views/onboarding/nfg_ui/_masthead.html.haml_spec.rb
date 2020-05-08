@@ -30,14 +30,14 @@ RSpec.describe 'onboarding/nfg_ui/_masthead.html.haml', type: :view do
     context 'when render_title is false via local_assigns' do
       let(:render_title) { false }
       it 'does not render the title' do
-        expect(subject).not_to have_css "h6", text: I18n.t('onboarding.sample_onboarder.title_bar.title')
+        expect(subject).not_to have_css "h5", text: I18n.t('onboarding.sample_onboarder.title_bar.title')
       end
     end
 
     context 'when render_title is nil via local_assigns' do
       let(:render_title) { nil }
       it 'renders the title via the fallback set in the partial for render_title when local assigns is nil' do
-        expect(subject).to have_css "h6", text: I18n.t('onboarding.sample_onboarder.title_bar.title')
+        expect(subject).to have_css "h5", text: I18n.t('onboarding.sample_onboarder.title_bar.title')
       end
     end
   end
