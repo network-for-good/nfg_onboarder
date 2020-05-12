@@ -4,6 +4,9 @@
 -# Optionally, turn off the save & exit button on the top title bar.
 - show_exit_button = true if local_assigns[:show_exit_button].nil?
 
+-# Pass in a custom form_builder method as a string if needed, e.g.: "form_for", defaults to simple_form if none is set.
+- form_builder = 'simple_form_for' if local_assigns[:form_builder].nil?
+
 - guidance = '' if local_assigns[:guidance].nil?
 - header_message = '' if local_assigns[:header_message].nil?
 - header_page = '' if local_assigns[:header_page].nil?
@@ -14,7 +17,7 @@
 - framed = true if local_assigns[:framed].nil? # controls whether the page is displayed with a border
 - hide_navigation_bar = false if local_assigns[:hide_navigation_bar].nil?
 
-= simple_form_for form, url: wizard_path, html: { id: 'onboarding_main_form', multipart: true, autocomplete: 'off', class: ('was-validated' if form.errors.any?), novalidate: form.errors.any? }, method: :put do |f|
+= send(form_builder, form, url: wizard_path, html: { id: 'onboarding_main_form', multipart: true, autocomplete: 'off', class: ('was-validated' if form.errors.any?), novalidate: form.errors.any? }, method: :put) do |f|
   = render partial: "onboarding/nfg_ui/masthead", locals: { show_exit_button: show_exit_button, exit_without_saving: exit_without_saving? }
 
   - unless hide_navigation_bar
