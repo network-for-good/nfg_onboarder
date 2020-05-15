@@ -13,7 +13,7 @@
     - if show_exit_button
       .col-auto
         - if first_step || exit_without_saving
-          = ui.nfg :button, :link, href: exit_path, body: t('title_bar.buttons.exit', scope: locale_namespace), onclick: 'NfgOnboarder.submitOnboardingExitForm()', class: 'my-1 text-light', id: 'exit_button'
+          = ui.nfg :button, :link, href: exit_without_saving_path, body: t('title_bar.buttons.exit', scope: locale_namespace), class: 'my-1 text-light', id: 'exit_button'
 
         - else
           = ui.nfg :button, :link, href: exit_path, id: 'save_and_exit',  body: t('title_bar.buttons.save_and_exit', scope: locale_namespace), onclick: 'NfgOnboarder.submitOnboardingExitForm()', class: 'my-1 text-light'
