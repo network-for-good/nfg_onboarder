@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
 gemspec
-gem 'nfg_ui', git: 'https://github.com/network-for-good/nfg_ui', branch: 'feature/DM-6754_group_videos'
+
 gem 'rails', '~> 5.0'
 gem 'bundler', '~> 1.14'
 
