@@ -20,8 +20,9 @@ module NfgOnboarder
       expose(:last_step) { steps.last == step }
       expose(:locale_namespace) { self.class.name.underscore.gsub('_controller', '').split('/') }
       expose(:form_params) { params.fetch("#{field_prefix}_#{step}", {}).permit! }
-      expose(:exit_without_saving?) { exit_without_save_steps.include?(onboarding_session.current_step) }
+      expose(:exit_without_saving?) { (exit_without_save_steps || []).map(&:to_sym).include?(onboarding_session.current_step.try(:to_sym)) }
       expose(:use_recaptcha?) { false }
+      expose(:exit_without_saving_path) { finish_wizard_path }
 
       # This gets prepended to a value of a route.  finished_wizard_path then redirects to this route
       ALT_FINISH_PATH_PREPEND_KEY ||= 'alternative_finished_wizard_path'

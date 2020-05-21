@@ -5,21 +5,27 @@
 - disable_next_button = false if local_assigns[:disable_next_button].nil?
 - back_button_text = local_assigns[:back_button_text]
 - submit_button_text = local_assigns[:submit_button_text]
+- submit_button_icon = local_assigns[:submit_button_icon]
 
 -# Fallback presenter
 - presenter = NfgOnboarder::HighLevelNavigationBarPresenter.new(onboarding_session, self) if local_assigns[:presenter].nil?
 
-.p-3.bg-white.border-bottom
+.builder-nav
   .row.align-items-center.justify-content-between
-    .col-12.col-lg-8.py-1.mx-auto.order-lg-2
+    .col-6.col-lg.d-none.d-lg-block
+      = ui.nfg :button, :lg, :secondary, :outlined, href: previous_wizard_path, body: back_button_text.html_safe, left_icon: 'caret-left', class: 'flex-fill', disable_with: ui.nfg(:icon, :loader), render_unless: presenter.render_previous_button_unless?, describe: 'previous-button'
+    .col-12.col-lg-8.mx-auto.pt-lg-1
       = ui.nfg :steps, describe: 'nav-steps' do
         - controller.wizard_steps.each_with_index do |step, i|
           - i += 1
           = ui.nfg :step, presenter.step_status(step), step: i, href: presenter.href(step, path: wizard_path(step)), describe: "#{step}-step", icon: presenter.step_icon(step) do
             = presenter.step_body(step)
-    .col-6.col-lg.pt-2.pt-lg-0.order-lg-1
-      = ui.nfg :button, :secondary, :outlined, href: previous_wizard_path, body: back_button_text.html_safe, left_icon: 'arrow-left', disable_with: ui.nfg(:icon, :loader), render_unless: presenter.render_previous_button_unless?, describe: 'previous-button'
-    .col-6.col-lg.pt-2.pt-lg-0.text-right.order-lg-3
-      = ui.nfg :button, *[:submit, (:disabled if disable_next_button)], body: submit_button_text.html_safe, icon: 'arrow-right', confirm: next_step_confirmation, disable_with: ui.nfg(:icon, :loader)
+    .col-6.col-lg.text-right.d-none.d-lg-block
+      = ui.nfg :button, :lg, *[:submit, (:disabled if disable_next_button)], body: submit_button_text.html_safe, icon: submit_button_icon, class: 'flex-fill', confirm: next_step_confirmation, disable_with: ui.nfg(:icon, :loader)
 
-
+.builder-nav-sm
+  .row
+    .col
+      = ui.nfg :button, :lg, :block, :secondary, :outlined, href: previous_wizard_path, body: back_button_text.html_safe, left_icon: 'caret-left', disable_with: ui.nfg(:icon, :loader), render_unless: presenter.render_previous_button_unless?, describe: 'previous-button'
+    .col
+      = ui.nfg :button, :lg, :block, *[:submit, (:disabled if disable_next_button)], body: submit_button_text.html_safe, icon: submit_button_icon, class: 'flex-fill', confirm: next_step_confirmation, disable_with: ui.nfg(:icon, :loader)
