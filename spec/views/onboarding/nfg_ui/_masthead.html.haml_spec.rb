@@ -10,6 +10,7 @@ RSpec.describe 'onboarding/nfg_ui/_masthead.html.haml', type: :view do
   let(:locale_namespace) { ['onboarding', 'sample_onboarder'] }
   let(:h) { ActionController::Base.new.view_context }
   let(:presenter) { NfgOnboarder::MastheadPresenter.new(onboarding_session, h) }
+  let(:exit_without_saving_path) { '/edit/without/saving/path' }
 
   subject { render partial: 'onboarding/nfg_ui/masthead', locals: { show_exit_button: show_exit_button, render_title: render_title, exit_path: exit_path, locale_namespace: locale_namespace, presenter: presenter } }
 
@@ -17,6 +18,7 @@ RSpec.describe 'onboarding/nfg_ui/_masthead.html.haml', type: :view do
     allow(view).to receive(:first_step).and_return(first_step)
     allow(view).to receive(:onboarding_session).and_return(onboarding_session)
     allow(h).to receive(:locale_namespace).and_return(locale_namespace)
+    allow(view).to receive(:exit_without_saving_path).and_return(exit_without_saving_path)
   end
 
   describe 'the title' do
