@@ -50,6 +50,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'wicked'
   spec.add_dependency 'decent_exposure'
   spec.add_dependency 'haml'
-  spec.add_dependency 'nfg_ui', '~> 0.10'
+  spec.add_dependency 'nfg_ui', '~> 0.11.0'
   spec.add_dependency 'simple_form'
 end
