@@ -6,6 +6,7 @@ source 'https://rubygems.org'
 gemspec
 gem 'rails', '~> 5.0'
 gem 'bundler', '~> 1.14'
+gem 'nfg_ui', git: 'https://github.com/network-for-good/nfg_ui', branch: 'feature/DM-7727_email_gallery_draft_composition'
 
 group :test do
   gem 'reform-rails'
