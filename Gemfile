@@ -6,7 +6,6 @@ source 'https://rubygems.org'
 gemspec
 gem 'rails', '~> 5.0'
 gem 'bundler', '~> 1.14'
-gem 'nfg_ui', git: 'https://github.com/network-for-good/nfg_ui', branch: 'dependabot/bundler/nokogiri-1.11.0'
 
 group :test do
   gem 'reform-rails'
