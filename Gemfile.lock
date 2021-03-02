@@ -133,7 +133,7 @@ GEM
     minitest (5.14.1)
     momentjs-rails (2.20.1)
       railties (>= 3.1)
-    nfg_ui (0.11.12)
+    nfg_ui (0.11.13)
       autoprefixer-rails (= 9.4.9)
       bootstrap (= 4.3.1)
       browser (~> 2.7.1)
