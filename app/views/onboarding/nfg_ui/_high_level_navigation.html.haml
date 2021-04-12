@@ -14,7 +14,7 @@
   .row.align-items-center.justify-content-between
     .col-6.col-lg.d-none.d-lg-block
       = ui.nfg :button, :lg, :secondary, :outlined, href: previous_wizard_path, body: back_button_text.html_safe, left_icon: 'caret-left', class: 'flex-fill', disable_with: ui.nfg(:icon, :loader), render_unless: presenter.render_previous_button_unless?, describe: 'previous-button'
-    .col-12.col-lg-8.mx-auto.pt-lg-1
+    .col-12.col-lg-8.mx-auto
       = ui.nfg :steps, describe: 'nav-steps' do
         - controller.wizard_steps.each_with_index do |step, i|
           - i += 1
