@@ -27,9 +27,9 @@
 
   .builder-container
     - if framed
-      .container.py-4.py-5-lg
+      .container.py-4.py-lg-5
         .row
-          .col.col-lg-8.mx-auto
+          .col.col-lg-10.col-xl-8.mx-auto
             = ui.nfg :alert, :danger, body: flash[:error], render_if: flash[:error].present?
             = ui.nfg :alert, :danger, body: f.object.errors.full_messages.join('<br/>').html_safe, icon: 'exclamation-circle', render_if: f.object.errors.any?
 
