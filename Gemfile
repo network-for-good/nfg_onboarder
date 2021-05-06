@@ -5,7 +5,6 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
-gem 'nfg_ui', git: 'https://github.com/network-for-good/nfg_ui', branch: 'dependabot/bundler/actionpack-5.2.6'
 gem 'rails', '~> 5.0'
 gem 'bundler', '~> 1.14'
 
