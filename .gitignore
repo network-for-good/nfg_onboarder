@@ -12,7 +12,7 @@ spec/dummy/db/*.sqlite3
 spec/dummy/tmp/*
 !/log/.keep
 !/tmp/.keep
-
+spec/dummy/log/development.log
 # Ignore uploaded files in development
 /storage/*
 !/storage/.keep
