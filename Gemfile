@@ -7,7 +7,7 @@ gemspec
 
 gem 'rails', '~> 5.0'
 gem 'bundler', '~> 1.14'
-gem 'nfg_ui', git: 'https://github.com/network-for-good/nfg_ui', branch: 'feature/security_vulnerabilities'
+
 
 group :test do
   gem 'reform-rails'
