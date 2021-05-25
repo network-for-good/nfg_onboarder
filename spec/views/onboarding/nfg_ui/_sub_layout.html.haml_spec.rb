@@ -31,7 +31,7 @@ RSpec.describe 'onboarding/nfg_ui/_sub_layout.html.haml', type: :view do
     submit_button_text: submit_button_text,
     framed: framed,
     hide_navigation_bar: hide_navigation_bar
-   } { 'Body' } }
+   } }
 
    before do
      allow(view).to receive(:locale_namespace).and_return(locale_namespace)

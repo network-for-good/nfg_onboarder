@@ -41,12 +41,13 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "capybara"
   spec.add_development_dependency "selenium-webdriver"
   spec.add_development_dependency "recaptcha"
-  spec.add_development_dependency "puma"
+  spec.add_development_dependency "puma", ">= 4.3.8"
   spec.add_development_dependency 'jquery-rails'
   spec.add_development_dependency 'byebug'
 
   spec.add_dependency 'rails', '~> 5.0'
   spec.add_dependency 'reform', '2.2.4'
+  spec.add_dependency 'execjs', '2.7.0'
   spec.add_dependency 'wicked'
   spec.add_dependency 'decent_exposure'
   spec.add_dependency 'haml'
