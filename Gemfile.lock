@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/network-for-good/nfg_ui.git
-  revision: c71a3ca9b6c31224f4d8a3dfd40fd35577f0d421
+  revision: 850e216b6700f392cd25dcb9a4c3326be560bdb5
   branch: feature/PSTWO-17175_datetime_update_for_side_by_side
   specs:
     nfg_ui (0.12.0.5)
