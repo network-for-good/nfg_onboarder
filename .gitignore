@@ -28,3 +28,5 @@ spec/dummy/log/development.log
 
 /config/database.yml
 
+.idea
+.idea/*

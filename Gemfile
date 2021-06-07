@@ -8,7 +8,7 @@ gemspec
 gem 'rails', '~> 5.0'
 gem 'bundler', '~> 1.14'
 
-
+gem 'nfg_ui', git: 'https://github.com/network-for-good/nfg_ui.git',  branch: 'feature/PSTWO-17175_datetime_update_for_side_by_side'
 group :test do
   gem 'reform-rails'
 end
