@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/network-for-good/nfg_ui.git
-  revision: 850e216b6700f392cd25dcb9a4c3326be560bdb5
+  revision: 6cad5418ba8f91d27028bac21e40d88f31b88a12
   branch: feature/PSTWO-17175_datetime_update_for_side_by_side
   specs:
-    nfg_ui (0.12.0.5)
+    nfg_ui (0.12.0.6)
       autoprefixer-rails (= 9.4.9)
       bootstrap (= 4.3.1)
       browser (~> 2.7.1)
