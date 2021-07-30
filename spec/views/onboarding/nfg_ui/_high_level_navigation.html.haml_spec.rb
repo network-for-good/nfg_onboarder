@@ -5,7 +5,8 @@ require 'wicked'
 RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view do
   # Locals
   let(:next_step_confirmation) { nil }
-  let(:disable_next_button) { nil }
+  let(:disable_submit_button) { nil }
+  let(:hide_submit_button) { nil }
   let(:back_button_text) { '' }
   let(:submit_button_text) { '' }
   let(:onboarding_session) { FactoryBot.create(:onboarding_session) }
@@ -41,7 +42,7 @@ RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view
     allow(presenter).to receive(:render_previous_button_unless?).and_return(render_previous_button_unless)
   end
 
-  subject { render partial: 'onboarding/nfg_ui/high_level_navigation', locals: { next_step_confirmation: next_step_confirmation, disable_next_button: disable_next_button, back_button_text: back_button_text, submit_button_text: submit_button_text, presenter: presenter } }
+  subject { render partial: 'onboarding/nfg_ui/high_level_navigation', locals: { next_step_confirmation: next_step_confirmation, disable_submit_button: disable_submit_button, hide_submit_button: hide_submit_button, back_button_text: back_button_text, submit_button_text: submit_button_text, presenter: presenter } }
 
   describe 'the steps in the step nav' do
     it 'lists a nav item for each step' do
