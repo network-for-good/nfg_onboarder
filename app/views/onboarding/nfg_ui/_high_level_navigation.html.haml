@@ -14,7 +14,7 @@
 .builder-nav
   .row.align-items-center.justify-content-between
     .col-6.col-lg.d-none.d-lg-block
-      = ui.nfg :button, :lg, :secondary, :outlined, href: previous_wizard_path, body: back_button_text.html_safe, left_icon: 'caret-left', class: 'flex-fill', disable_with: ui.nfg(:icon, :loader), render_unless: presenter.render_previous_button_unless?, describe: 'previous-button'
+      = ui.nfg :button, :lg, :secondary, :outlined, href: previous_wizard_path, body: back_button_text.html_safe, id: 'prev_step', class: 'flex-fill', describe: 'previous-button', disable_with: ui.nfg(:icon, :loader), render_unless: presenter.render_previous_button_unless?
     .col-12.col-lg-8.mx-auto
       = ui.nfg :steps, describe: 'nav-steps' do
         - controller.wizard_steps.each_with_index do |step, i|
@@ -22,7 +22,7 @@
           = ui.nfg :step, presenter.step_status(step), step: i, href: presenter.href(step, path: wizard_path(step)), describe: "#{step}-step", icon: presenter.step_icon(step) do
             = presenter.step_body(step)
     .col-6.col-lg.text-right.d-none.d-lg-block
-      = ui.nfg :button, :lg, *[:submit, (:disabled if disable_submit_button)], body: submit_button_text.html_safe, icon: submit_button_icon, class: 'flex-fill', confirm: next_step_confirmation, disable_with: ui.nfg(:icon, :loader), render_unless: hide_submit_button
+      = ui.nfg :button, :lg, *[:submit, (:disabled if disable_submit_button)], body: submit_button_text.html_safe, icon: submit_button_icon, id: 'next_step', class: 'flex-fill', describe: 'next-button', disable_with: ui.nfg(:icon, :loader), confirm: next_step_confirmation, render_unless: hide_submit_button
 
 .builder-nav-sm
   .row
