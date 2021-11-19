@@ -14,8 +14,8 @@
 - next_step_confirmation = nil if local_assigns[:next_step_confirmation].nil? # pass in a confirmation prompt on submit
 - back_button_text = t('back', scope: locale_namespace + [step, :button], default: 'Prev') if local_assigns[:back_button_text].nil?
 - submit_button_text = t('submit', scope: locale_namespace + [step, :button], default: 'Next') if local_assigns[:submit_button_text].nil?
-- submit_button_icon = 'caret-right' if local_assigns[:submit_button_icon].nil?
-- disable_submit_button = false if local_assigns[:disable_submitt_button].nil?
+- submit_button_icon = false if local_assigns[:submit_button_icon].nil?
+- disable_submit_button = false if local_assigns[:disable_submit_button].nil?
 - hide_submit_button = false if local_assigns[:hide_submit_button].nil?
 - framed = true if local_assigns[:framed].nil? # controls whether the page is displayed with a border
 - hide_navigation_bar = false if local_assigns[:hide_navigation_bar].nil?
