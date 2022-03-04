@@ -10,6 +10,7 @@ jobs:
        - image: circleci/ruby:2.5.8-node-browsers
          environment:
            RAILS_ENV: test
+       - image: circleci/redis:4
 
     working_directory: ~/repo
 
@@ -19,9 +20,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          - v3-dependencies-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          - v3-dependencies-
 
       - run:
           name: install dependencies
@@ -31,7 +32,7 @@ jobs:
       - save_cache:
           paths:
             - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+          key: v3-dependencies-{{ checksum "Gemfile.lock" }}
 
       # Database setup
       - run: cd spec/dummy && bundle exec rake db:create db:schema:load
