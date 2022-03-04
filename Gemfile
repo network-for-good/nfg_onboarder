@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'rails', '~> 5.0'
-gem 'bundler', '~> 1.14'
+gem 'bundler', '~> 2.1.4'
 
 group :test do
   gem 'reform-rails'

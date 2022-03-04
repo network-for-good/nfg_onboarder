@@ -280,7 +280,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.14)
+  bundler (~> 2.1.4)
   byebug
   capybara
   factory_bot_rails
