@@ -1,7 +1,10 @@
 require 'rails/generators/base'
 
+
 module NfgOnboarder
   module Generators
+    # Creates onboarding controllers, views etc
+    # rails g nfg_onboarder:onboarder CreateEvent get_started event_details event_page review
     class OnboarderGenerator < Rails::Generators::Base
       source_root File.expand_path('../templates', __FILE__)
 
