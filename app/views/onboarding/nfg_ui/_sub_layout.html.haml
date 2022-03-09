@@ -1,0 +1,48 @@
+-# NOTE: This does not include all of the logic found in the original sub_layout and should not be used as the final
+-# until evo has been converted to use this newer nfg_ui onboarder.
+
+-# Optionally, turn off the save & exit button on the top title bar.
+- show_exit_button = true if local_assigns[:show_exit_button].nil?
+
+-# Pass in a custom form_builder method as a string if needed, e.g.: "form_for", defaults to simple_form if none is set.
+- form_builder = 'simple_form_for' if local_assigns[:form_builder].nil?
+
+- guidance = '' if local_assigns[:guidance].nil?
+- header_message = '' if local_assigns[:header_message].nil?
+- header_page = '' if local_assigns[:header_page].nil?
+- enable_next_button = true if local_assigns[:enable_next_button].nil?
+- next_step_confirmation = nil if local_assigns[:next_step_confirmation].nil? # pass in a confirmation prompt on submit
+- back_button_text = t('back', scope: locale_namespace + [step, :button], default: 'Prev') if local_assigns[:back_button_text].nil?
+- submit_button_text = t('submit', scope: locale_namespace + [step, :button], default: 'Next') if local_assigns[:submit_button_text].nil?
+- submit_button_icon = false if local_assigns[:submit_button_icon].nil?
+- disable_submit_button = false if local_assigns[:disable_submit_button].nil?
+- hide_submit_button = false if local_assigns[:hide_submit_button].nil?
+- framed = true if local_assigns[:framed].nil? # controls whether the page is displayed with a border
+- hide_navigation_bar = false if local_assigns[:hide_navigation_bar].nil?
+- masthead_presenter ||= nil
+
+= send(form_builder, form, url: wizard_path, html: { id: 'onboarding_main_form', multipart: true, autocomplete: 'off', class: ('was-validated' if form.errors.any?), novalidate: form.errors.any? }, method: :put) do |f|
+  = render partial: "onboarding/nfg_ui/masthead", locals: { presenter: masthead_presenter, show_exit_button: show_exit_button, exit_without_saving: exit_without_saving? }
+
+  - unless hide_navigation_bar
+    = render partial: 'onboarding/nfg_ui/high_level_navigation', locals: { back_button_text: back_button_text, submit_button_text: submit_button_text, submit_button_icon: submit_button_icon, disable_submit_button: disable_submit_button, hide_submit_button: hide_submit_button, next_step_confirmation: next_step_confirmation }
+
+  .builder-container
+    - if framed
+      .container.py-4.py-lg-5
+        .row
+          .col-11.col-lg-10.col-xl-8.mx-auto
+            = ui.nfg :alert, :danger, body: flash[:error], render_if: flash[:error].present?
+            = ui.nfg :alert, :danger, body: f.object.errors.full_messages.join('<br/>').html_safe, icon: 'exclamation-circle', render_if: f.object.errors.any?
+            = ui.nfg :typeface, heading: header_message.html_safe, class: 'mb-2', render_if: header_message.present?
+            = ui.nfg :typeface, :muted, body: header_page.html_safe, render_if: header_page.present?
+            = yield f
+
+    - else
+      - if f.object.errors.any?
+        .container.pt-3
+          .row
+            .col-11.col-lg-10.col-xl-8.mx-auto
+              = ui.nfg :alert, :danger, body: f.object.errors.full_messages.join('<br/>').html_safe, icon: 'exclamation-circle'
+
+      = yield f

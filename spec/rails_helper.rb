@@ -10,8 +10,15 @@ ActiveRecord::Migrator.migrations_paths = 'spec/dummy/db/migrate'
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
+Capybara.register_driver :selenium do |app|
+  # profile = Selenium::WebDriver::Firefox::Profile.new
+  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+end
+
+
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
+  config.order = "random"
   config.infer_spec_type_from_file_location!
   config.include FactoryBot::Syntax::Methods
 end

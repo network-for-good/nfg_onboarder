@@ -1,4 +1,4 @@
-class CreateOnboardingSession < ActiveRecord::Migration
+class CreateOnboardingSession < ActiveRecord::Migration[5.0]
   def change
     create_table "onboarding_sessions", force: :cascade do |t|
       t.text     "completed_high_level_steps", :limit=>65535

@@ -1,0 +1,20 @@
+!!!
+%html{:xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    = render partial: 'nfg_ui/app_icons/icons'
+    %title= yield(:title).presence || onboarder_page_title
+    = stylesheet_link_tag "nfg_onboarder/application"
+    = javascript_include_tag "nfg_onboarder/application", "data-turbolinks-track" => "reload"
+    = javascript_include_tag "onboarding/application", "data-turbolinks-track" => "reload" if js_asset_exists?("onboarding/application.js")
+
+    = csrf_meta_tags
+  %body{ class: "#{controller_path.gsub('/', '-')} #{try(:step).try(:to_s)} nfg_ui_onboarder builder-layout" }
+    -# Allow host app to supply a partial for opening the page.
+    = render(partial: 'shared/after_opening_body_alert') rescue nil
+    = yield :after_opening_body
+    = yield
+
+    = javascript_include_tag 'https://www.google.com/jsapi'
+    = yield :before_closing_body

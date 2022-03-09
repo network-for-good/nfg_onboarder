@@ -115,8 +115,7 @@ describe NfgOnboarder::Session do
       let(:completed_at) { nil }
       it { should be_truthy }
       it "timestamps the field" do
-        subject
-        expect(onboarding_session.completed_at.to_s).to eql onboarding_session.updated_at.to_s
+        expect { subject }.to change { onboarding_session.reload.completed_at }.from(nil)
       end
     end
   end

@@ -1,0 +1,7 @@
+/ bs4 hack
+- type = 'danger alert-error' if type == 'error'
+
+.alert.alert-dismissable.fade.show.in{ class: "alert-#{type}" }
+  %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", type: "button"}
+    %span.icon-slim-close
+  = message.html_safe

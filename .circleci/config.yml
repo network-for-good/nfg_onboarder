@@ -7,9 +7,10 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-       - image: circleci/ruby:2.3.7-node-browsers
+       - image: circleci/ruby:2.5.9-node-browsers
          environment:
            RAILS_ENV: test
+       - image: circleci/redis:4
 
     working_directory: ~/repo
 
@@ -19,9 +20,16 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          - v3-dependencies-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          - v3-dependencies-
+
+      - run:
+          name: Force bundler version to match Gemfile.lock
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler -v=$BUNDLER_VERSION --no-document
 
       - run:
           name: install dependencies
@@ -31,7 +39,7 @@ jobs:
       - save_cache:
           paths:
             - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+          key: v3-dependencies-{{ checksum "Gemfile.lock" }}
 
       # Database setup
       - run: cd spec/dummy && bundle exec rake db:create db:schema:load
