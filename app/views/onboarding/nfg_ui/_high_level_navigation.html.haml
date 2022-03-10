@@ -14,7 +14,7 @@
 .builder-nav
   .row.align-items-center.justify-content-between
     .col-6.col-lg.d-none.d-lg-block
-      = ui.nfg :button, :lg, :secondary, :outlined, href: previous_wizard_path, body: back_button_text.html_safe, id: 'prev_step', class: 'flex-fill', describe: 'previous-button', disable_with: ui.nfg(:icon, :loader), render_unless: presenter.render_previous_button_unless?
+      = ui.nfg :button, :lg, :secondary, href: previous_wizard_path, body: back_button_text.html_safe, id: 'prev_step', class: 'flex-fill', describe: 'previous-button', disable_with: ui.nfg(:icon, :loader), render_unless: presenter.render_previous_button_unless?
     .col-12.col-lg-8.mx-auto
       = ui.nfg :steps, describe: 'nav-steps' do
         - controller.wizard_steps.each_with_index do |step, i|
@@ -27,6 +27,6 @@
 .builder-nav-sm
   .row
     .col
-      = ui.nfg :button, :lg, :block, :secondary, :outlined, href: previous_wizard_path, body: back_button_text.html_safe, left_icon: 'caret-left', disable_with: ui.nfg(:icon, :loader), render_unless: presenter.render_previous_button_unless?, describe: 'previous-button'
+      = ui.nfg :button, :lg, :block, :secondary, href: previous_wizard_path, body: back_button_text.html_safe, disable_with: ui.nfg(:icon, :loader), render_unless: presenter.render_previous_button_unless?, describe: 'previous-button'
     .col
       = ui.nfg :button, :lg, :block, *[:submit, (:disabled if disable_submit_button)], body: submit_button_text.html_safe, icon: submit_button_icon, class: 'flex-fill', confirm: next_step_confirmation, disable_with: ui.nfg(:icon, :loader)
