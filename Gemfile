@@ -5,11 +5,12 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
-gem 'rails', '~> 5.0'
+gem 'rails', '~> 6.0'
 gem 'bundler', '~> 2.1.4'
 
 group :test do
   gem 'reform-rails'
+  gem 'factory_bot_rails'
 end
 
 # Declare any dependencies that are still in development here instead of in
