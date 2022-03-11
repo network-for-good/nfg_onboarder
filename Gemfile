@@ -10,7 +10,7 @@ gem 'bundler', '~> 2.1.4'
 
 group :test do
   gem 'reform-rails'
-  # gem 'factory_bot_rails'
+  gem 'factory_bot_rails'
 end
 
 # Declare any dependencies that are still in development here instead of in
