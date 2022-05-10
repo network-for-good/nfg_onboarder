@@ -10,7 +10,7 @@ gem 'bundler', '~> 2.1.4'
 gem 'nfg_ui', git: 'https://github.com/network-for-good/nfg_ui', branch: 'rails_6'
 
 group :test do
-  gem 'reform-rails'
+  gem 'reform-rails', '~> 0.2.3'
   gem 'factory_bot_rails'
 end
 

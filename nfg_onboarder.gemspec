@@ -46,7 +46,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'byebug'
 
   spec.add_dependency 'rails', '~> 6.0'
-  spec.add_dependency 'reform'
+  spec.add_dependency 'reform-rails', '~> 0.2.3'
   spec.add_dependency 'execjs', '2.7.0'
   spec.add_dependency 'wicked'
   spec.add_dependency 'decent_exposure'
