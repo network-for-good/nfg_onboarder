@@ -25,7 +25,7 @@ PATH
       execjs (= 2.7.0)
       haml
       rails (~> 6.0)
-      reform (= 2.2.4)
+      reform
       simple_form
       wicked
 
