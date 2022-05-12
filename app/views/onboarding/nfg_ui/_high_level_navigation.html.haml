@@ -7,6 +7,7 @@
 - submit_button_icon = local_assigns[:submit_button_icon]
 - disable_submit_button = false if local_assigns[:disable_submit_button].nil?
 - hide_submit_button = false if local_assigns[:hide_submit_button].nil?
+- navigation_steps = onboarding_group_steps.present? ? onboarding_group_steps : controller.wizard_steps
 
 -# Fallback presenter
 - presenter = NfgOnboarder::HighLevelNavigationBarPresenter.new(onboarding_session, self) if local_assigns[:presenter].nil?
@@ -17,7 +18,7 @@
       = ui.nfg :button, :lg, :secondary, href: previous_wizard_path, body: back_button_text.html_safe, id: 'prev_step', class: 'flex-fill', describe: 'previous-button', disable_with: ui.nfg(:icon, :loader), render_unless: presenter.render_previous_button_unless?
     .col-12.col-lg-8.mx-auto
       = ui.nfg :steps, describe: 'nav-steps' do
-        - controller.wizard_steps.each_with_index do |step, i|
+        - navigation_steps.each_with_index do |step, i|
           - i += 1
           = ui.nfg :step, presenter.step_status(step), step: i, href: presenter.href(step, path: wizard_path(step)), describe: "#{step}-step", icon: presenter.step_icon(step) do
             = presenter.step_body(step)
