@@ -36,7 +36,12 @@
             = render partial: 'onboarding/nfg_ui/navigation' if onboarding_group_steps.present?
             = ui.nfg :alert, :danger, body: flash[:error], render_if: flash[:error].present?
             = ui.nfg :alert, :danger, body: f.object.errors.full_messages.join('<br/>').html_safe, icon: 'exclamation-circle', render_if: f.object.errors.any?
-            = ui.nfg :typeface, heading: header_message.html_safe, class: 'mb-2', render_if: header_message.present?
+            .row
+              .col-12.col-md
+                = ui.nfg :typeface, heading: header_message.html_safe, class: 'mb-2', render_if: header_message.present?
+              - if guidance.present?
+                .col-12.col-md-auto
+                  = ui.nfg :button, :secondary, as: :button, body: 'Need Help?', modal: '#myModal', left_icon: :tip, class: 'mb-2'
             = ui.nfg :typeface, :muted, body: header_page.html_safe, render_if: header_page.present?
             = yield f
 
@@ -48,3 +53,6 @@
               = ui.nfg :alert, :danger, body: f.object.errors.full_messages.join('<br/>').html_safe, icon: 'exclamation-circle'
 
       = yield f
+
+= ui.nfg :modal, id: 'myModal', title: 'Additional Guidance', render_if: guidance.present? do
+  = simple_format(guidance)
