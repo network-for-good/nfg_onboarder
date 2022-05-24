@@ -48,7 +48,19 @@ describe NfgOnboarder::Session do
 
       context "when there are related objects" do
         let(:admin) { create(:admin) }
-        let(:session) { create(:session, related_objects: { admin: admin }) }
+
+        let!(:session) do
+          begin
+            s = build(:session, related_objects: { admin: admin })
+            s.validate
+            puts s.errors.full_messages.to_sentence
+            Rails.logger.error s.errors.full_messages.to_sentence
+            s.save!
+          rescue StandardError => e
+            puts "#{e.class}: #{e.message}"
+            Rails.logger.error "#{e.class}: #{e.message}"
+          end
+        end
 
         it "returns the related object" do
           expect(session.admin).to eql(admin)
