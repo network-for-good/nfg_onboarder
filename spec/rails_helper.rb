@@ -34,6 +34,9 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-# By default, FactoryBot searches the dummy app in spec/dummy for FactoryBot factories
-FactoryBot.definition_file_paths = [File.expand_path("#{__dir__}/factories")]
-FactoryBot.find_definitions
+# By default, FactoryBot searches the dummy app in spec/dummy for FactoryBot factories,
+# except on CircleCI, which someone is able to find the directories correctly
+if FactoryBot.factories.count < 1
+  FactoryBot.definition_file_paths = [File.expand_path("#{__dir__}/factories")]
+  FactoryBot.find_definitions
+end
