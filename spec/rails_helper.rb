@@ -15,7 +15,6 @@ Capybara.register_driver :selenium do |app|
   Capybara::Selenium::Driver.new(app, :browser => :chrome)
 end
 
-
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.order = "random"
@@ -31,3 +30,7 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+# By default, FactoryBot searches the dummy app in spec/dummy for FactoryBot factories
+FactoryBot.definition_file_paths = [File.expand_path("#{__dir__}/factories")]
+FactoryBot.find_definitions

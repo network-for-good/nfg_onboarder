@@ -58,8 +58,7 @@ describe NfgOnboarder::Session do
         end
 
         it "saves the related object" do
-          expect_any_instance_of(NfgOnboarder::RelatedObject).to receive(:save).once
-          subject
+          expect(session.related_objects).to all be_persisted
         end
       end
     end
