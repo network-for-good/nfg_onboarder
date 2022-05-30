@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 module NfgOnboarder
-  # Ex usage on a view: NfgOnboarder::HighLevelNavigationBarPresenter.new(onboarding_session, self)
-  class HighLevelNavigationBarPresenter < NfgOnboarder::OnboarderPresenter
+  # Ex usage on a view: NfgOnboarder::NavigationBarPresenter.new(onboarding_session, self)
+  class NavigationBarPresenter < NfgOnboarder::OnboarderPresenter
     # Ensure that the href is nil (thus supporting accessibility via the nfg_ui Step)
     # when the step is disabled / unclickable
     # or on the last step, all links should have a nil :href
-    def href(c_step, path = '')
-      h.before_last_visited_point_of_no_return?(c_step) ? nil : path_with_id(c_step)
+    def href(step, path: '')
+      h.before_last_visited_point_of_no_return?(step) ? nil : path
     end
 
     def points_of_no_return
@@ -35,30 +35,12 @@ module NfgOnboarder
     #
     # Example usage:
     # = ui.nfg :step, onboarder_presenter.step_status(the_step), step: 1, href: wizard_path(the_step)
-    def step_status(nav_step)
-      return :active if active?(nav_step)
-      return :visited if visited?(nav_step)
-      return :disabled if disabled?(nav_step)
-    end
-
-    def active?(nav_step)
-      nav_step.to_sym == h.controller_name.to_sym
-    end
-
-    def disabled?(nav_step)
-      (all_steps.index(nav_step.to_sym) || 0) > (all_steps.index(active_step.to_sym) || 0)
-    end
-
-    def visited?(nav_step)
-      model.onboarder_progress.keys.include?(nav_step.to_s)
-    end
-
-    def path_with_id(c_step)
-      return nil if active?(c_step)
-
-      return nil unless model.onboarder_progress.key?(c_step.to_s)
-
-      "/onboarding/create_campaign/#{c_step}/#{model.onboarder_progress[c_step.to_s][0]}"
+    def step_status(step)
+      return :active if step.to_sym == active_step.to_sym
+      return :visited if try(:completed_steps, h.controller_name).try(:include?, step)
+      # in case steps change, if the step or active step can't be found in what
+      # is currently the list of steps  don't barf
+      return :disabled if (all_steps.index(step.to_sym) || 0) > (all_steps.index(active_step.to_sym) || 0)
     end
   end
 end
