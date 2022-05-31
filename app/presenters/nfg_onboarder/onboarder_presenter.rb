@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 
-# Ex: NfgCsvImporter::OnboarderPresenter.new(onboarding_session)
 module NfgOnboarder
+  # Ex: NfgCsvImporter::OnboarderPresenter.new(onboarding_session)
   class OnboarderPresenter < NfgOnboarder::GemPresenter
     def active_step
       # this is the step that is currently being displayed.

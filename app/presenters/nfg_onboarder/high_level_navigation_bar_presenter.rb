@@ -54,8 +54,6 @@ module NfgOnboarder
     end
 
     def path_with_id(c_step)
-      return nil if active?(c_step)
-
       return nil unless model.onboarder_progress.key?(c_step.to_s)
 
       "/onboarding/create_campaign/#{c_step}/#{model.onboarder_progress[c_step.to_s][0]}"
