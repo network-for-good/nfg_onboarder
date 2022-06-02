@@ -1,8 +1,8 @@
 require "rails_helper"
 
-describe NfgOnboarder::HighLevelNavigationBarPresenter do
+describe NfgOnboarder::NavigationBarPresenter do
   let(:h) { ApplicationController.new.view_context }
-  let(:high_level_navigation_bar_presenter) { described_class.new(onboarding_session, h) }
+  let(:navigation_bar_presenter) { described_class.new(onboarding_session, h) }
   let(:onboarding_session) { NfgOnboarder::Session.new(current_step: current_step) }
   let(:tested_first_step) { :first }
   let(:tested_last_step) { :last }
@@ -13,6 +13,7 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
   before do
     allow(h.controller).to receive(:params).and_return(id: current_step)
     allow(h.controller).to receive(:wizard_steps).and_return(steps)
+    allow(h.controller).to receive(:onboarding_group_steps).and_return(steps)
     allow(h).to receive(:first_step).and_return(on_first_step)
   end
 
@@ -20,14 +21,12 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
     let(:tested_step) { :first }
     let(:tested_path) { nil }
     let(:before_point_of_no_return) { nil }
-
-    subject { high_level_navigation_bar_presenter.href(tested_step, path: tested_path) }
+    subject { navigation_bar_presenter.href(tested_step, path: tested_path) }
 
     before { allow(h).to receive(:before_last_visited_point_of_no_return?).with(tested_step).and_return(before_point_of_no_return) }
 
     context 'when #before_last_visited_point_of_no_return? is true' do
       let(:before_point_of_no_return) { true }
-
       it 'returns nil so that the step is not clickable' do
         expect(subject).to be_nil
       end
@@ -36,7 +35,6 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
     context 'when #before_last_visited_point_of_no_return? is false' do
       let(:before_point_of_no_return) { false }
       let(:tested_path) { '/tested/path' }
-
       it 'returns the path so that the step is clickable' do
         expect(subject).to eq tested_path
       end
@@ -44,7 +42,7 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
   end
 
   describe '#points_of_no_return' do
-    subject { high_level_navigation_bar_presenter.points_of_no_return }
+    subject { navigation_bar_presenter.points_of_no_return }
     let(:tested_points_of_no_return) { [current_step] }
 
     before { allow(h.controller).to receive(:points_of_no_return).and_return(tested_points_of_no_return) }
@@ -55,7 +53,7 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
   end
 
   describe '#render_previous_button_unless?' do
-    subject { high_level_navigation_bar_presenter.render_previous_button_unless? }
+    subject { navigation_bar_presenter.render_previous_button_unless? }
 
     let(:tested_single_use_steps) { [] }
     let(:tested_at_point_of_no_return) { false } # a native state
@@ -113,7 +111,7 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
   end
 
   describe '#step_body(step)' do
-    subject { high_level_navigation_bar_presenter.step_body(step) }
+    subject { navigation_bar_presenter.step_body(step) }
 
     let(:locale_namespace) { [] }
       before { allow(h).to receive(:locale_namespace).and_return(locale_namespace) }
@@ -129,7 +127,7 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
   end
 
   describe '#step_icon(step)' do
-    subject { high_level_navigation_bar_presenter.step_icon(step) }
+    subject { navigation_bar_presenter.step_icon(step) }
     context 'when the step is the last step' do
       let(:step) { tested_last_step }
       it 'returns the icon string' do
@@ -146,7 +144,7 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
   end
 
   describe '#step_status(step)' do
-    subject { high_level_navigation_bar_presenter.step_status(step) }
+    subject { navigation_bar_presenter.step_status(step) }
     context 'when step is the active step' do
       let(:step) { current_step }
       it { is_expected.to eq :active }

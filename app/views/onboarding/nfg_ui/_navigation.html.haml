@@ -3,9 +3,4 @@
 
   = ui.nfg :breadcrumb, class: 'nav-secondary' do
     - controller.wizard_steps.each_with_index do |nav_step, index|
-      = ui.nfg :breadcrumb_item, presenter.breadcrumb_status(nav_step) do
-        = link_to wizard_path(nav_step), class: presenter.href_class(nav_step) do
-          - if (nav_step == :submit_for_review) && (!required_approval?)
-            = t('onboarding.create_fundraiser.launch_your_campaign.step')
-          - else
-            = t(nav_step, scope: locale_namespace + [:step_navigations], default: nav_step.to_s.humanize)
+      = ui.nfg :breadcrumb_item, (:active if presenter.active?(nav_step)), body: presenter.step_body(nav_step), href: presenter.href(nav_step, path: wizard_path(nav_step))
