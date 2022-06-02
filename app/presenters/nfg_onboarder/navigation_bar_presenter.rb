@@ -35,12 +35,38 @@ module NfgOnboarder
     #
     # Example usage:
     # = ui.nfg :step, onboarder_presenter.step_status(the_step), step: 1, href: wizard_path(the_step)
-    def step_status(step)
-      return :active if step.to_sym == active_step.to_sym
-      return :visited if try(:completed_steps, h.controller_name).try(:include?, step)
+    def step_status(nav_step)
+      return :active if active?(nav_step)
+      return :visited if visited?(nav_step)
       # in case steps change, if the step or active step can't be found in what
       # is currently the list of steps  don't barf
-      return :disabled if (all_steps.index(step.to_sym) || 0) > (all_steps.index(active_step.to_sym) || 0)
+      return :disabled if disabled?(nav_step)
+    end
+
+    # returns the active trait if current_step is active
+    def breadcrumb_status(nav_step)
+      return :active if active?(nav_step)
+
+      nil
+    end
+
+    # returns disabled along with muted class for the href if passed step not visited yet
+    def href_class(nav_step)
+      return 'text-muted disabled' unless visited?(nav_step) || active?(nav_step)
+
+      nil
+    end
+
+    def active?(nav_step)
+      nav_step.to_sym == active_step.to_sym
+    end
+
+    def visited?(nav_step)
+      try(:completed_steps, h.controller_name).try(:include?, nav_step)
+    end
+
+    def disabled?(nav_step)
+      (all_steps.index(nav_step.to_sym) || 0) > (all_steps.index(active_step.to_sym) || 0)
     end
   end
 end

@@ -48,7 +48,8 @@ module NfgOnboarder
       end
 
       def update
-        redirect_to finish_wizard_path and return if exit_without_saving? && exit?
+        redirect_to finish_path and return if exit_without_saving? && exit?
+
         if (!use_recaptcha? || verify_recaptcha(model: form)) && form.validate(form_params)
           on_before_save
           form.save
@@ -56,10 +57,11 @@ module NfgOnboarder
           process_on_last_step if last_step
           # redirect if exit hasn't happened already
           # exit can sometimes happen in onboarders where on_valid_method is overriden to redirect
-          redirect_to finish_wizard_path and return if exit? && !performed?
+          redirect_to finish_path and return if exit? && !performed?
         else
           on_invalid_step
         end
+
         render_wizard(nil, {}, finish_wizard_params) unless performed?
       end
 
@@ -293,6 +295,14 @@ module NfgOnboarder
 
       def exit?
         params[:exit] == 'true'
+      end
+
+      def finish_path
+        if onboarding_group_steps.present? && onboarding_session.save_and_exit_path.present?
+          onboarding_session.save_and_exit_path
+        else
+          finish_wizard_path
+        end
       end
     end
   end
