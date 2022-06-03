@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_15_141825) do
+ActiveRecord::Schema.define(version: 2022_06_03_155503) do
 
   create_table "admins", force: :cascade do |t|
     t.string "first_name"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2019_08_15_141825) do
     t.datetime "completed_at"
     t.string "onboarder_prefix", limit: 255
     t.string "name", limit: 255
+    t.string "save_and_exit_path"
     t.index ["entity_id"], name: "fk__onboarding_sessions_entity_id"
     t.index ["name"], name: "index_onboarding_sessions_on_name"
     t.index ["owner_id"], name: "fk__onboarding_sessions_admin_id"
@@ -53,7 +54,6 @@ ActiveRecord::Schema.define(version: 2019_08_15_141825) do
   end
 
   create_table "testings", force: :cascade do |t|
-    t.text "name"
   end
 
 end
