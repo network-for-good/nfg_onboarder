@@ -11,6 +11,7 @@ describe NfgOnboarder::OnboarderPresenter do
   before do
     allow(h.controller).to receive(:params).and_return(id: current_step)
     allow(h.controller).to receive(:wizard_steps).and_return(steps)
+    allow(h.controller).to receive(:onboarding_group_steps).and_return(steps)
   end
 
   describe '#active_step' do

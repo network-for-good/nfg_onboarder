@@ -1,5 +1,8 @@
-require "rails_helper"
+# frozen_string_literal: true
 
+require 'rails_helper'
+
+# rubocop:disable Metrics/BlockLength
 describe NfgOnboarder::NavigationBarPresenter do
   let(:h) { ApplicationController.new.view_context }
   let(:navigation_bar_presenter) { described_class.new(onboarding_session, h) }
@@ -13,7 +16,7 @@ describe NfgOnboarder::NavigationBarPresenter do
   before do
     allow(h.controller).to receive(:params).and_return(id: current_step)
     allow(h.controller).to receive(:wizard_steps).and_return(steps)
-    allow(h.controller).to receive(:onboarding_group_steps).and_return(steps)
+    allow(h.controller).to receive(:onboarding_group_steps).and_return(nil)
     allow(h).to receive(:first_step).and_return(on_first_step)
   end
 
@@ -21,12 +24,22 @@ describe NfgOnboarder::NavigationBarPresenter do
     let(:tested_step) { :first }
     let(:tested_path) { nil }
     let(:before_point_of_no_return) { nil }
+
     subject { navigation_bar_presenter.href(tested_step, path: tested_path) }
 
-    before { allow(h).to receive(:before_last_visited_point_of_no_return?).with(tested_step).and_return(before_point_of_no_return) }
+    before do
+      allow(h).to receive(:before_last_visited_point_of_no_return?).with(tested_step).and_return(before_point_of_no_return)
+    end
+
+    context 'when current step is second' do
+      it 'returns nil so that the step is not clickable' do
+        expect(subject).to be_nil
+      end
+    end
 
     context 'when #before_last_visited_point_of_no_return? is true' do
       let(:before_point_of_no_return) { true }
+
       it 'returns nil so that the step is not clickable' do
         expect(subject).to be_nil
       end
@@ -34,7 +47,15 @@ describe NfgOnboarder::NavigationBarPresenter do
 
     context 'when #before_last_visited_point_of_no_return? is false' do
       let(:before_point_of_no_return) { false }
+      let(:current_step) { :second }
+      let(:tested_step) { tested_first_step }
       let(:tested_path) { '/tested/path' }
+      let(:progress) { { h.controller_name => [tested_step] } }
+
+      before do
+        allow(onboarding_session).to receive(:onboarder_progress).and_return(progress)
+      end
+
       it 'returns the path so that the step is clickable' do
         expect(subject).to eq tested_path
       end
@@ -114,7 +135,8 @@ describe NfgOnboarder::NavigationBarPresenter do
     subject { navigation_bar_presenter.step_body(step) }
 
     let(:locale_namespace) { [] }
-      before { allow(h).to receive(:locale_namespace).and_return(locale_namespace) }
+
+    before { allow(h).to receive(:locale_namespace).and_return(locale_namespace) }
 
     # could not figure out how to test the alternative context of this to verify the onboarding.create_project.steps_navigation.project_description correctly pulls this up from spec/dummy/config/locales/views/onboarding/create_project.yml
     context 'when the step does not have a locale entry' do
@@ -122,6 +144,28 @@ describe NfgOnboarder::NavigationBarPresenter do
 
       it 'humanizes the step name' do
         expect(subject).to eq tested_first_step.to_s.humanize
+      end
+    end
+
+    context "when required_approval? returns nil" do
+      context 'when current step is submit for review' do
+        let(:step) { :submit_for_review }
+
+        before { allow(h.controller).to receive(:required_approval?).and_return(nil) }
+
+        it 'returns Launch your Campaign' do
+          expect(subject).to eq I18n.t('onboarding.create_fundraiser.launch_your_campaign.step')
+        end
+      end
+
+      context 'when current step is not submit for review' do
+        let(:step) { tested_first_step }
+
+        before { allow(h.controller).to receive(:required_approval?).and_return(nil) }
+
+        it 'humanizes the step name' do
+          expect(subject).to eq tested_first_step.to_s.humanize
+        end
       end
     end
   end
@@ -168,3 +212,4 @@ describe NfgOnboarder::NavigationBarPresenter do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

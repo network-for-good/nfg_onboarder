@@ -28,7 +28,9 @@ RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view
   before do
     # Both controller stubs are required:
     allow(controller).to receive(:wizard_steps).and_return(steps) # necessary for view
+    allow(controller).to receive(:onboarding_group_steps).and_return(nil) # necessary for view
     allow(h.controller).to receive(:wizard_steps).and_return(steps) # necessary for presenter
+    allow(h.controller).to receive(:onboarding_group_steps).and_return(nil) # necessary for view
 
     allow(h.controller).to receive(:params).and_return(id: current_step)
     allow(h).to receive(:locale_namespace).and_return(locale_namespace)

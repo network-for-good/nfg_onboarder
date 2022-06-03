@@ -27,9 +27,9 @@ module NfgOnboarder
     def step_body(nav_step)
       if nav_step.to_sym == :submit_for_review && !h.controller.required_approval?
         I18n.t('onboarding.create_fundraiser.launch_your_campaign.step')
+      else
+        I18n.t(nav_step, scope: h.locale_namespace + [:step_navigations], default: nav_step.to_s.humanize)
       end
-
-      I18n.t(nav_step, scope: h.locale_namespace + [:step_navigations], default: nav_step.to_s.humanize)
     end
 
     # Returns a check mark for the last step's icon

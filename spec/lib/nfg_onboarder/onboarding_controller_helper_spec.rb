@@ -11,8 +11,20 @@ end
 describe FakesController do
   let(:form) { double('form', model: model, build_errors: nil, validate: true, save: nil) }
   let(:model) { double('model', name: '', persisted?: true, onboarding_sessions: onboarding_sessions) }
-  let(:onboarding_session) { FactoryBot.create(:onboarding_session, step_data: {}, onboarder_progress: {}, current_high_level_step: nil, current_step: step, owner: nil, completed_high_level_steps: nil) }
-  let(:params) { double('params', fetch: double('fetch', permit!: true), keys: keys, select: double('select', permit!: nil)) }
+  let(:onboarding_session) do
+    FactoryBot.create(
+      :onboarding_session,
+      step_data: {},
+      onboarder_progress: {},
+      current_high_level_step: nil,
+      current_step: step,
+      owner: nil,
+      completed_high_level_steps: nil
+    )
+  end
+  let(:params) do
+    double('params', fetch: double('fetch', permit!: true), keys: keys, select: double('select', permit!: nil))
+  end
   let(:onboarding_sessions) { double('onboarding_sessions', is_a?: activerecord_proxy) }
   let(:activerecord_proxy) { true }
   let(:exit) { false }
@@ -24,6 +36,7 @@ describe FakesController do
     allow_any_instance_of(FakesController).to receive(:params).and_return(params)
     allow_any_instance_of(FakesController).to receive(:step).and_return(step)
     allow_any_instance_of(FakesController).to receive(:steps).and_return([step])
+    allow_any_instance_of(FakesController).to receive(:onboarding_group_steps).and_return([step])
     allow_any_instance_of(FakesController).to receive(:next_step).and_return('next-step')
     allow_any_instance_of(FakesController).to receive(:cleansed_param_data)
     allow_any_instance_of(FakesController).to receive(:get_form_object).and_return(form)
