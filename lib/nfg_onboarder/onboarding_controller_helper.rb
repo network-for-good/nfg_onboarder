@@ -294,7 +294,7 @@ module NfgOnboarder
       end
 
       def exit?
-        params[:exit] == 'true'
+        params[:exit]
       end
 
       def finish_path

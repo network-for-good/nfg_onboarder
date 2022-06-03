@@ -9,6 +9,8 @@ ActiveRecord::Migrator.migrations_paths = 'spec/dummy/db/migrate'
 #
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+# load factories to avoid 'Factory not registered' error locally
+Dir["#{File.dirname(__FILE__)}/factories/*.rb"].each { |f| require f }
 
 Capybara.register_driver :selenium do |app|
   # profile = Selenium::WebDriver::Firefox::Profile.new

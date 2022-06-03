@@ -19,7 +19,8 @@ describe FakesController do
       current_high_level_step: nil,
       current_step: step,
       owner: nil,
-      completed_high_level_steps: nil
+      completed_high_level_steps: nil,
+      save_and_exit_path: nil
     )
   end
   let(:params) do
@@ -29,6 +30,7 @@ describe FakesController do
   let(:activerecord_proxy) { true }
   let(:exit) { false }
   let(:step) { 'some-step' }
+  let(:high_level_step) { 'high-level-step' }
 
   let(:keys) { [] }
   before do
@@ -36,7 +38,7 @@ describe FakesController do
     allow_any_instance_of(FakesController).to receive(:params).and_return(params)
     allow_any_instance_of(FakesController).to receive(:step).and_return(step)
     allow_any_instance_of(FakesController).to receive(:steps).and_return([step])
-    allow_any_instance_of(FakesController).to receive(:onboarding_group_steps).and_return([step])
+    allow_any_instance_of(FakesController).to receive(:onboarding_group_steps).and_return([high_level_step])
     allow_any_instance_of(FakesController).to receive(:next_step).and_return('next-step')
     allow_any_instance_of(FakesController).to receive(:cleansed_param_data)
     allow_any_instance_of(FakesController).to receive(:get_form_object).and_return(form)
