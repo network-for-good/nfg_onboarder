@@ -56,7 +56,7 @@ module NfgOnboarder
     def path_with_id(nav_step)
       return nil unless model.onboarder_progress.key?(nav_step.to_s)
 
-      "/onboarding/create_campaign/#{nav_step}/#{model.onboarder_progress[nav_step.to_s][0]}"
+      "/onboarding/create_campaign/#{nav_step}/#{model.onboarder_progress[nav_step.to_s].last}"
     end
   end
 end
