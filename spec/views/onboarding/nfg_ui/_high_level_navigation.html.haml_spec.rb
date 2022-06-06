@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'wicked'
 
-
+# rubocop:disable Metrics/BlockLength
 RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view do
   # Locals
   let(:next_step_confirmation) { nil }
@@ -22,7 +24,7 @@ RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view
   let(:current_step) { first_step }
   let(:wizard_path) { '/test_path' }
   let(:before_point_of_no_return) { false }
-  let(:locale_namespace) { ['onboarding', 'sample_onboarder'] }
+  let(:locale_namespace) { %w[onboarding sample_onboarder] }
   let(:render_previous_button_unless) { true }
 
   before do
@@ -95,6 +97,72 @@ RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view
     end
   end
 
+  describe 'with high level nav options' do
+    let(:presenter) { NfgOnboarder::HighLevelNavigationBarPresenter.new(onboarding_session, h) }
+    let(:high_level_step_first) { :first }
+    let(:high_level_step_second) { :second }
+    let(:high_level_step_last) { :last }
+    let(:high_level_steps) { [high_level_step_first, high_level_step_second, high_level_step_last] }
+    let(:high_level_path) { '/test_path' }
+
+    before do
+      allow(controller).to receive(:onboarding_group_steps).and_return(high_level_steps) # necessary for view
+      allow(h.controller).to receive(:onboarding_group_steps).and_return(high_level_steps) # necessary for presenter
+      allow(view).to receive(:onboarding_group_steps).and_return(high_level_steps)
+    end
+
+    it 'lists a nav item for each step' do
+      expect(subject).to have_css "[data-describe='nav-steps'] .nav-item", count: high_level_steps.size
+    end
+
+    describe 'with step nav item' do
+      # Put us right in the middle - step 1: completed, step 2: active, step 3: upcoming
+      let(:current_step) { high_level_step_second }
+      let(:progress) { { high_level_step_first.to_s => [:some_id] } }
+
+      before do
+        allow(onboarding_session).to receive(:onboarder_progress).and_return(progress)
+        allow(h).to receive(:controller_name).and_return(current_step)
+      end
+
+      context 'an active step' do
+        it 'is an active visited step' do
+          expect(subject).to have_css '.nav-item.active.visited', count: 1, text: '2Second'
+        end
+      end
+
+      context 'a completed step' do
+        it 'is a visited ("completed") step' do
+          expect(subject).to have_selector '.nav-item.visited', text: '1First'
+
+          and_it 'is not active' do
+            expect(subject).not_to have_selector '.nav-item.active.visited', text: '1First'
+          end
+        end
+      end
+
+      context 'an upcoming step' do
+        it 'is disabled, upcoming step' do
+          expect(subject).to have_selector ".nav-item.disabled[data-describe='last-step'][tabindex='-1']", text: 'Last'
+
+          and_it 'is not active' do
+            expect(subject).not_to have_selector '.nav-item.active', text: 'Last'
+          end
+
+          and_it 'is not visited' do
+            expect(subject).not_to have_selector '.nav-item.visited', text: 'Last'
+          end
+        end
+      end
+
+      context 'the last step' do
+        it 'is indicated with a checkmark' do
+          expect(subject).to have_css "[data-describe='last-step'] .fa-check"
+        end
+      end
+    end
+  end
+
   describe 'the previous button' do
     context 'when render_previous_button_unless? is true' do
       let(:render_previous_button_unless) { true }
@@ -112,3 +180,4 @@ RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
