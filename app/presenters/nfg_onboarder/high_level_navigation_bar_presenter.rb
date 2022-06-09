@@ -23,7 +23,11 @@ module NfgOnboarder
     # or default to humanizing the
     # step's symbol.
     def step_body(nav_step)
-      I18n.t(nav_step, scope: h.locale_namespace + [:step_navigations], default: nav_step.to_s.humanize)
+      I18n.t(
+        nav_step,
+        scope: h.locale_namespace + [:step_navigations],
+        default: nav_step.to_s.split('_').map(&:capitalize).join(' ')
+      )
     end
 
     # Returns a check mark for the last step's icon
