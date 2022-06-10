@@ -7,6 +7,9 @@ module NfgOnboarder
     # when the step is disabled / unclickable
     # or on the last step, all links should have a nil :href
     def href(nav_step, path: '')
+      # returns nil if the navigation is secondary breadcrumbs navigation.
+      return nil if options[:breadcrumb] && (active?(nav_step) || !visited?(nav_step))
+
       h.before_last_visited_point_of_no_return?(nav_step) ? nil : path
     end
 
