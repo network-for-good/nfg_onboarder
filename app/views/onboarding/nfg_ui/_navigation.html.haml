@@ -1,5 +1,5 @@
 - if controller.wizard_steps.count > 1
-  - presenter = NfgOnboarder::NavigationBarPresenter.new(onboarding_session, self, breadcrumb: true)
+  - presenter = NfgOnboarder::WizardStepsNavigationBarPresenter.new(onboarding_session, self, breadcrumb: true)
 
   .p-2.p-lg-4.bg-light.border-bottom
     .row

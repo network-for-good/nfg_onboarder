@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module NfgOnboarder
-  # Ex usage on a view: NfgOnboarder::HighLevelNavigationBarPresenter.new(onboarding_session, self)
-  class HighLevelNavigationBarPresenter < NfgOnboarder::OnboarderPresenter
+  # Ex usage on a view: NfgOnboarder::GroupStepsNavigationBarPresenter.new(onboarding_session, self)
+  class GroupStepsNavigationBarPresenter < NfgOnboarder::OnboarderPresenter
     # Ensure that the href is nil (thus supporting accessibility via the nfg_ui Step)
     # when the step is disabled / unclickable
     # or on the last step, all links should have a nil :href
@@ -45,6 +45,7 @@ module NfgOnboarder
       return :disabled if disabled?(nav_step)
     end
 
+    # Checks whether the step is active or not. If the step is active, it will return true.
     def active?(nav_step)
       nav_step.to_sym == h.controller_name.to_sym
     end
@@ -53,14 +54,24 @@ module NfgOnboarder
       !visited?(nav_step) && !active?(nav_step)
     end
 
+    # Checks whether the step is visited or not. If the step is visited, it will return true.
+    # Since the onboarder_progress is a hash, the key is the step name and the value is an array
+    # of the steps that have been visited. so here we check if the step is visited or not by checking
+    # if the step name is in the onboarder_progress hash.
     def visited?(nav_step)
       model.onboarder_progress.keys.include?(nav_step.to_s)
     end
 
+    # returns the path for the high level group steps. If group step has wizard steps,
+    # it will return the path for the last completed step.
     def path_with_id(nav_step)
       return nil unless model.onboarder_progress.key?(nav_step.to_s)
 
-      "/onboarding/create_campaign/#{nav_step}/#{model.onboarder_progress[nav_step.to_s].last}"
+      "/onboarding/#{controller_name}/#{nav_step}/#{model.onboarder_progress[nav_step.to_s].last}"
+    end
+
+    def controller_name
+      h.controller.class.name.underscore.split('/')[1]
     end
   end
 end

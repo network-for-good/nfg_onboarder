@@ -12,7 +12,7 @@ RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view
   let(:back_button_text) { '' }
   let(:submit_button_text) { '' }
   let(:onboarding_session) { FactoryBot.create(:onboarding_session) }
-  let(:presenter) { NfgOnboarder::NavigationBarPresenter.new(onboarding_session, h) }
+  let(:presenter) { NfgOnboarder::WizardStepsNavigationBarPresenter.new(onboarding_session, h) }
 
   # View spec setup
   let(:h) { ActionController::Base.new.view_context }
@@ -98,7 +98,7 @@ RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view
   end
 
   describe 'with high level nav options' do
-    let(:presenter) { NfgOnboarder::HighLevelNavigationBarPresenter.new(onboarding_session, h) }
+    let(:presenter) { NfgOnboarder::GroupStepsNavigationBarPresenter.new(onboarding_session, h) }
     let(:high_level_step_first) { :first }
     let(:high_level_step_second) { :second }
     let(:high_level_step_last) { :last }

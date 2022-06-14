@@ -11,10 +11,10 @@
 
 - if onboarding_group_steps.present?
   - navigation_steps = onboarding_group_steps
-  - presenter ||= NfgOnboarder::HighLevelNavigationBarPresenter.new(onboarding_session, self)
+  - presenter ||= NfgOnboarder::GroupStepsNavigationBarPresenter.new(onboarding_session, self) # onboarder group steps
 - else
   - navigation_steps = controller.wizard_steps
-  - presenter ||= NfgOnboarder::NavigationBarPresenter.new(onboarding_session, self)
+  - presenter ||= NfgOnboarder::WizardStepsNavigationBarPresenter.new(onboarding_session, self) # wizard steps
 
 .builder-nav
   .row.align-items-center.justify-content-between
@@ -24,8 +24,8 @@
       = ui.nfg :steps, id: 'onboarding_steps', describe: 'nav-steps' do
         - navigation_steps.each_with_index do |nav_step, i|
           - i += 1
-          = ui.nfg :step, presenter.step_status(nav_step), step: i, href: presenter.href(nav_step, path: wizard_path(nav_step)), describe: "#{nav_step}-step", icon: presenter.step_icon(nav_step) do
-            = presenter.step_body(nav_step)
+          = ui.nfg :step, presenter.step_status(nav_step), step: i, body: presenter.step_body(nav_step), href: presenter.href(nav_step, path: wizard_path(nav_step)), describe: "#{nav_step}-step", icon: presenter.step_icon(nav_step)
+
     .col-6.col-lg.text-right.d-none.d-lg-block
       = ui.nfg :button, :lg, *[:submit, (:disabled if disable_submit_button)], body: submit_button_text.html_safe, icon: submit_button_icon, id: 'next_step', class: 'flex-fill', describe: 'next-button', disable_with: ui.nfg(:icon, :loader), confirm: next_step_confirmation, render_unless: hide_submit_button
 

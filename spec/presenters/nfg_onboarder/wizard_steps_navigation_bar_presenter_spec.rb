@@ -1,35 +1,40 @@
-require "rails_helper"
+# frozen_string_literal: true
 
-describe NfgOnboarder::HighLevelNavigationBarPresenter do
+require 'rails_helper'
+
+# rubocop:disable Metrics/BlockLength
+describe NfgOnboarder::WizardStepsNavigationBarPresenter do
   let(:h) { ApplicationController.new.view_context }
-  let(:high_level_navigation_bar_presenter) { described_class.new(onboarding_session, h) }
+  let(:navigation_bar_presenter) { described_class.new(onboarding_session, h) }
   let(:onboarding_session) { NfgOnboarder::Session.new(current_step: current_step) }
-  let(:high_level_first_step) { :high_level_first }
-  let(:high_level_second_step) { :high_level_second }
-  let(:high_level_last_step) { :high_level_last }
-  let(:group_steps) { [high_level_first_step, high_level_second_step, high_level_last_step] }
   let(:tested_first_step) { :first }
   let(:tested_last_step) { :last }
   let(:steps) { [tested_first_step, :second, tested_last_step] }
-  let(:current_step) { high_level_first_step }
+  let(:current_step) { tested_first_step }
   let(:on_first_step) { current_step == tested_first_step }
 
   before do
     allow(h.controller).to receive(:params).and_return(id: current_step)
     allow(h.controller).to receive(:wizard_steps).and_return(steps)
-    allow(h.controller).to receive(:onboarding_group_steps).and_return(group_steps)
+    allow(h.controller).to receive(:onboarding_group_steps).and_return(nil)
     allow(h).to receive(:first_step).and_return(on_first_step)
   end
 
   describe "#href(step, path: '')" do
-    let(:tested_step) { high_level_first_step }
+    let(:tested_step) { :first }
     let(:tested_path) { nil }
     let(:before_point_of_no_return) { nil }
 
-    subject { high_level_navigation_bar_presenter.href(tested_step, path: tested_path) }
+    subject { navigation_bar_presenter.href(tested_step, path: tested_path) }
 
     before do
       allow(h).to receive(:before_last_visited_point_of_no_return?).with(tested_step).and_return(before_point_of_no_return)
+    end
+
+    context 'when current step is second' do
+      it 'returns nil so that the step is not clickable' do
+        expect(subject).to be_nil
+      end
     end
 
     context 'when #before_last_visited_point_of_no_return? is true' do
@@ -42,33 +47,23 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
 
     context 'when #before_last_visited_point_of_no_return? is false' do
       let(:before_point_of_no_return) { false }
-      let(:tested_path) { nil }
+      let(:current_step) { :second }
+      let(:tested_step) { tested_first_step }
+      let(:tested_path) { '/tested/path' }
+      let(:progress) { { h.controller_name => [tested_step] } }
 
       before do
         allow(onboarding_session).to receive(:onboarder_progress).and_return(progress)
       end
 
-      context 'when onboarding has some progress' do
-        let(:onboarding_path) { "/onboarding/create_campaign/#{high_level_first_step}/#{tested_first_step}" }
-        let(:progress) { { high_level_first_step.to_s => [tested_first_step] } }
-
-        it 'returns the path so that the step is clickable' do
-          expect(subject).to eq onboarding_path
-        end
-      end
-
-      context 'when no progress has made in onboarding' do
-        let(:progress) { {} }
-
-        it 'returns nil so that the step is not clickable' do
-          expect(subject).to be_nil
-        end
+      it 'returns the path so that the step is clickable' do
+        expect(subject).to eq tested_path
       end
     end
   end
 
   describe '#points_of_no_return' do
-    subject { high_level_navigation_bar_presenter.points_of_no_return }
+    subject { navigation_bar_presenter.points_of_no_return }
     let(:tested_points_of_no_return) { [current_step] }
 
     before { allow(h.controller).to receive(:points_of_no_return).and_return(tested_points_of_no_return) }
@@ -79,7 +74,7 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
   end
 
   describe '#render_previous_button_unless?' do
-    subject { high_level_navigation_bar_presenter.render_previous_button_unless? }
+    subject { navigation_bar_presenter.render_previous_button_unless? }
 
     let(:tested_single_use_steps) { [] }
     let(:tested_at_point_of_no_return) { false } # a native state
@@ -137,7 +132,7 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
   end
 
   describe '#step_body(step)' do
-    subject { high_level_navigation_bar_presenter.step_body(step) }
+    subject { navigation_bar_presenter.step_body(step) }
 
     let(:locale_namespace) { [] }
 
@@ -151,21 +146,41 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
         expect(subject).to eq tested_first_step.to_s.humanize
       end
     end
+
+    context "when required_approval? returns nil" do
+      context 'when current step is submit for review' do
+        let(:step) { :submit_for_review }
+
+        before { allow(h.controller).to receive(:required_approval?).and_return(nil) }
+
+        it 'returns Launch your Campaign' do
+          expect(subject).to eq I18n.t('onboarding.create_fundraiser.launch_your_campaign.step')
+        end
+      end
+
+      context 'when current step is not submit for review' do
+        let(:step) { tested_first_step }
+
+        before { allow(h.controller).to receive(:required_approval?).and_return(nil) }
+
+        it 'humanizes the step name' do
+          expect(subject).to eq tested_first_step.to_s.humanize
+        end
+      end
+    end
   end
 
   describe '#step_icon(step)' do
-    subject { high_level_navigation_bar_presenter.step_icon(step) }
-
+    subject { navigation_bar_presenter.step_icon(step) }
     context 'when the step is the last step' do
-      let(:step) { high_level_last_step }
-
+      let(:step) { tested_last_step }
       it 'returns the icon string' do
         expect(subject).to eq 'check'
       end
     end
 
     context 'when the step is not the last step' do
-      let(:step) { high_level_first_step }
+      let(:step) { tested_first_step }
       it 'returns nil so as to disable the icon via the component options' do
         expect(subject).to eq nil
       end
@@ -173,40 +188,28 @@ describe NfgOnboarder::HighLevelNavigationBarPresenter do
   end
 
   describe '#step_status(step)' do
-    subject { high_level_navigation_bar_presenter.step_status(step) }
-
+    subject { navigation_bar_presenter.step_status(step) }
     context 'when step is the active step' do
       let(:step) { current_step }
-
-      before do
-        allow(h).to receive(:controller_name).and_return(step)
-      end
-
       it { is_expected.to eq :active }
     end
 
     context 'when step has been completed' do
-      let(:current_step) { high_level_second_step }
-      let(:step) { high_level_first_step }
-      let(:progress) { { high_level_first_step.to_s => [tested_first_step] } }
-
-      before do
-        allow(onboarding_session).to receive(:onboarder_progress).and_return(progress)
-        allow(h).to receive(:controller_name).and_return(current_step)
-      end
-
+      let(:current_step) { tested_last_step }
+      let(:step) { tested_first_step }
+      before { allow(onboarding_session).to receive(:completed_steps).and_return([step]) }
       it 'is determined to be visited' do
         expect(subject).to eq :visited
       end
     end
 
     context 'when step has not yet been visited' do
-      let(:current_step) { high_level_second_step }
-      let(:step) { high_level_last_step }
-
+      let(:current_step) { tested_first_step }
+      let(:step) { tested_last_step }
       it 'returns a status conducive to being visited' do
         expect(subject).to eq :disabled
       end
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
