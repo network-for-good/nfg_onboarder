@@ -26,7 +26,7 @@ module NfgOnboarder
       I18n.t(
         nav_step,
         scope: h.locale_namespace + [:step_navigations],
-        default: nav_step.to_s.split('_').map(&:capitalize).join(' ')
+        default: nav_step.to_s.titleize
       )
     end
 
@@ -50,7 +50,7 @@ module NfgOnboarder
     end
 
     def disabled?(nav_step)
-      (all_steps.index(nav_step.to_sym) || 0) > (all_steps.index(active_step.to_sym) || 0)
+      !visited?(nav_step) && !active?(nav_step)
     end
 
     def visited?(nav_step)
