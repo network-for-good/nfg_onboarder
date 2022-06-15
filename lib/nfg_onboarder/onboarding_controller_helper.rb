@@ -298,11 +298,7 @@ module NfgOnboarder
       end
 
       def finish_path
-        if onboarding_group_steps.present? && onboarding_session.save_and_exit_path.present?
-          onboarding_session.save_and_exit_path
-        else
-          finish_wizard_path
-        end
+        onboarding_group_steps.present? ? method(:finish_wizard_path).super_method.call : finish_wizard_path
       end
     end
   end
