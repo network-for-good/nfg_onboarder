@@ -297,6 +297,11 @@ module NfgOnboarder
         params[:exit]
       end
 
+      # This is used to determine where to redirect the user after they have completed the onboarder or when they click save & exit link.
+      # If group_steps are present, we have to call the parent finish_wizard_path to get the user to the correct location when they are clicking the save&exit link.
+      # In group steps, since all the individual controllers has their own finish_wizard_path, and when the user clicks Save & Exit, the form is getting submitted and -
+      # redirected to the current finish_wizard_path which means it will go to the next group. So actually the Exit will not happen.
+      # If group_steps are not present, we can just use the default finish_wizard_path.
       def finish_path
         onboarding_group_steps.present? ? method(:finish_wizard_path).super_method.call : finish_wizard_path
       end
