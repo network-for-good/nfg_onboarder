@@ -2,20 +2,12 @@
 
 module NfgOnboarder
   # Ex usage on a view: NfgOnboarder::GroupStepsNavigationBarPresenter.new(onboarding_session, self)
-  class GroupStepsNavigationBarPresenter < NfgOnboarder::OnboarderPresenter
+  class GroupStepsNavigationBarPresenter < NfgOnboarder::OnboarderNavigationBarPresenter
     # Ensure that the href is nil (thus supporting accessibility via the nfg_ui Step)
     # when the step is disabled / unclickable
     # or on the last step, all links should have a nil :href
     def href(nav_step, path = '')
       h.before_last_visited_point_of_no_return?(nav_step) ? nil : path_with_id(nav_step)
-    end
-
-    def points_of_no_return
-      @points_of_no_return ||= h.controller.send(:points_of_no_return)
-    end
-
-    def render_previous_button_unless?
-      on_first_step? or h.controller.single_use_steps.include?(h.controller.previous_step) or h.at_point_of_no_return?
     end
 
     # Provide a custom locale lookup
@@ -28,21 +20,6 @@ module NfgOnboarder
         scope: h.locale_namespace + [:step_navigations],
         default: nav_step.to_s.titleize
       )
-    end
-
-    # Returns a check mark for the last step's icon
-    def step_icon(nav_step)
-      nav_step == all_steps.last ? 'check' : nil
-    end
-
-    # Returns an nfg_ui friendly status for the :step component's status trait
-    #
-    # Example usage:
-    # = ui.nfg :step, onboarder_presenter.step_status(the_step), step: 1, href: wizard_path(the_step)
-    def step_status(nav_step)
-      return :active if active?(nav_step)
-      return :visited if visited?(nav_step)
-      return :disabled if disabled?(nav_step)
     end
 
     # Checks whether the step is active or not. If the step is active, it will return true.
