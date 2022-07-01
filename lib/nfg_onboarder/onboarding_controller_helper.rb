@@ -16,8 +16,23 @@ module NfgOnboarder
       # assume the onboarding session is associated with an admin. This won't be the case for donor related
       # onboarding sessions. This exposure will need to be overwritten there.
       expose(:onboarding_session) { get_onboarding_session }
-      expose(:first_step) { steps.first == step }
-      expose(:last_step) { steps.last == step }
+
+      expose(:first_step) do
+        if onboarding_group_steps.present?
+          onboarding_group_steps.first == locale_namespace.last.to_sym
+        else
+          steps.first == step
+        end
+      end
+
+      expose(:last_step) do
+        if onboarding_group_steps.present?
+          onboarding_group_steps.last == locale_namespace.last.to_sym
+        else
+          steps.last == step
+        end
+      end
+
       expose(:locale_namespace) { self.class.name.underscore.gsub('_controller', '').split('/') }
       expose(:form_params) { params.fetch("#{field_prefix}_#{step}", {}).permit! }
       expose(:exit_without_saving?) { (exit_without_save_steps || []).map(&:to_sym).include?(onboarding_session.current_step.try(:to_sym)) }
@@ -33,7 +48,8 @@ module NfgOnboarder
       end
 
       def update
-        redirect_to finish_wizard_path and return if exit_without_saving? && exit?
+        redirect_to finish_path and return if exit_without_saving? && exit?
+
         if (!use_recaptcha? || verify_recaptcha(model: form)) && form.validate(form_params)
           on_before_save
           form.save
@@ -41,10 +57,11 @@ module NfgOnboarder
           process_on_last_step if last_step
           # redirect if exit hasn't happened already
           # exit can sometimes happen in onboarders where on_valid_method is overriden to redirect
-          redirect_to finish_wizard_path and return if exit? && !performed?
+          redirect_to finish_path and return if exit? && !performed?
         else
           on_invalid_step
         end
+
         render_wizard(nil, {}, finish_wizard_params) unless performed?
       end
 
@@ -276,9 +293,17 @@ module NfgOnboarder
         params.select { |key| key == ALT_FINISH_PATH_PREPEND_KEY }.permit!
       end
 
-
       def exit?
         params[:exit]
+      end
+
+      # This is used to determine where to redirect the user after they have completed the onboarder or when they click save & exit link.
+      # If group_steps are present, we have to call the parent finish_wizard_path to get the user to the correct location when they are clicking the save&exit link.
+      # In group steps, since all the individual controllers has their own finish_wizard_path, and when the user clicks Save & Exit, the form is getting submitted and -
+      # redirected to the current finish_wizard_path which means it will go to the next group. So actually the Exit will not happen.
+      # If group_steps are not present, we can just use the default finish_wizard_path.
+      def finish_path
+        onboarding_group_steps.present? ? method(:finish_wizard_path).super_method.call : finish_wizard_path
       end
     end
   end
