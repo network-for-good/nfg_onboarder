@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 
-# Ex: NfgCsvImporter::OnboarderPresenter.new(onboarding_session)
 module NfgOnboarder
+  # Ex: NfgCsvImporter::OnboarderPresenter.new(onboarding_session)
   class OnboarderPresenter < NfgOnboarder::GemPresenter
     def active_step
       # this is the step that is currently being displayed.
@@ -24,7 +25,17 @@ module NfgOnboarder
 
     # returns an array of symbols: [:step1, :step2, :step3]
     def all_steps
-      @all_steps ||= h.controller.wizard_steps
+      @all_steps ||= navigation_steps
+    end
+
+    def steps_type
+      h.controller.onboarding_group_steps.present? ? :onboarding_group_steps : :wizard_steps
+    end
+
+    def navigation_steps
+      return h.controller.onboarding_group_steps if steps_type == :onboarding_group_steps
+
+      h.controller.wizard_steps
     end
   end
 end

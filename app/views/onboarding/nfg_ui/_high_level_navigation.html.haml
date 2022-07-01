@@ -7,20 +7,25 @@
 - submit_button_icon = local_assigns[:submit_button_icon]
 - disable_submit_button = false if local_assigns[:disable_submit_button].nil?
 - hide_submit_button = false if local_assigns[:hide_submit_button].nil?
+- presenter = local_assigns[:presenter]
 
--# Fallback presenter
-- presenter = NfgOnboarder::HighLevelNavigationBarPresenter.new(onboarding_session, self) if local_assigns[:presenter].nil?
+- if onboarding_group_steps.present?
+  - navigation_steps = onboarding_group_steps
+  - presenter ||= NfgOnboarder::GroupStepsNavigationBarPresenter.new(onboarding_session, self) # onboarder group steps
+- else
+  - navigation_steps = controller.wizard_steps
+  - presenter ||= NfgOnboarder::WizardStepsNavigationBarPresenter.new(onboarding_session, self) # wizard steps
 
 .builder-nav
   .row.align-items-center.justify-content-between
     .col-6.col-lg.d-none.d-lg-block
       = ui.nfg :button, :lg, :secondary, href: previous_wizard_path, body: back_button_text.html_safe, id: 'prev_step', class: 'flex-fill', describe: 'previous-button', disable_with: ui.nfg(:icon, :loader), render_unless: presenter.render_previous_button_unless?
     .col-12.col-lg-8.mx-auto
-      = ui.nfg :steps, describe: 'nav-steps' do
-        - controller.wizard_steps.each_with_index do |step, i|
+      = ui.nfg :steps, id: 'onboarding_steps', describe: 'nav-steps' do
+        - navigation_steps.each_with_index do |nav_step, i|
           - i += 1
-          = ui.nfg :step, presenter.step_status(step), step: i, href: presenter.href(step, path: wizard_path(step)), describe: "#{step}-step", icon: presenter.step_icon(step) do
-            = presenter.step_body(step)
+          = ui.nfg :step, presenter.step_status(nav_step), step: i, body: presenter.step_body(nav_step), href: presenter.href(nav_step, path: wizard_path(nav_step)), describe: "#{nav_step}-step", icon: presenter.step_icon(nav_step)
+
     .col-6.col-lg.text-right.d-none.d-lg-block
       = ui.nfg :button, :lg, *[:submit, (:disabled if disable_submit_button)], body: submit_button_text.html_safe, icon: submit_button_icon, id: 'next_step', class: 'flex-fill', describe: 'next-button', disable_with: ui.nfg(:icon, :loader), confirm: next_step_confirmation, render_unless: hide_submit_button
 
