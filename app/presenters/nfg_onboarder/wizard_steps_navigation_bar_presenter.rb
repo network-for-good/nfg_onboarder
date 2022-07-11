@@ -36,5 +36,9 @@ module NfgOnboarder
     def disabled?(nav_step)
       (all_steps.index(nav_step.to_sym) || 0) > (all_steps.index(active_step.to_sym) || 0)
     end
+
+    def previous_path
+      h.controller.previous_wizard_path
+    end
   end
 end
