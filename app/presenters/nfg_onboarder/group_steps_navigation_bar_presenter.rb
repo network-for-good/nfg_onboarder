@@ -57,11 +57,9 @@ module NfgOnboarder
     # first step of the group or not. If it is the first step of the group, we need to return
     # the previous_group_path. Otherwise, we need to return the previous_wizard_path.
     def previous_path
-      if active_group_path == h.controller.previous_wizard_path
-        h.controller.previous_group_path
-      else
-        h.controller.previous_wizard_path
-      end
+      return h.controller.previous_group_path if h.controller.previous_wizard_path == active_group_path
+
+      h.controller.previous_wizard_path
     end
 
     # Returns the active group step from the controller.
