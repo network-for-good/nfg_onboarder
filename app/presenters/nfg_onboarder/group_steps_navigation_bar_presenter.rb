@@ -44,11 +44,32 @@ module NfgOnboarder
     def path_with_id(nav_step)
       return nil unless model.onboarder_progress.key?(nav_step.to_s)
 
-      "/onboarding/#{controller_name}/#{nav_step}/#{model.onboarder_progress[nav_step.to_s].last}"
+      "/onboarding/#{controller_name[1]}/#{nav_step}/#{model.onboarder_progress[nav_step.to_s].last}"
     end
 
     def controller_name
-      h.controller.class.name.underscore.split('/')[1]
+      h.controller.class.name.underscore.split('/')
+    end
+
+    # previous_wizard_path is the last step that was visited in the group. It is used to
+    # determine the previous step but it is not the actual previous step when it comes to
+    # the first step of the group. So we need to check if the previous_wizard_path is the
+    # first step of the group or not. If it is the first step of the group, we need to return
+    # the previous_group_path. Otherwise, we need to return the previous_wizard_path.
+    def previous_path
+      return h.controller.previous_group_path if h.controller.previous_wizard_path == active_group_path
+
+      h.controller.previous_wizard_path
+    end
+
+    # Returns the active group step from the controller.
+    def active_group_step
+      controller_name.last.split('_')[0...-1].join('_')
+    end
+
+    # Returns the path for the active group step.
+    def active_group_path
+      "/onboarding/#{controller_name[1]}/#{active_group_step}/#{active_step}"
     end
   end
 end
