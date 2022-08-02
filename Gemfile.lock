@@ -5,7 +5,7 @@ PATH
       decent_exposure
       execjs (= 2.7.0)
       haml
-      nfg_ui (~> 0.14.0)
+      nfg_ui (~> 0.15.0)
       rails (~> 5.0)
       reform (= 2.2.4)
       simple_form
@@ -136,7 +136,7 @@ GEM
     minitest (5.14.1)
     momentjs-rails (2.29.4.1)
       railties (>= 3.1)
-    nfg_ui (0.14.7)
+    nfg_ui (0.15.0)
       autoprefixer-rails (= 9.4.9)
       bootstrap (= 4.3.1)
       browser (~> 2.7.1)
@@ -264,7 +264,7 @@ GEM
     temple (0.8.2)
     thor (1.0.1)
     thread_safe (0.3.6)
-    tilt (2.0.10)
+    tilt (2.0.11)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
     uber (0.1.0)
