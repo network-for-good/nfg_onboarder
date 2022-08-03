@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/network-for-good/nfg_ui
-  revision: f88cb418e192e25e608c479c7e567e5913ef281e
+  revision: 14509725dec500049878a0b807acabb3a9bd5d92
   branch: rails_6
   specs:
-    nfg_ui (0.15.0)
+    nfg_ui (0.15.1)
       autoprefixer-rails (= 9.4.9)
       bootstrap (= 4.3.1)
       browser (~> 2.7.1)
