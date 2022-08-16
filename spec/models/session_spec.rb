@@ -48,15 +48,17 @@ describe NfgOnboarder::Session do
 
       context "when there are related objects" do
         let(:admin) { create(:admin) }
-        let(:session) { create(:session, related_objects: { admin: admin }) }
+
+        let!(:session) do
+          create(:session, related_objects: { admin: admin })
+        end
 
         it "returns the related object" do
           expect(session.admin).to eql(admin)
         end
 
         it "saves the related object" do
-          expect_any_instance_of(NfgOnboarder::RelatedObject).to receive(:save).once
-          subject
+          expect(session.related_objects).to all be_persisted
         end
       end
     end

@@ -1,0 +1,9 @@
+- if controller.wizard_steps.count > 1
+  - presenter = NfgOnboarder::WizardStepsNavigationBarPresenter.new(onboarding_session, self, breadcrumb: true)
+
+  .p-2.p-lg-4.bg-light.border-bottom
+    .row
+      .col-12.col-lg-8.mx-auto
+        = ui.nfg :breadcrumb, class: 'nav-secondary mb-0' do
+          - controller.wizard_steps.each_with_index do |nav_step, index|
+            = ui.nfg :breadcrumb_item, (:active if presenter.active?(nav_step)), body: presenter.step_body(nav_step), href: presenter.href(nav_step, path: wizard_path(nav_step))

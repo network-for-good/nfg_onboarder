@@ -11,7 +11,6 @@ gem 'nfg_ui', git: 'https://github.com/network-for-good/nfg_ui', branch: 'rails_
 
 group :test do
   gem 'reform-rails', '~> 0.2.3'
-  gem 'factory_bot_rails'
 end
 
 # Declare any dependencies that are still in development here instead of in
