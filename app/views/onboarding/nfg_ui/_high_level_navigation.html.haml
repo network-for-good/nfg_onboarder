@@ -19,7 +19,7 @@
 .builder-nav
   .row.align-items-center.justify-content-between
     .col-6.col-lg.d-none.d-lg-block
-      = ui.nfg :button, :lg, :secondary, href: previous_wizard_path, body: back_button_text.html_safe, id: 'prev_step', class: 'flex-fill', describe: 'previous-button', disable_with: ui.nfg(:icon, :loader), render_unless: presenter.render_previous_button_unless?
+      = ui.nfg :button, :lg, :secondary, href: presenter.previous_path, body: back_button_text.html_safe, id: 'prev_step', class: 'flex-fill', describe: 'previous-button', disable_with: ui.nfg(:icon, :loader), render_unless: presenter.render_previous_button_unless?
     .col-12.col-lg-8.mx-auto
       = ui.nfg :steps, id: 'onboarding_steps', describe: 'nav-steps' do
         - navigation_steps.each_with_index do |nav_step, i|
