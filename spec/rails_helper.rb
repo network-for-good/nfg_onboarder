@@ -10,6 +10,11 @@ ActiveRecord::Migrator.migrations_paths = 'spec/dummy/db/migrate'
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
+# by default, FactoryBot will look for factories in the Dummy app, but
+# we want to have them in the /spec/factories folder
+FactoryBot.definition_file_paths << "#{File.dirname(__FILE__)}/factories"
+FactoryBot.find_definitions
+
 Capybara.register_driver :selenium do |app|
   # profile = Selenium::WebDriver::Firefox::Profile.new
   Capybara::Selenium::Driver.new(app, :browser => :chrome)
@@ -20,6 +25,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.order = "random"
   config.infer_spec_type_from_file_location!
+
   config.include FactoryBot::Syntax::Methods
 end
 
