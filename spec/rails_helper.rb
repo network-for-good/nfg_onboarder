@@ -12,8 +12,10 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 # by default, FactoryBot will look for factories in the Dummy app, but
 # we want to have them in the /spec/factories folder
+# but, when running on cicleci, the `find_definitions` line below raises
+# an error that the definitions are already loaded. 
 FactoryBot.definition_file_paths << "#{File.dirname(__FILE__)}/factories"
-FactoryBot.find_definitions
+FactoryBot.find_definitions rescue nil
 
 Capybara.register_driver :selenium do |app|
   # profile = Selenium::WebDriver::Firefox::Profile.new
