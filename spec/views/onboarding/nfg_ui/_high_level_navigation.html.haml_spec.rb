@@ -26,6 +26,7 @@ RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view
   let(:before_point_of_no_return) { false }
   let(:locale_namespace) { %w[onboarding sample_onboarder] }
   let(:render_previous_button_unless) { true }
+  let(:previous_wizard_path) { '/previous_path' }
 
   before do
     # Both controller stubs are required:
@@ -34,6 +35,7 @@ RSpec.describe 'onboarding/nfg_ui/_high_level_navigation.html.haml', type: :view
     allow(h.controller).to receive(:wizard_steps).and_return(steps) # necessary for presenter
     allow(h.controller).to receive(:onboarding_group_steps).and_return(nil) # necessary for presenter
 
+    allow(h.controller).to receive(:previous_wizard_path).and_return(previous_wizard_path)
     allow(h.controller).to receive(:params).and_return(id: current_step)
     allow(h).to receive(:locale_namespace).and_return(locale_namespace)
     allow(view).to receive(:onboarding_session).and_return(onboarding_session)
