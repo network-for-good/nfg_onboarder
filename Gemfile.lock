@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/network-for-good/nfg_ui
-  revision: 3eacc4c8d4e96ff33eff5e16a6ad998e225cf3b6
-  branch: feature/rails_6_add_button_to_v2
+  revision: 6534004d19cd50fcf386fb781a7c145316498eec
+  branch: rails_6
   specs:
     nfg_ui (6.15.3)
       autoprefixer-rails (= 9.4.9)
