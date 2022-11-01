@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/network-for-good/nfg_ui
-  revision: 14509725dec500049878a0b807acabb3a9bd5d92
+  revision: 6534004d19cd50fcf386fb781a7c145316498eec
   branch: rails_6
   specs:
-    nfg_ui (0.15.1)
+    nfg_ui (6.15.3)
       autoprefixer-rails (= 9.4.9)
       bootstrap (= 4.3.1)
       browser (~> 2.7.1)
@@ -13,7 +13,7 @@ GIT
       jquery-rails (~> 4.3)
       momentjs-rails (~> 2.11, >= 2.11.1)
       nokogiri (>= 1.13.3)
-      rails (>= 4.2.0)
+      rails (~> 6.0)
       sass-rails (~> 6.0)
       select2-rails (~> 4.0)
 
@@ -168,7 +168,7 @@ GEM
     nokogiri (1.13.4)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    popper_js (1.16.0)
+    popper_js (1.16.1)
     public_suffix (4.0.6)
     puma (5.6.2)
       nio4r (~> 2.0)
