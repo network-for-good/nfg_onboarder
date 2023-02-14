@@ -1,8 +1,8 @@
 class NfgOnboarder::Session < ActiveRecord::Base
   self.table_name = 'onboarding_sessions'
 
-  belongs_to :owner, polymorphic: true
-  belongs_to :entity
+  belongs_to :owner, polymorphic: true, optional: true
+  belongs_to :entity, optional: true
   has_many :related_objects, class_name: 'NfgOnboarder::RelatedObject', foreign_key: :onboarding_session_id, dependent: :destroy
 
   validates :name, presence: true
