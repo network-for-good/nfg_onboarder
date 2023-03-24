@@ -7,10 +7,13 @@ gemspec
 
 gem 'rails', '~> 6.0'
 gem 'bundler', '~> 2.1.4'
-gem 'nfg_ui', git: 'https://github.com/network-for-good/nfg_ui', branch: 'rails_6'
 
 group :test do
   gem 'reform-rails'
+end
+
+source "https://rubygems.pkg.github.com/network-for-good" do
+  gem "nfg_ui", "~> 6.15.0"
 end
 
 # Declare any dependencies that are still in development here instead of in

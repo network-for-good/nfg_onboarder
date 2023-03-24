@@ -1,22 +1,3 @@
-GIT
-  remote: https://github.com/network-for-good/nfg_ui
-  revision: da33296cb43dd4dce3afc899f4eafc101a205356
-  branch: rails_6
-  specs:
-    nfg_ui (6.15.6)
-      autoprefixer-rails (= 9.4.9)
-      bootstrap (= 4.3.1)
-      browser (~> 2.7.1)
-      coffee-script (~> 2.4)
-      font-awesome-rails (~> 4.7)
-      inky-rb (~> 1.3.7)
-      jquery-rails (~> 4.3)
-      momentjs-rails (~> 2.11, >= 2.11.1)
-      nokogiri (>= 1.13.9)
-      rails (~> 6.0)
-      sass-rails (~> 6.0)
-      select2-rails (~> 4.0)
-
 PATH
   remote: .
   specs:
@@ -24,6 +5,7 @@ PATH
       decent_exposure
       execjs (= 2.7.0)
       haml
+      nfg_ui (~> 6.15.0)
       rails (~> 6.0)
       reform (= 2.2.4)
       simple_form
@@ -31,6 +13,7 @@ PATH
 
 GEM
   remote: https://rubygems.org/
+  remote: https://rubygems.pkg.github.com/network-for-good/
   specs:
     actioncable (6.0.4.7)
       actionpack (= 6.0.4.7)
@@ -164,6 +147,19 @@ GEM
     minitest (5.15.0)
     momentjs-rails (2.29.4.1)
       railties (>= 3.1)
+    nfg_ui (6.15.2)
+      autoprefixer-rails (= 9.4.9)
+      bootstrap (= 4.3.1)
+      browser (~> 2.7.1)
+      coffee-script (~> 2.4)
+      font-awesome-rails (~> 4.7)
+      inky-rb (~> 1.3.7)
+      jquery-rails (~> 4.3)
+      momentjs-rails (~> 2.11, >= 2.11.1)
+      nokogiri (>= 1.13.3)
+      rails (~> 6.0)
+      sass-rails (~> 6.0)
+      select2-rails (~> 4.0)
     nio4r (2.5.8)
     nokogiri (1.13.9)
       mini_portile2 (~> 2.8.0)
@@ -293,7 +289,7 @@ DEPENDENCIES
   factory_bot_rails
   jquery-rails
   nfg_onboarder!
-  nfg_ui!
+  nfg_ui (~> 6.15.0)!
   puma (>= 4.3.8)
   rails (~> 6.0)
   rake (~> 10.0)
