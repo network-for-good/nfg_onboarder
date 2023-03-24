@@ -5,7 +5,7 @@ PATH
       decent_exposure
       execjs (= 2.7.0)
       haml
-      nfg_ui (~> 5.0)
+      nfg_ui (~> 5.15.0)
       rails (~> 5.0)
       reform (= 2.2.4)
       simple_form
@@ -13,6 +13,7 @@ PATH
 
 GEM
   remote: https://rubygems.org/
+  remote: https://rubygems.pkg.github.com/network-for-good/
   specs:
     actioncable (5.2.4.3)
       actionpack (= 5.2.4.3)
@@ -286,6 +287,7 @@ DEPENDENCIES
   factory_bot_rails
   jquery-rails
   nfg_onboarder!
+  nfg_ui (~> 5.15.0)!
   puma (>= 4.3.8)
   rails (~> 5.0)
   rake (~> 10.0)
