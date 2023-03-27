@@ -33,6 +33,11 @@ module Dummy
       Set,
       OpenStruct,
       Symbol,
+      BigDecimal,
+      File,
+      Tempfile,
+      ActionController::Parameters,
+      ActiveSupport::HashWithIndifferentAccess,
       ActionDispatch::Http::UploadedFile
     ]
   end
