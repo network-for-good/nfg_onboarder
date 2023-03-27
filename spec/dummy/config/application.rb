@@ -25,6 +25,16 @@ module Dummy
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     # config.active_record.raise_in_transactional_callbacks = true
+    # This is a list of classes that the YAML parser is allowed to deserialize
+    config.active_record.yaml_column_permitted_classes = [
+      Date,
+      Time,
+      DateTime,
+      Set,
+      OpenStruct,
+      Symbol,
+      ActionDispatch::Http::UploadedFile
+    ]
   end
 end
 
