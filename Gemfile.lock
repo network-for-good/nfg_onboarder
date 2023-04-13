@@ -5,7 +5,7 @@ PATH
       decent_exposure
       execjs (= 2.7.0)
       haml
-      nfg_ui (~> 6.15.0)
+      nfg_ui (~> 6.16.0)
       rails (~> 6.0)
       reform (= 2.2.4)
       simple_form
@@ -13,7 +13,6 @@ PATH
 
 GEM
   remote: https://rubygems.org/
-  remote: https://rubygems.pkg.github.com/network-for-good/
   specs:
     actioncable (6.1.4.7)
       actionpack (= 6.1.4.7)
@@ -127,8 +126,9 @@ GEM
     foundation_emails (2.2.1.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
-    haml (5.2.2)
-      temple (>= 0.8.0)
+    haml (6.1.1)
+      temple (>= 0.8.2)
+      thor
       tilt
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
@@ -164,7 +164,7 @@ GEM
       timeout
     net-smtp (0.3.3)
       net-protocol
-    nfg_ui (6.15.8)
+    nfg_ui (6.16.1)
       autoprefixer-rails (= 9.4.9)
       bootstrap (= 4.3.1)
       browser (~> 2.7.1)
@@ -269,7 +269,7 @@ GEM
       rubyzip (>= 1.2.2)
     shoulda-matchers (4.0.1)
       activesupport (>= 4.2.0)
-    simple_form (5.1.0)
+    simple_form (5.2.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
     sprockets (4.2.0)
@@ -280,7 +280,7 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.4.2)
-    temple (0.8.2)
+    temple (0.10.0)
     thor (1.2.1)
     tilt (2.1.0)
     timeout (0.3.2)
@@ -290,7 +290,7 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    wicked (1.4.0)
+    wicked (2.0.0)
       railties (>= 3.0.7)
     xpath (3.2.0)
       nokogiri (~> 1.8)
@@ -306,7 +306,6 @@ DEPENDENCIES
   factory_bot_rails
   jquery-rails
   nfg_onboarder!
-  nfg_ui (~> 6.15.0)!
   puma (>= 4.3.8)
   rails (~> 6.0)
   rake (~> 10.0)

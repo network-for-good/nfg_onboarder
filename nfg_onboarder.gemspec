@@ -52,7 +52,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'decent_exposure'
   spec.add_dependency 'haml'
 
-  spec.add_dependency 'nfg_ui', '~> 6.15.0'
+  spec.add_dependency 'nfg_ui', '~> 6.16.0'
 
   spec.add_dependency 'simple_form'
 end
