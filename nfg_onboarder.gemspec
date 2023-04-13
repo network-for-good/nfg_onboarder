@@ -50,14 +50,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'execjs', '2.7.0'
   spec.add_dependency 'wicked'
   spec.add_dependency 'decent_exposure'
-  spec.add_dependency 'haml'
-
-  # nfg_ui while using rails_6 branche and not master
-  # are called from the Gemfile
-  # Once we move to rails_6 on master branch, remove from the Gemfile
-  # and re-enable this dependency.
-  # Note added: 5/5/22
-  # spec.add_dependency 'nfg_ui', '~> 0.15.0'
-
+  spec.add_dependency 'nfg_ui', '~> 6.16.0'
+  spec.add_dependency 'haml', '>= 5.1.2', '< 6.0.0'
   spec.add_dependency 'simple_form'
 end
