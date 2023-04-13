@@ -4,7 +4,7 @@ PATH
     nfg_onboarder (0.0.3)
       decent_exposure
       execjs (= 2.7.0)
-      haml
+      haml (= 5.2.2)
       nfg_ui (~> 6.16.0)
       rails (~> 6.0)
       reform (= 2.2.4)
@@ -126,9 +126,8 @@ GEM
     foundation_emails (2.2.1.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
-    haml (6.1.1)
-      temple (>= 0.8.2)
-      thor
+    haml (5.2.2)
+      temple (>= 0.8.0)
       tilt
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)

@@ -50,7 +50,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'execjs', '2.7.0'
   spec.add_dependency 'wicked'
   spec.add_dependency 'decent_exposure'
-  spec.add_dependency 'haml'
+  spec.add_dependency 'haml', '5.2.2'
 
   spec.add_dependency 'nfg_ui', '~> 6.16.0'
 
