@@ -57,7 +57,7 @@ Gem::Specification.new do |spec|
   # Once we move to rails_6 on master branch, remove from the Gemfile
   # and re-enable this dependency.
   # Note added: 5/5/22
-  # spec.add_dependency 'nfg_ui', '~> 0.15.0'
+  spec.add_dependency 'nfg_ui', '~> 6.16.0'
 
   spec.add_dependency 'simple_form'
 end
