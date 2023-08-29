@@ -29,6 +29,7 @@ class Onboarding::CreateProjectController < NfgOnboarder::BaseController
   end
 
   def project_name_on_valid_step
+p "in project_name_on_valid_step"
     # since we had supplied the form with a new project record
     # we need to now ensure that the project record id is
     # stored to the cookie, and all of the related
@@ -44,7 +45,8 @@ class Onboarding::CreateProjectController < NfgOnboarder::BaseController
   def can_view_step_without_onboarding_session
     return true if params[:id] == 'wicked_finish' # the onboarding session is typically completed prior to this step
     # if there are steps that can be accessed without a onboarding session (typically the first step of the onboarder), list them here
-    return true if step == :project_name
+    return true if step.to_sym == :project_name
+
     false
   end
 

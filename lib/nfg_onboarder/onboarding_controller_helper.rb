@@ -7,6 +7,7 @@ module NfgOnboarder
 
       helper NfgOnboarder::ApplicationHelper
 
+      before_action :maybe_force_return_last_visited_step, only: :show
       before_action :maybe_jump_to_last_visited_step, only: :show
       before_action :maybe_jump_to_next_step, only: :show
       before_action :maybe_jump_to_last_visited_point_of_no_return, only: :show
@@ -156,6 +157,16 @@ module NfgOnboarder
         referred_by_us? ? jump_to(onboarding_session.current_step) : next_step
       end
 
+      def maybe_force_return_last_visited_step
+        return if params[:id].to_s == steps.first.to_s
+        return if params[:id].to_s == 'wicked_finish'
+        return if can_view_step_without_onboarding_session
+        return if viewing_previous_visited_step?
+        return if viewing_next_step?
+
+        redirect_to wizard_path(steps.first)
+      end
+
       def cleansed_param_data
         form_params.dup.delete_if { |key, value| fields_to_be_cleansed_from_form_params.include?(key)}
       end
@@ -172,7 +183,6 @@ module NfgOnboarder
           get_form_object_name.constantize.new(get_form_target)
         else
           #supply a dummy form
-          p "here"
           NfgOnboarder::InformationalForm.new(OpenStruct.new(name: ''))
         end
       end
@@ -304,6 +314,22 @@ module NfgOnboarder
       # If group_steps are not present, we can just use the default finish_wizard_path.
       def finish_path
         onboarding_group_steps.present? ? method(:finish_wizard_path).super_method.call : finish_wizard_path
+      end
+
+      # checks whether the user is attempting to view
+      # a step that they had previously visited in the onboarding session
+      def viewing_previous_visited_step?
+        return false unless onboarding_session&.persisted?
+        return false unless onboarding_session&.current_step.present?
+
+        onboarder_progress_with_current_step.include?(step)
+      end
+
+      def viewing_next_step?
+        return false unless onboarding_session&.persisted?
+        return false unless onboarding_session&.current_step.present?
+
+        steps.find_index(step.to_sym) == steps.find_index(onboarding_session.current_step.to_sym) + 1
       end
     end
   end
