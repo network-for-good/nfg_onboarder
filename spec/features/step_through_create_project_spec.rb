@@ -53,4 +53,9 @@ RSpec.describe "Walking through the create project onboarder", js: true do
       expect(current_url).to eq("https://www.google.com/?from_wicked_finish=true")
     end
   end
+
+  it "doesn't allow the user to skip steps" do
+    visit onboarding_create_project_path(id: :project_description)
+    expect(current_path).to eq(onboarding_create_project_path(id: :project_name))
+  end
 end
