@@ -1,8 +1,8 @@
 class NfgOnboarder::RelatedObject < ActiveRecord::Base
   self.table_name = 'onboarding_related_objects'
 
-  belongs_to :onboarding_session, class_name: 'NfgOnboarder::Session'
-  belongs_to :target, polymorphic: true
+  belongs_to :onboarding_session, class_name: 'NfgOnboarder::Session', inverse_of: :related_objects, optional: true
+  belongs_to :target, polymorphic: true, inverse_of: :related_objects, optional: true
 
   validates :name, uniqueness: { scope: :onboarding_session_id }
 

@@ -2,7 +2,7 @@ module NfgOnboarder::OnboardableOwner
   extend ActiveSupport::Concern
 
   included do
-    has_many :onboarding_sessions, as: :owner, class_name: "Onboarding::Session", dependent: :destroy
+    has_many :onboarding_sessions, as: :owner, class_name: "Onboarding::Session", dependent: :destroy, inverse_of: :owner
   end
 
   def onboarding_session
