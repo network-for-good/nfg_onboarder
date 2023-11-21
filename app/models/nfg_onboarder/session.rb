@@ -3,7 +3,7 @@ class NfgOnboarder::Session < ActiveRecord::Base
 
   belongs_to :owner, polymorphic: true, optional: true
   belongs_to :entity, optional: true
-  has_many :related_objects, class_name: 'NfgOnboarder::RelatedObject', foreign_key: :onboarding_session_id, dependent: :destroy
+  has_many :related_objects, class_name: 'NfgOnboarder::RelatedObject', foreign_key: :onboarding_session_id, dependent: :destroy, inverse_of: :onboarding_session
 
   validates :name, presence: true
 

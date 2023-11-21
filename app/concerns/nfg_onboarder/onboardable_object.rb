@@ -5,7 +5,7 @@ module NfgOnboarder
     extend ActiveSupport::Concern
 
     included do
-      has_many :related_objects, as: :target, class_name: 'Onboarding::RelatedObject', dependent: :destroy
+      has_many :related_objects, as: :target, class_name: 'Onboarding::RelatedObject', dependent: :destroy, inverse_of: :target
     end
   end
 end
