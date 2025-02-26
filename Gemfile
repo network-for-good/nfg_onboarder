@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
-gem 'rails', '~> 6.0'
+gem 'rails', '~> 7.2'
 gem 'bundler', '~> 2.1.4'
 
 group :test do

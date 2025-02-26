@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.13"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rake", "~> 12.2"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rspec_junit_formatter"
   spec.add_development_dependency "rspec-rails", "~> 4.0"
@@ -45,12 +45,12 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'jquery-rails'
   spec.add_development_dependency 'byebug'
 
-  spec.add_dependency 'rails', '~> 6.0'
+  spec.add_dependency 'rails', '~> 7.2'
   spec.add_dependency 'reform-rails', '~> 0.2.3'
   spec.add_dependency 'execjs', '2.7.0'
   spec.add_dependency 'wicked'
   spec.add_dependency 'decent_exposure'
-  spec.add_dependency 'nfg_ui', '~> 6.17.2'
+  spec.add_dependency 'nfg_ui', '~> 7.0'
   spec.add_dependency 'haml', '>= 5.1.2', '< 6.0.0'
   spec.add_dependency 'simple_form'
 end
