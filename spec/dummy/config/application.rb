@@ -1,13 +1,17 @@
 require_relative "boot"
+#require File.expand_path('../boot', __FILE__)
 
 require "rails/all"
+require 'reform/rails'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+require "nfg_onboarder"
 
 module Dummy
   class Application < Rails::Application
+    config.i18n.load_path += Dir["#{Rails.root.to_s}/config/locales/**/*.{rb,yml}"]
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.0
 
