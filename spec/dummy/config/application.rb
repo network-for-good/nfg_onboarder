@@ -19,7 +19,8 @@ module Dummy
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
-
+    config.active_record.use_yaml_unsafe_load = true
+    # config.active_record.yaml_column_permitted_classes = [Symbol, Date]
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

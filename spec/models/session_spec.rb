@@ -6,10 +6,10 @@ shared_examples_for "raising a method missing exception" do
   end
 end
 
-describe NfgOnboarder::Session do
-  let(:session) { FactoryBot.create :session }
+describe Onboarding::Session do
+  let(:session) { FactoryBot.create :onboarding_session }
 
-  it { is_expected.to belong_to :owner }
+  it {  expect(described_class.reflect_on_association(:owner).options[:optional]).to be true }
 
   it { is_expected.to serialize(:step_data).as(Hash) }
   it { is_expected.to serialize(:completed_high_level_steps).as(Array) }
@@ -20,14 +20,14 @@ describe NfgOnboarder::Session do
 
     context "when the record is unsaved" do
       context "with no related objects" do
-        let(:session) { NfgOnboarder::Session.new(name: 'create_event', related_objects: nil) }
+        let(:session) { described_class.new(name: 'create_event', related_objects: nil) }
         it { should be_empty }
         it_behaves_like "raising a method missing exception"
       end
 
       context "when there are related objects" do
         let(:admin) { create(:admin) }
-        let(:session) { NfgOnboarder::Session.new(name: 'create_event', related_objects: { admin: admin }) }
+        let(:session) { described_class.new(name: 'create_event', related_objects: { admin: admin }) }
         it "builds the related object" do
           expect(subject.first.target_id).to eql(admin.id)
         end
@@ -41,7 +41,7 @@ describe NfgOnboarder::Session do
 
     context "when the record is saved" do
       context "with no related objects" do
-        let(:session) { create(:session, related_objects: nil) }
+        let(:session) { create(:onboarding_session, related_objects: nil) }
         it { should be_empty }
         it_behaves_like "raising a method missing exception"
       end
@@ -50,7 +50,7 @@ describe NfgOnboarder::Session do
         let(:admin) { create(:admin) }
 
         let!(:session) do
-          create(:session, related_objects: { admin: admin })
+          create(:onboarding_session, related_objects: { admin: admin })
         end
 
         it "returns the related object" do
@@ -66,7 +66,7 @@ describe NfgOnboarder::Session do
     describe "Adding a new related object when other objects are present" do
       let(:admin) { create(:admin) }
       let(:other_admin) { create(:admin) }
-      let(:session) { create(:session, related_objects: { other_admin: other_admin }) }
+      let(:session) { create(:onboarding_session, related_objects: { other_admin: other_admin }) }
 
       before { session.update(related_objects: { admin: admin }) }
 
@@ -104,7 +104,7 @@ describe NfgOnboarder::Session do
   end
 
   describe "complete!" do
-    let(:onboarding_session) { create(:session, completed_at: completed_at) }
+    let(:onboarding_session) { create(:onboarding_session, completed_at: completed_at) }
 
     subject { onboarding_session.complete! }
 
@@ -137,7 +137,7 @@ describe NfgOnboarder::Session do
 
   describe "destroying related objects" do
     let(:parent_admin) { create(:admin) }
-    let!(:session) { create(:session, related_objects: { parent_admin: parent_admin }) }
+    let!(:session) { create(:onboarding_session, related_objects: { parent_admin: parent_admin }) }
 
     subject { session.destroy }
 
