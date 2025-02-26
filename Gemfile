@@ -7,6 +7,7 @@ gemspec
 
 gem 'rails', '~> 7.2'
 gem 'bundler', '~> 2.1.4'
+gem 'sprockets', "~> 3.7"
 
 group :test do
   gem 'reform-rails', '~> 0.2.3'
