@@ -44,6 +44,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "puma", ">= 4.3.8"
   spec.add_development_dependency 'jquery-rails'
   spec.add_development_dependency 'byebug'
+  spec.add_development_dependency 'matrix'
 
   spec.add_dependency 'rails', '~> 6.0'
   spec.add_dependency 'reform-rails', '~> 0.2.3'
