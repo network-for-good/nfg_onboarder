@@ -3,12 +3,6 @@
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
 version: 2
-orbs:
-  browser-tools: circleci/browser-tools@1.4.8
-  node: circleci/node@5.1.1
-  ruby: circleci/ruby@2.1.0
-  aws-cli: circleci/aws-cli@4.0
-  nfg-infrastructure: network-for-good/nfg-infrastructure-orb@0.0.14
 jobs:
   build:
     docker:
@@ -58,21 +52,6 @@ jobs:
 
       # Database setup
       - run: cd spec/dummy && bundle exec rake db:create db:schema:load
-
-      - run:
-          name: Run apt-get update and install chrome dependencies
-          command: |
-            sudo apt-get update -y
-            sudo apt install libu2f-udev
-      - browser-tools/install-chrome:
-          replace-existing: true
-          chrome-version: "116.0.5845.140"
-      - browser-tools/install-chromedriver
-      - run:
-          name: Check browser tools
-          command: |
-            google-chrome --version
-            chromedriver --version
 
       # run tests!
       - run:
