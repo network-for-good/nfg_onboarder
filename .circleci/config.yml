@@ -56,9 +56,20 @@ jobs:
       # Database setup
       - run: cd spec/dummy && bundle exec rake db:create db:schema:load
 
-      # Install ChromeDriver
-      - browser-tools/install-chrome
+      - run:
+          name: Run apt-get update and install chrome dependencies
+          command: |
+            sudo apt-get update -y
+            sudo apt install libu2f-udev
+      - browser-tools/install-chrome:
+          replace-existing: true
+          chrome-version: "116.0.5845.140"
       - browser-tools/install-chromedriver
+      - run:
+          name: Check browser tools
+          command: |
+            google-chrome --version
+            chromedriver --version
 
       # run tests!
       - run:
