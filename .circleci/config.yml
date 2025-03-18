@@ -63,7 +63,7 @@ jobs:
             sudo apt install libu2f-udev
       - browser-tools/install-chrome:
           replace-existing: true
-          chrome-version: "116.0.5845.140"
+          chrome-version: "latest"
       - browser-tools/install-chromedriver
       - run:
           name: Check browser tools
