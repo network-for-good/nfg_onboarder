@@ -54,4 +54,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'nfg_ui', '~> 6.17.3'
   spec.add_dependency 'haml', '>= 5.1.2', '< 6.0.0'
   spec.add_dependency 'simple_form'
+  spec.add_dependency "observer"
+  spec.add_dependency "bigdecimal"
+  spec.add_dependency "mutex_m"
 end
