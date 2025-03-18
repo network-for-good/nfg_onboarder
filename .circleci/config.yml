@@ -3,6 +3,9 @@
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
 version: 2
+orbs:
+  browser-tools: circleci/browser-tools@1.4.8
+
 jobs:
   build:
     docker:
@@ -52,6 +55,10 @@ jobs:
 
       # Database setup
       - run: cd spec/dummy && bundle exec rake db:create db:schema:load
+
+      # Install ChromeDriver
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
 
       # run tests!
       - run:
