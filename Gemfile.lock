@@ -212,7 +212,7 @@ GEM
       method_source
       rake (>= 0.13)
       thor (~> 1.0)
-    rake (10.5.0)
+    rake (13.2.1)
     recaptcha (5.9.0)
       json
     reform (2.6.1)
@@ -311,7 +311,7 @@ DEPENDENCIES
   nfg_onboarder!
   puma (>= 4.3.8)
   rails (~> 6.0)
-  rake (~> 10.0)
+  rake (~> 13.0)
   recaptcha
   reform-rails (~> 0.2.3)
   rspec (~> 3.0)
