@@ -45,6 +45,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'jquery-rails'
   spec.add_development_dependency 'byebug'
   spec.add_development_dependency 'matrix'
+  spec.add_development_dependency 'mutex_m'
+  spec.add_development_dependency 'drb'
+  spec.add_development_dependency 'ostruct'
+  spec.add_development_dependency 'benchmark'
+  spec.add_development_dependency 'logger'
 
   spec.add_dependency 'rails', '~> 6.0'
   spec.add_dependency 'reform-rails', '~> 0.2.3'
@@ -56,5 +61,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'simple_form'
   spec.add_dependency "observer"
   spec.add_dependency "bigdecimal"
-  spec.add_dependency "mutex_m"
 end
