@@ -3,8 +3,7 @@ require 'rails_helper'
 describe 'Testing' do
   let(:test_model) { Testing.new }
   let(:name) { 'name' }
-  let(:entity) { FactoryBot.create(:project) }
-  let(:onboarding_session) { Onboarding::Session.create(name: name, owner: test_model, entity: entity) }
+  let(:onboarding_session) { Onboarding::Session.create(name: name, owner: test_model) }
   let(:arg_name) { name }
 
   before do
