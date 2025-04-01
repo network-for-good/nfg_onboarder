@@ -10,7 +10,7 @@ describe NfgOnboarder::UrlGenerator do
 
   describe 'when using a multi-level onboarder' do
     let!(:onboarding_session) do
-      create(:session,
+      create(:onboarding_session,
              owner: admin,
              onboarder_prefix: 'create_campaign',
              completed_high_level_steps: [],
@@ -28,7 +28,7 @@ describe NfgOnboarder::UrlGenerator do
 
   describe "with a single level onboarder" do
     let!(:onboarding_session) do
-      create(:session,
+      create(:onboarding_session,
              owner: admin,
              onboarder_prefix: nil,
              current_high_level_step: 'create_project',

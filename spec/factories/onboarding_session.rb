@@ -3,5 +3,6 @@ FactoryBot.define do
     owner { Testing.create() }
     completed_at { nil }
     name { "import_data_onboarder" }
+    entity { FactoryBot.create(:project) }
   end
 end

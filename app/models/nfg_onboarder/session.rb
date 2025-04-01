@@ -2,15 +2,15 @@ class NfgOnboarder::Session < ActiveRecord::Base
   self.table_name = 'onboarding_sessions'
 
   belongs_to :owner, polymorphic: true, optional: true
-  belongs_to :entity, optional: true
+  # belongs_to :entity, optional: true
   has_many :related_objects, class_name: 'NfgOnboarder::RelatedObject', foreign_key: :onboarding_session_id, dependent: :destroy, inverse_of: :onboarding_session
 
   validates :name, presence: true
 
-  serialize :completed_high_level_steps, Array
-  serialize :step_data, Hash
+  serialize :completed_high_level_steps, type: Array
+  serialize :step_data, type: Hash
 
-  serialize :onboarder_progress, Hash
+  serialize :onboarder_progress, type: Hash
 
   accepts_nested_attributes_for :related_objects
 
