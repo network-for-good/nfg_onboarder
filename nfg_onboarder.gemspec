@@ -51,7 +51,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'benchmark'
   spec.add_development_dependency 'logger'
 
-  spec.add_dependency 'rails', '~> 6.0'
+  spec.add_dependency 'rails', '~> 7.2.0'
   spec.add_dependency 'reform-rails', '~> 0.2.3'
   spec.add_dependency 'execjs', '2.7.0'
   spec.add_dependency 'wicked'
