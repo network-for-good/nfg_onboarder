@@ -7,10 +7,10 @@ class NfgOnboarder::Session < ActiveRecord::Base
 
   validates :name, presence: true
 
-  serialize :completed_high_level_steps, coder: Array
-  serialize :step_data, coder: Hash
+  serialize :completed_high_level_steps, type: Array, coder: JSON
+  serialize :step_data, type: Hash, coder: JSON
 
-  serialize :onboarder_progress, coder: Hash
+  serialize :onboarder_progress, type: Hash, coder: JSON
 
   accepts_nested_attributes_for :related_objects
 
