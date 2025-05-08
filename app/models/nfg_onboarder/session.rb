@@ -7,10 +7,10 @@ class NfgOnboarder::Session < ActiveRecord::Base
 
   validates :name, presence: true
 
-  serialize :completed_high_level_steps, type: Array, coder: JSON
-  serialize :step_data, type: Hash, coder: JSON
+  serialize :completed_high_level_steps, type: Array
+  serialize :step_data, type: Hash
 
-  serialize :onboarder_progress, type: Hash, coder: JSON
+  serialize :onboarder_progress, type: Hash
 
   accepts_nested_attributes_for :related_objects
 
@@ -18,11 +18,11 @@ class NfgOnboarder::Session < ActiveRecord::Base
   scope :fundraisers, -> { includes(:related_objects).where(related_objects: { name: 'parent_id' }) }
 
   def completed_steps(current_high_level_step)
-    key = current_high_level_step.to_s
+    key = current_high_level_step
     if onboarder_progress[key].nil?
       onboarder_progress[key] = []
     end
-    onboarder_progress[key].map(&:to_sym)
+    onboarder_progress[key]
   end
 
   def complete!
