@@ -18,10 +18,11 @@ class NfgOnboarder::Session < ActiveRecord::Base
   scope :fundraisers, -> { includes(:related_objects).where(related_objects: { name: 'parent_id' }) }
 
   def completed_steps(current_high_level_step)
-    if onboarder_progress[current_high_level_step].nil?
-      onboarder_progress[current_high_level_step] = []
+    key = current_high_level_step.to_s
+    if onboarder_progress[key].nil?
+      onboarder_progress[key] = []
     end
-    onboarder_progress[current_high_level_step]
+    onboarder_progress[key].map(&:to_sym)
   end
 
   def complete!
