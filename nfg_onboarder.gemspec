@@ -56,7 +56,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'execjs', '2.7.0'
   spec.add_dependency 'wicked'
   spec.add_dependency 'decent_exposure'
-  spec.add_dependency 'nfg_ui', '~> 7.1.3'
+  spec.add_dependency 'nfg_ui', '~> 7.2.1'
   spec.add_dependency 'haml', '>= 5.1.2', '< 6.0.0'
   spec.add_dependency 'simple_form'
   spec.add_dependency "observer"
