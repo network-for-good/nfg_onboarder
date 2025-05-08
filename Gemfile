@@ -6,7 +6,8 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'rails', '~> 6.0'
-gem 'bundler', '~> 2.1.4'
+gem 'bundler', '~> 2.5'
+gem 'sprockets', "~> 3.7"
 
 group :test do
   gem 'reform-rails', '~> 0.2.3'
