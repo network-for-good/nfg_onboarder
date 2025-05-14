@@ -124,11 +124,11 @@ describe NfgOnboarder::Session do
 
   describe "#completed_steps" do
     before do
-      session.onboarder_progress = {:first_step=>[:goal, :final], :last_step=>[:bert]}
+      session.onboarder_progress = {"first_step"=>[:goal, :final], "last_step"=>[:bert]}
       session.current_high_level_step = :first_step
     end
 
-    subject { session.completed_steps(:first_step) }
+    subject { session.completed_steps("first_step") }
 
     it "should return an array of the completed steps for the current_high_level_step" do
       expect(subject).to eq([:goal, :final])
