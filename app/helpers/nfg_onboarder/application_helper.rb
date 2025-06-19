@@ -86,7 +86,7 @@ module NfgOnboarder
     private
 
     def color_is_selected?(color)
-      return false unless onboarding_session.step_data[controller_name].has_key?(:theme)
+      return false unless onboarding_session&.step_data[controller_name]&.has_key?(:theme)
       onboarding_session.step_data[controller_name][:theme][:selected_color_swatch] == color.to_s
     end
   end
