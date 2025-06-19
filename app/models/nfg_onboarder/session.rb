@@ -5,6 +5,7 @@ class NfgOnboarder::Session < ActiveRecord::Base
   belongs_to :entity, optional: true
   has_many :related_objects, class_name: 'NfgOnboarder::RelatedObject', foreign_key: :onboarding_session_id, dependent: :destroy, inverse_of: :onboarding_session
 
+  before_validation :sanitize_serialize_data
   validates :name, presence: true
 
   serialize :completed_high_level_steps, type: Array, coder: Rails.application.config.default_coder || JSON
@@ -17,11 +18,11 @@ class NfgOnboarder::Session < ActiveRecord::Base
   scope :fundraisers, -> { includes(:related_objects).where(related_objects: { name: 'parent_id' }) }
 
   def completed_steps(current_high_level_step)
-    key = current_high_level_step.to_s
+    key = current_high_level_step
     if onboarder_progress[key].nil?
       onboarder_progress[key] = []
     end
-    onboarder_progress[key].map(&:to_sym)
+    onboarder_progress[key]
   end
 
   def complete!
@@ -72,5 +73,26 @@ class NfgOnboarder::Session < ActiveRecord::Base
 
   def respond_to_missing?(method_name, include_private)
     self.related_objects.find_by(name: method_name) || super(method_name, include_private)
+  end
+
+  private
+
+  def sanitize_serialize_data
+    self.step_data = deep_sanitize(step_data)
+    self.onboarder_progress = deep_sanitize(onboarder_progress)
+    self.completed_high_level_steps = deep_sanitize(completed_high_level_steps)
+  end
+
+  def deep_sanitize(obj)
+    case obj
+    when ActionController::Parameters
+      deep_sanitize(obj.to_unsafe_h)
+    when Hash
+      obj.to_h.transform_values { |v| deep_sanitize(v) }
+    when Array
+      obj.map { |v| deep_sanitize(v) }
+    else
+      obj
+    end
   end
 end
