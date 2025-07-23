@@ -51,7 +51,7 @@ describe FakesController do
     allow(params).to receive(:[]).with(:exit).and_return(exit)
   end
 
-    describe '#redirect_to_finish_wizard' do
+  describe '#redirect_to_finish_wizard' do
     let(:controller) { FakesController.new }
     let(:options) { { status: 302 } }
     let(:test_params) { {} }
