@@ -127,7 +127,7 @@ module NfgOnboarder
       end
 
       def redirect_to_finish_wizard(options, params)
-        redirect_to(finish_wizard_path + "?from_wicked_finish=true", options)
+        redirect_to(finish_wizard_path + "?from_wicked_finish=true", options.merge(allow_other_host: true))
       end
 
       def maybe_jump_to_last_visited_step

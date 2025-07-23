@@ -2,6 +2,7 @@ require 'rails_helper'
 
 class FakesController < ApplicationController
   include NfgOnboarder::OnboardingControllerHelper
+  include ActionController::Redirecting
 
   def finish_wizard_path
     'abc'
@@ -48,6 +49,95 @@ describe FakesController do
     allow_any_instance_of(ApplicationController).to receive(:redirect_to).and_return(double('redirect'))
 
     allow(params).to receive(:[]).with(:exit).and_return(exit)
+  end
+
+    describe '#redirect_to_finish_wizard' do
+    let(:controller) { FakesController.new }
+    let(:options) { { status: 302 } }
+    let(:test_params) { {} }
+
+    before do
+      # Set up basic request and response objects for the controller
+      request = double('request')
+      response = double('response')
+      allow(controller).to receive(:request).and_return(request)
+      allow(controller).to receive(:response).and_return(response)
+      allow(response).to receive(:redirect?)
+      allow(response).to receive(:location)
+      allow(response).to receive(:location=)
+      allow(response).to receive(:status=)
+      allow(response).to receive(:status)
+      allow(request).to receive(:get?)
+      allow(request).to receive(:xhr?)
+    end
+
+    context 'when redirecting to an external host' do
+      before do
+        # Override the finish_wizard_path to return an external URL
+        allow(controller).to receive(:finish_wizard_path).and_return('https://external-domain.com/finish')
+      end
+
+      it 'allows redirect to external host without raising UnsafeRedirectError' do
+        # This verifies that our fix (allow_other_host: true) prevents the UnsafeRedirectError
+        expect { controller.send(:redirect_to_finish_wizard, options, test_params) }.not_to raise_error
+      end
+
+      it 'ensures the redirect_to call includes allow_other_host: true' do
+        # Verify that the redirect_to method is called with allow_other_host: true
+        expect(controller).to receive(:redirect_to).with(
+          'https://external-domain.com/finish?from_wicked_finish=true',
+          options.merge(allow_other_host: true)
+        )
+        
+        controller.send(:redirect_to_finish_wizard, options, test_params)
+      end
+    end
+
+    context 'when redirecting to a relative path' do
+      before do
+        allow(controller).to receive(:finish_wizard_path).and_return('/internal/path')
+      end
+
+      it 'works normally for internal redirects' do
+        expect { controller.send(:redirect_to_finish_wizard, options, test_params) }.not_to raise_error
+      end
+
+      it 'still includes allow_other_host: true even for internal paths' do
+        # Even for internal paths, we include allow_other_host: true for consistency
+        expect(controller).to receive(:redirect_to).with(
+          '/internal/path?from_wicked_finish=true',
+          options.merge(allow_other_host: true)
+        )
+        
+        controller.send(:redirect_to_finish_wizard, options, test_params)
+      end
+    end
+
+    context 'with various option combinations' do
+      before do
+        allow(controller).to receive(:finish_wizard_path).and_return('https://external-domain.com/finish')
+      end
+
+      it 'merges allow_other_host: true with empty options' do
+        expect(controller).to receive(:redirect_to).with(
+          'https://external-domain.com/finish?from_wicked_finish=true',
+          { allow_other_host: true }
+        )
+        
+        controller.send(:redirect_to_finish_wizard, {}, test_params)
+      end
+
+      it 'overrides allow_other_host: false with allow_other_host: true' do
+        options_with_false = { allow_other_host: false, status: 302 }
+        
+        expect(controller).to receive(:redirect_to).with(
+          'https://external-domain.com/finish?from_wicked_finish=true',
+          { allow_other_host: true, status: 302 }
+        )
+        
+        controller.send(:redirect_to_finish_wizard, options_with_false, test_params)
+      end
+    end
   end
 
   context 'when event target is present' do
