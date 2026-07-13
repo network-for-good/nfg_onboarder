@@ -2,15 +2,27 @@
 #
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
-version: 2
+version: 2.1
+orbs:
+  browser-tools: circleci/browser-tools@1.4.8
+
 jobs:
   build:
     docker:
-      # specify the version you desire here
-       - image: circleci/ruby:2.7.5-node-browsers
-         environment:
-           RAILS_ENV: test
-       - image: circleci/redis:4
+      - image: cimg/ruby:3.4.2-browsers
+        environment:
+          PGHOST: 127.0.0.1
+          PGUSER: postgres
+          PGPASSWORD: ""
+          NODE_ENV: test
+          PAGER: cat
+          RAILS_ENV: test
+          TZ: /usr/share/zoneinfo/US/Eastern
+          DISABLE_SPRING: true
+      - image: cimg/postgres:11.12
+        environment:
+          POSTGRES_HOST_AUTH_METHOD: trust
+      - image: cimg/redis:6.2.6
 
     working_directory: ~/repo
 
@@ -43,6 +55,21 @@ jobs:
 
       # Database setup
       - run: cd spec/dummy && bundle exec rake db:create db:schema:load
+
+      - run:
+          name: Run apt-get update and install chrome dependencies
+          command: |
+            sudo apt-get update -y
+            sudo apt install libu2f-udev
+      - browser-tools/install-chrome:
+          replace-existing: true
+          chrome-version: "latest"
+      - browser-tools/install-chromedriver
+      - run:
+          name: Check browser tools
+          command: |
+            google-chrome --version
+            chromedriver --version
 
       # run tests!
       - run:

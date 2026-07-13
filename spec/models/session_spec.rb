@@ -48,15 +48,17 @@ describe NfgOnboarder::Session do
 
       context "when there are related objects" do
         let(:admin) { create(:admin) }
-        let(:session) { create(:session, related_objects: { admin: admin }) }
+
+        let!(:session) do
+          create(:session, related_objects: { admin: admin })
+        end
 
         it "returns the related object" do
           expect(session.admin).to eql(admin)
         end
 
         it "saves the related object" do
-          expect_any_instance_of(NfgOnboarder::RelatedObject).to receive(:save).once
-          subject
+          expect(session.related_objects).to all be_persisted
         end
       end
     end
@@ -122,11 +124,11 @@ describe NfgOnboarder::Session do
 
   describe "#completed_steps" do
     before do
-      session.onboarder_progress = {:first_step=>[:goal, :final], :last_step=>[:bert]}
+      session.onboarder_progress = {"first_step"=>[:goal, :final], "last_step"=>[:bert]}
       session.current_high_level_step = :first_step
     end
 
-    subject { session.completed_steps(:first_step) }
+    subject { session.completed_steps("first_step") }
 
     it "should return an array of the completed steps for the current_high_level_step" do
       expect(subject).to eq([:goal, :final])

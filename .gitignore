@@ -30,3 +30,4 @@ spec/dummy/log/development.log
 
 .idea
 .idea/*
+.vscode/settings.json
