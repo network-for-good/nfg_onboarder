@@ -41,9 +41,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "capybara"
   spec.add_development_dependency "selenium-webdriver"
   spec.add_development_dependency "recaptcha"
-  spec.add_development_dependency "puma", ">= 4.3.8"
   spec.add_development_dependency 'jquery-rails'
-  spec.add_development_dependency 'byebug'
   spec.add_development_dependency 'matrix'
   spec.add_development_dependency 'mutex_m'
   spec.add_development_dependency 'drb'
@@ -53,12 +51,10 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'rails', '~> 7.2.0'
   spec.add_dependency 'reform-rails', '~> 0.2.3'
-  spec.add_dependency 'execjs', '2.7.0'
   spec.add_dependency 'wicked'
   spec.add_dependency 'decent_exposure'
   spec.add_dependency 'nfg_ui', '~> 7.2.1'
   spec.add_dependency 'haml', '>= 5.1.2', '< 6.0.0'
   spec.add_dependency 'simple_form'
   spec.add_dependency "observer"
-  spec.add_dependency "bigdecimal"
 end
