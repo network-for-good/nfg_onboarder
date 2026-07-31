@@ -18,6 +18,9 @@ Gem::Specification.new do |spec|
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
     spec.metadata['allowed_push_host'] = "https://rubygems.pkg.github.com/network-for-good"
+    # Links published packages to this repo so they inherit its permissions
+    # (private packages are invisible to CI tokens without this).
+    spec.metadata['github_repo'] = "ssh://github.com/network-for-good/nfg_onboarder"
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
