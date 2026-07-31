@@ -48,6 +48,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'ostruct'
   spec.add_development_dependency 'benchmark'
   spec.add_development_dependency 'logger'
+  spec.add_development_dependency 'webrick' # Capybara test server (puma is intentionally not a dependency)
 
   spec.add_dependency 'rails', '~> 7.2.0'
   spec.add_dependency 'reform-rails', '~> 0.2.3'
