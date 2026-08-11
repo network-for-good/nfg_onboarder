@@ -5,12 +5,12 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
-gem 'rails', '~> 7.2.0'
+gem 'rails', '~> 7.2.3', '>= 7.2.3.1'
 gem 'bundler', '~> 2.5'
-gem 'sprockets', "~> 3.7"
+gem 'sprockets', '~> 4.2', '>= 4.2.0'
 
 group :test do
-  gem 'reform-rails', '~> 0.2.3'
+  gem 'reform-rails', '~> 0.2.4'
 end
 
 group :development do
