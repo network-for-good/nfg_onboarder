@@ -8,9 +8,9 @@ class NfgOnboarder::Session < ActiveRecord::Base
   before_validation :sanitize_serialize_data
   validates :name, presence: true
 
-  serialize :completed_high_level_steps, type: Array, coder: Rails.application.config.try(:default_coder) || JSON
-  serialize :step_data, type: Hash, coder: Rails.application.config.try(:default_coder) || JSON
-  serialize :onboarder_progress, type: Hash, coder: Rails.application.config.try(:default_coder) || JSON
+  serialize :completed_high_level_steps, type: Array, coder: Rails.application.config.try(:default_coder) || YAML
+  serialize :step_data, type: Hash, coder: Rails.application.config.try(:default_coder) || YAML
+  serialize :onboarder_progress, type: Hash, coder: Rails.application.config.try(:default_coder) || YAML
 
   accepts_nested_attributes_for :related_objects
 
