@@ -6,6 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'rails', '~> 7.2.0'
+gem 'nfg_ui', '= 7.3.0.pre.uat'
 gem 'bundler', '~> 2.5'
 gem 'sprockets', "~> 3.7"
 
