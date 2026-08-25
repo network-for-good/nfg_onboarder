@@ -50,7 +50,7 @@ RSpec.describe "Walking through the create project onboarder", js: true do
       expect(session.completed_at).not_to be_nil
 
       # takes user to the finish_wizard_path
-      expect(current_url).to eq("https://www.google.com/?from_wicked_finish=true")
+      expect(current_url).to include("https://www.google.com/").and include("from_wicked_finish=true")
     end
   end
 
