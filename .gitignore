@@ -32,3 +32,4 @@ spec/dummy/log/development.log
 .idea/*
 .vscode/settings.json
 vendor/
+.env
