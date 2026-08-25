@@ -6,7 +6,7 @@ PATH
       decent_exposure
       execjs (= 2.7.0)
       haml (>= 5.1.2, < 6.0.0)
-      nfg_ui (~> 7.2.1)
+      nfg_ui (= 7.3.0.pre.uat)
       observer
       rails (~> 7.2.0)
       reform-rails (~> 0.2.3)
@@ -185,7 +185,7 @@ GEM
       timeout
     net-smtp (0.5.1)
       net-protocol
-    nfg_ui (7.2.1)
+    nfg_ui (7.3.0.pre.uat)
       autoprefixer-rails (= 9.4.9)
       bootstrap (= 4.3.1)
       browser (~> 2.7.1)
