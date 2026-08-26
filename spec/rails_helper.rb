@@ -22,6 +22,10 @@ Dir["#{File.dirname(__FILE__)}/factories/*.rb"].each { |f| require f } if Rails.
 # FactoryBot.definition_file_paths << "#{File.dirname(__FILE__)}/factories"
 # FactoryBot.find_definitions rescue nil
 
+# puma is intentionally not a dependency of this gem, so Capybara's default
+# server is unavailable; webrick is pulled in as a development dependency instead
+Capybara.server = :webrick
+
 Capybara.register_driver :selenium do |app|
   # profile = Selenium::WebDriver::Firefox::Profile.new
   Capybara::Selenium::Driver.new(app, :browser => :chrome)
