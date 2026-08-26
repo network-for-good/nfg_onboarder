@@ -31,3 +31,8 @@ spec/dummy/log/development.log
 .idea
 .idea/*
 .vscode/settings.json
+
+# Ignore built gem packages
+/pkg/
+spec/dummy/db/*.sqlite3-shm
+spec/dummy/db/*.sqlite3-wal
