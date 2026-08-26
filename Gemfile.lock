@@ -115,7 +115,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.3.5)
+    concurrent-ruby (1.3.7)
     connection_pool (2.5.3)
     crass (1.0.6)
     date (3.4.1)
@@ -199,7 +199,7 @@ GEM
       sass-rails (~> 6.0)
       select2-rails (~> 4.0)
     nio4r (2.7.4)
-    nokogiri (1.18.8)
+    nokogiri (1.18.9)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     observer (0.1.2)
@@ -366,6 +366,7 @@ DEPENDENCIES
   matrix
   mutex_m
   nfg_onboarder!
+  nokogiri (= 1.18.9)
   ostruct
   pry
   pry-rails
