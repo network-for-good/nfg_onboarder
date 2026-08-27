@@ -7,7 +7,7 @@ gemspec
 
 gem 'rails', '~> 7.2.0'
 gem 'bundler', '~> 2.5'
-gem 'sprockets', "~> 3.7"
+gem 'sprockets', "~> 4.0"
 gem "nokogiri", "1.18.9"
 
 group :test do
