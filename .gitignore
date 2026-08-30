@@ -33,3 +33,8 @@ spec/dummy/log/development.log
 .vscode/settings.json
 vendor/
 .env
+
+# Ignore built gem packages
+/pkg/
+spec/dummy/db/*.sqlite3-shm
+spec/dummy/db/*.sqlite3-wal
