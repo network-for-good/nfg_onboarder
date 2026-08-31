@@ -35,3 +35,8 @@ spec/dummy/log/development.log
 # Ignore Spec Kit planning artifacts.
 /.specify
 /specs
+
+# Ignore built gem packages
+/pkg/
+spec/dummy/db/*.sqlite3-shm
+spec/dummy/db/*.sqlite3-wal
