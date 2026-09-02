@@ -32,6 +32,10 @@ spec/dummy/log/development.log
 .idea/*
 .vscode/settings.json
 
+# Ignore Spec Kit planning artifacts.
+/.specify
+/specs
+
 # Ignore built gem packages
 /pkg/
 spec/dummy/db/*.sqlite3-shm
