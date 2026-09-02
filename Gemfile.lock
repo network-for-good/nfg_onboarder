@@ -218,8 +218,6 @@ GEM
       date
       stringio
     public_suffix (4.0.6)
-    puma (5.6.9)
-      nio4r (~> 2.0)
     racc (1.8.1)
     rack (2.2.24)
     rack-session (1.0.2)
@@ -373,7 +371,6 @@ DEPENDENCIES
   ostruct
   pry
   pry-rails
-  puma (>= 4.3.8, < 6)
   rack (>= 2.2.23)
   rails (~> 7.2.0, >= 7.2.3.2)
   rake (~> 13.0)

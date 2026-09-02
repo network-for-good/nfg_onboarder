@@ -15,17 +15,18 @@ gem "nokogiri", ">= 1.19.4"           # was pinned to 1.18.9; CVE-2025-49795, CV
 gem 'rack', '>= 2.2.23'               # CVE-2025-59830, CVE-2025-61770/71/72/919, CVE-2026-34230/785/826/829/830
 gem 'thor', '>= 1.4.0'                # CVE-2025-54314 (disputed upstream; bump is free)
 
-# Compatibility ceilings, unrelated to the security floors above: neither gem
-# has an upper bound in the gemspec, so unconstrained resolution picks up
-# breaking major versions that Capybara 3.35 (also unbounded) doesn't support:
-# - puma 8.x dropped `Puma::Events.stdio`, breaking Capybara's default test
-#   server (undefined method 'stdio' for class Puma::Events).
+# Compatibility ceiling, unrelated to the security floors above: selenium-webdriver
+# has no upper bound in the gemspec, so unconstrained resolution picks up a
+# breaking major version that Capybara 3.35 (also unbounded) doesn't support:
 # - selenium-webdriver 4.x changed Selenium::WebDriver::Logger#initialize's
 #   signature, which Capybara 3.35's selenium driver still calls the old way
 #   (wrong number of arguments (given 2, expected 0..1)).
-# Cap both below their breaking major version until Capybara is upgraded past
-# these incompatibilities.
-gem 'puma', '>= 4.3.8', '< 6'
+# Cap below the breaking major version until Capybara is upgraded past this
+# incompatibility.
+# (puma was previously pinned here but is unused: the test suite runs against
+# webrick via `Capybara.server = :webrick` in spec/rails_helper.rb and the
+# gemspec treats puma as intentionally not a dependency, so it was removed to
+# clear CVE-2026-47736 / CVE-2026-47737.)
 gem 'selenium-webdriver', '< 4'
 
 group :test do
