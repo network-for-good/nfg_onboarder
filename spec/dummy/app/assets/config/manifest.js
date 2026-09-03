@@ -1,0 +1,15 @@
+//= link_tree ../images
+//= link_tree ../javascripts
+//= link_tree ../stylesheets
+//= link nfg_onboarder/application.js
+//= link nfg_onboarder/application.css
+//= link nfg_ui/app_icon/apple-touch-icon.png
+//= link nfg_ui/app_icon/favicon.ico
+//= link nfg_ui/app_icon/favicon-16x16.png
+//= link nfg_ui/app_icon/favicon-32x32.png
+//= link nfg_ui/app_icon/safari-pinned-tab.svg
+//= link nfg_ui/app_icon/android-chrome-192x192.png
+//= link nfg_ui/app_icon/android-chrome-384x384.png
+//= link nfg_ui/app_icon/mstile-150x150.png
+//= link nfg_ui/app_icon/site.webmanifest
+//= link nfg_ui/app_icon/browserconfig.xml
