@@ -7,15 +7,17 @@ gemspec
 
 gem 'nfg_ui', '= 7.3.0.pre.uat', source: 'https://rubygems.pkg.github.com/network-for-good'
 
-# Security floors for SCA root causes (NFG-4294). Each entry is the gem the CVE
+# Security floors for SCA root causes (NFG-3931, NFG-4294). Each entry is the gem the CVE
 # actually lives in, not the direct parent Snyk attributed it to. Pinned here so a
 # future `bundle update` cannot silently regress the lockfile below the fix.
-gem 'rails', '~> 7.2.0', '>= 7.2.3.2' # CVE-2026-33176: activesupport
+gem 'rails', '~> 7.2.0', '>= 7.2.3.2' # CVE-2025-24293, CVE-2026-33176, CVE-2026-33195, CVE-2026-66066: activestorage/activesupport
 gem 'bundler', '~> 2.5'
 gem 'sprockets', "~> 3.7"
-gem "nokogiri", ">= 1.19.4"           # was pinned to 1.18.9; CVE-2025-49795, CVE-2025-49796, CVE-2025-6021, CVE-2026-57438
+gem "nokogiri", ">= 1.19.4"           # was pinned to 1.18.9; CVE-2025-49795, CVE-2025-49796, CVE-2025-6021, CVE-2026-57234, CVE-2026-57438
 gem 'rack', '>= 2.2.23'               # CVE-2025-59830, CVE-2025-61770/71/72/919, CVE-2026-34230/785/826/829/830
 gem 'thor', '>= 1.4.0'                # CVE-2025-54314 (disputed upstream; bump is free)
+gem 'net-imap', '>= 0.6.5'            # CVE-2026-42246, CVE-2026-42256, CVE-2026-42257, CVE-2026-47240
+gem 'websocket-driver', '>= 0.8.2'    # CVE-2026-61666
 
 # Compatibility ceiling, unrelated to the security floors above: selenium-webdriver
 # has no upper bound in the gemspec, so unconstrained resolution picks up a
