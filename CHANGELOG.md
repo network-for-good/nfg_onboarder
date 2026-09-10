@@ -4,6 +4,13 @@ All notable changes to this gem are documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project uses the version declared in `lib/nfg_onboarder/version.rb`. Versioning policy: the version tracks the Rails major.minor series the gem supports, while the patch segment is the gem's own release counter — see the Versioning section in the README. Note: between `0.0.3` (2018) and `7.2.0` (2025) the gem's version was not bumped even though it went through the `rails_5`, `rails_6`, `rails_6_1`, and `rails_7_2` upgrade branches — those releases predate changelog tracking and are not itemized below.
 
+## [7.2.3.2] - 2026-09-10
+### Changed
+- Upgraded `sprockets` from `3.7.5` to `4.4.1` (resolves SCA finding NFG-4150).
+
+### Fixed
+- Precompiled `nfg_ui` `app_icon` assets in the Sprockets manifest so they resolve correctly under Sprockets 4's stricter asset lookup.
+
 ## [7.2.3.1.uat4] - 2026-08-12
 ### Fixed
 - Changed the fallback coder in `NfgOnboarder::Session` (used when a host app hasn't set `Rails.application.config.default_coder`) from `JSON` to `YAML`. Step-tracking throughout the gem (and consumers like `nfg_csv_importer`) reads `step_data`/`onboarder_progress` back with Symbol keys and Symbol array members (e.g. `onboarder_progress[controller_name] << step`, where `step` is a Symbol). `JSON` round-trips those as Strings, so on a host app that never configured `default_coder`, the wizard silently loses track of completed/visited steps after the first DB reload, causing `Wicked::Wizard::InvalidStepError` mid-onboarding. `YAML` preserves Symbols across dump/load, matching what every real consumer already sets explicitly — this just makes the safe default match established practice instead of silently miscompiling wizard state.
