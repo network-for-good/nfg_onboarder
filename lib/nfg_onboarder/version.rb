@@ -1,3 +1,3 @@
 module NfgOnboarder
-  VERSION = "7.2.3.2.pre.uat2"
+  VERSION = "7.2.3.3"
 end
